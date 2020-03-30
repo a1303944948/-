@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>浙江嘉丰机电-后台管理系统</title>
+	<link rel="icon" type="image/x-icon" href="image/logos.jpg"/>
+	<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="js/wm.js"></script>
+	<script type="text/javascript" src="js/object.js"></script>
+</head>
+<body>
+	<script type="text/javascript" src="js/header.js"></script>
+	<div class="index_home">
+		<div class="index_status">
+			<div class="index_status_list">
+				<div class="index_status_list_left" style="width: 100%; text-align: center">
+					<div class="index_status_list_left_top  index_status_list_left_top_total" style="width: 100%; text-align: center"></div>
+					<div class="index_status_list_left_bottom" style="width: 100%; text-align: center">总台数</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="index_status_list">
+				<div class="index_status_list_left">
+					<div class="index_status_list_left_top index_status_list_left_top_nornal"></div>
+					<div class="index_status_list_left_bottom">正在运行</div>
+				</div>
+				<div class="index_status_list_right">
+					<canvas id="canvas1" width="80" height="80"></canvas>
+					<div class="index_status_list_right_item index_status_list_right_item_nornal"></div>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="index_status_list">
+				<div class="index_status_list_left">
+					<div class="index_status_list_left_top index_status_list_left_top_bad"></div>
+					<div class="index_status_list_left_bottom">异常＜24小时</div>
+				</div>
+				<div class="index_status_list_right">
+					<canvas id="canvas2" width="80" height="80"></canvas>
+					<div class="index_status_list_right_item index_status_list_right_item_bad"></div>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="index_status_list">
+				<div class="index_status_list_left">
+					<div class="index_status_list_left_top index_status_list_left_top_bad24"></div>
+					<div class="index_status_list_left_bottom">异常＞24小时</div>
+				</div>
+				<div class="index_status_list_right">
+					<canvas id="canvas3" width="80" height="80"></canvas>
+					<div class="index_status_list_right_item index_status_list_right_item_bad24"></div>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="index_chart">
+			<div class="index_chart_head">
+				<p>最近30天销售图</p>
+				<div class="index_chart_head_top">
+					<div class="index_chart_head_top_left"></div>
+					<div class="index_chart_head_top_right">
+						<div id="index_chart_head_top_right_loading"><div><b></b><b></b></div></div>
+						<canvas id="index_chart_head_top_right_canvas"></canvas>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="index_chart_head_bottom">
+					<img src="image/ybp.png" align="right"/>
+				</div>
+			</div>
+			<div class="index_chart_foot">
+				<p>去年<b></b> vs 今年<b></b></p>
+				<div class="index_chart_foot_top">
+					<div class="index_chart_foot_top_left"></div>
+					<div class="index_chart_foot_top_right">
+						<div id="index_chart_foot_top_right_loading"><div><b></b><b></b></div></div>
+						<canvas id="index_chart_foot_top_right_canvas"></canvas>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="index_chart_foot_bottom">
+					<img src="image/ybpvs.png" align="right"/>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/index.js"></script>
+</body>
+</html>

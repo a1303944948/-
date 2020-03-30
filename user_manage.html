@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8"/>
+	<link rel="icon" type="image/x-icon" href="image/logos.jpg"/>
+	<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	<link rel="stylesheet" type="text/css" href="css/user_manage.css"/>
+	<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="js/wm.js"></script>
+	<script type="text/javascript" src="js/object.js"></script>
+</head>
+<body>
+	<script type="text/javascript" src="js/header.js"></script>
+	<div class="user_home">
+		<div class="user_head">
+			<table>
+				<tr>
+					<td>区域分组</td>
+					<td><input id="user_head_group" class="user_head_grouping" type="text" readonly="readonly"/><b></b></td>
+				</tr>
+			</table>
+			<!-- <table>
+				<tr>
+					<td>输入查询</td>
+					<td><input id="user_head_seach" type="text"></td>
+				</tr>
+			</table> -->
+			<table>
+				<tr>
+					<td>选择状态</td>
+					<td><input id="user_head_status" class="user_head_select" type="text" readonly="readonly"><b></b></td>
+				</tr>
+			</table>
+			<table>
+				<tr>
+					<td><button class="user_head_submit"><img src="image/seachs.png"/>搜索</button></td>
+				</tr>
+			</table>
+		</div>
+		<div class="user_body">
+			<div class="user_body_left">
+			</div>
+			<div class="user_body_right">
+				<div class="user_body_right_head">
+					<button id="body_creat"><span>+</span>创建</button>
+					<button id="body_submit"><img src="image/bc.png"/>保存</button>
+					<div class="user_body_right_head_bottom">
+						<ul class="user_body_right_head_bottom_ul"></ul>
+					</div>
+				</div>
+				<div class="user_body_right_foot">
+					<div class="user_body_right_foot_list" data-menuid="202001">
+						<div class="user_body_right_foot_item">
+							<p>基础信息</p>
+							<table>
+								<tr>
+									<td>运营方：<span>*</span></td>
+									<td><input id="user_operator" style="cursor: pointer;" class="user_head_operator" type="text" readonly="readonly"/><b></b></td>
+								</tr>
+								<tr>
+									<td>权限范围：<span>*</span></td>
+									<td><input id="user_purview" style="cursor: pointer;" class="user_head_grouping" type="text" readonly="readonly"/><b></b></td>
+								</tr>
+								<tr>
+									<td>姓名：<span>*</span></td>
+									<td><input id="user_name" type="text"/></td>
+								</tr>
+								<tr>
+									<td>职位：<span>*</span></td>
+									<td><input id="user_job" type="text"/></td>
+								</tr>
+								<tr>
+									<td>账号：<span>*</span></td>
+									<td><input id="user_account" onkeyup="this.value=this.value.replace(/[^\w_]/g,'');" type="text"/></td>
+								</tr>
+								<!-- <tr>
+									<td>语言类型：<span>*</span></td>
+									<td>中文<input id="user_cn" type="radio" name="type">English<input id="user_en" type="radio" name="type"></td>
+								</tr> -->
+								<tr>
+									<td>联系电话：</td>
+									<td><input id="user_phone" type="text"/></td>
+								</tr>
+								<!-- <tr>
+									<td>密码：<span>*</span></td>
+									<td><input id="user_password" type="password"/></td>
+								</tr>
+								<tr>
+									<td>确认密码：<span>*</span></td>
+									<td><input id="user_confirmpass" type="password"/></td>
+								</tr> -->
+								<tr>
+									<td>电子邮件：</td>
+									<td><input id="user_email" type="text"/></td>
+								</tr>
+								<tr>
+									<td>备用电话：</td>
+									<td><input id="user_rigphone" type="text"/></td>
+								</tr>
+								<tr>
+									<td>说明：</td>
+									<td><textarea id="user_legend"></textarea></td>
+								</tr>
+								<tr>
+									<td><input id="user_stop" type="checkbox"/>停用</td>
+									<td style="text-align: right;"><button class="user_rest_pass">重置密码</button></td>
+								</tr>
+							</table>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="user_body_right_foot_list" data-menuid="202002">
+						<div class="user_body_right_foot_item">
+							<p>权限分配</p>
+							<div class="user_body_right_foot_item_panel">
+							</div>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="user_body_right_foot_list" data-menuid="202003">
+						<div class="user_body_right_foot_item">
+							<p>删除用户</p>
+							<table>
+								<tr>
+									<td>姓名：<span>*</span></td>
+									<td><input id="user_name_delete" disabled="disabled" type="text"/></td>
+								</tr>
+								<tr>
+									<td>账号：<span>*</span></td>
+									<td><input id="user_account_delete" disabled="disabled" type="text"/></td>
+								</tr>
+								<tr>
+									<td>操作：</td>
+									<td><button id="user_empcode_delete">删除</button></td>
+								</tr>
+							</table>
+						</div>
+						<div class="clear"></div>
+					</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/user_manage.js"></script>
+</body>
+</html>

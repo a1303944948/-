@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>运营方</title>
+	<link rel="icon" type="image/x-icon" href="image/logos.jpg"/>
+	<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	<link rel="stylesheet" type="text/css" href="css/operator.css"/>
+	<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="js/qrcode.min.js"></script>
+	<script type="text/javascript" src="js/wm.js"></script>
+	<script type="text/javascript" src="js/object.js"></script>
+</head>
+<body>
+	<script type="text/javascript" src="js/header.js"></script>
+	<div class="operator_home">
+		<div class="operator_head">
+			<!-- <table>
+				<tr>
+					<td>运营方</td>
+					<td><input type="text"/></td>
+				</tr>
+			</table> -->
+			<!-- <table>
+				<tr>
+					<td>负责人</td>
+					<td><input type="text"/></td>
+				</tr>
+			</table> -->
+			<table>
+				<tr>
+					<td style="min-width: 60px;">选择状态</td>
+					<td><input id="operator_status" class="item_select" style="cursor: pointer;" type="text" readonly="readonly"/><b></b></td>
+				</tr>
+			</table>
+			<table>
+				<tr>
+					<td><button class="operator_home_head_submit"><img src="image/seachs.png"/>搜索</button></td>
+					<td></td>
+				</tr>
+			</table>
+		</div>
+		<div class="operator_body">
+			<div class="operator_body_left"></div>
+			<div class="operator_body_right">
+				<div class="operator_body_right_head">
+					<button id="body_creat"><span>+</span>创建</button>
+					<button id="body_submit"><img src="image/bc.png"/>保存</button>					
+					<div class="operator_body_right_head_bottom">
+						<ul class="operator_body_right_head_bottom_ul"></ul>
+					</div>
+				</div>
+				<div class="operator_body_right_foot">
+					<div class="operator_body_right_foot_list" data-menuid="205001">
+						<div class="operator_body_right_foot_item">
+							<p>基础信息</p>
+							<table>
+								<tr>
+									<td>运营方代码：<span>*</span></td>
+									<td><input id="detailed_operator_id" type="text" onkeyup="this.value=this.value.replace(/^\s+|\s+$/g,'')"/></td>
+								</tr>
+								<tr>
+									<td>运营方：<span>*</span></td>
+									<td><input id="detailed_operator_numbering" type="text"/></td>
+								</tr>
+								<tr>
+									<td>公司名称：</td>
+									<td><input id="detailed_operator_companyname" type="text"/></td>
+								</tr>
+								<tr>
+									<td>公司地址：</td>
+									<td><input id="detailed_operator_companyaddress" type="text"/></td>
+								</tr>
+								<tr>
+									<td>运营方负责人：</td>
+									<td><input id="detailed_operator_principal" type="text"/></td>
+								</tr>
+								<tr>
+									<td>联系电话：</td>
+									<td><input id="detailed_operator_phone" type="text" onkeyup ="value=value.replace(/[^\d]/g,'')"/></td>
+								</tr>
+								<tr>
+									<td>备用电话：</td>
+									<td><input id="detailed_operator_sparephone" type="text"/></td>
+								</tr>
+								<tr>
+									<td>E-mail：</td>
+									<td><input id="detailed_operator_email" type="text"/></td>
+								</tr>
+								<tr>
+									<td><input id="detailed_operator_stop" type="checkbox"/>停用</td>
+									<td><input id="detailed_operator_isFree" type="checkbox"/>免费</td>
+								</tr>
+							</table>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="operator_body_right_foot_list" data-menuid="205002">
+						<div class="operator_body_right_foot_item">
+							<p>微信</p>
+							<table>
+								<tr>
+									<td><input id="wechat_pay" type="checkbox"/>启用</td>
+									<td>&nbsp;</td>
+								</tr>
+								<tr>
+									<td>API密钥：<span class="wechat_pay">*</span></td>
+									<td><input id="wechat_pass" type="password"/></td>
+								</tr>
+								<tr>
+									<td>公众号ID：<span class="wechat_pay">*</span></td>
+									<td><input id="wechat_id" type="text"/></td>
+								</tr>
+								<tr>
+									<td>APPSecret：<span class="wechat_pay">*</span></td>
+									<td><input id="wechat_secret" type="password"/></td>
+								</tr>
+								<tr>
+									<td>商户号：<span class="wechat_pay">*</span></td>
+									<td><input id="wecaht_shanghu" type="text"/></td>
+								</tr>
+								<tr>
+									<td>Pcks12证书：<span class="wechat_pay">*</span></td>
+									<td><input id="wecahtFile" type="file" accept=".p12"/><div id="wecahtFile_value">点击选择文件...</div></td>
+								</tr>
+								<tr>
+									<td>支付测试：</td>
+									<td><button id="wechatTest">微信码</button></td>
+								</tr>
+							</table>
+						</div>
+						<div class="operator_body_right_foot_item">
+							<p>支付宝</p>
+							<table>
+								<tr>
+									<td><input id="alipay_pay" type="checkbox"/>启用</td>
+									<td>&nbsp;</td>
+								</tr>
+								<tr>
+									<td>APPID：<span class="alipay_pay">*</span></td>
+									<td><input id="alipay_id" type="text"/></td>
+								</tr>
+								<tr>
+									<td>用户私钥：<span class="alipay_pay">*</span></td>
+									<td><input id="alipay_privpay" type="password"/></td>
+								</tr>
+								<tr>
+									<td>支付宝公钥：<span class="alipay_pay">*</span></td>
+									<td><input id="alipay_publicpay" type="password"/></td>
+								</tr>
+								<tr>
+									<td>支付测试：</td>
+									<td><button id="alipayTest">支付宝码</button></td>
+								</tr>
+							</table>
+						</div>
+						<div class="operator_body_right_foot_item">
+							<p>银商</p>
+							<table>
+								<tr>
+									<td><input id="silver_pay" type="checkbox"/>启用</td>
+									<td>&nbsp;</td>
+								</tr>
+								<tr>
+									<td>银商平台商户号：<span class="silver_pay">*</span></td>
+									<td><input id="silver_shanghu" type="text"/></td>
+								</tr>
+								<tr>
+									<td>终端号：<span class="silver_pay">*</span></td>
+									<td><input id="silver_end" type="text"/></td>
+								</tr>
+								<tr>
+									<td>机构商户号：<span class="silver_pay">*</span></td>
+									<td><input id="silver_jshanghu" type="text"/></td>
+								</tr>
+								<tr>
+									<td>消息来源：<span class="silver_pay">*</span></td>
+									<td><input id="silver_news" type="text"/></td>
+								</tr>
+								<tr>
+									<td>来源编号：<span class="silver_pay">*</span></td>
+									<td><input id="silver_number" type="text"/></td>
+								</tr>
+								<tr>
+									<td>测试环境MD5：<span class="silver_pay">*</span></td>
+									<td><input id="silver_test" type="password"/></td>
+								</tr>
+							</table>
+						</div>
+						<div class="operator_body_right_foot_item">
+							<p>工行</p>
+							<table>
+								<tr>
+									<td><input id="icbc_pay" type="checkbox"/>启用</td>
+									<td>&nbsp;</td>
+								</tr>
+								<tr>
+									<td>网关公钥：<span class="icbc_pay">*</span></td>
+									<td><input id="icbc_publicpay" type="text"/></td>
+								</tr>
+								<tr>
+									<td>工行appid：<span class="icbc_pay">*</span></td>
+									<td><input id="icbc_appid" type="text"/></td>
+								</tr>
+								<tr>
+									<td>工行私钥：<span class="icbc_pay">*</span></td>
+									<td><input id="icbc_privpay" type="password"/></td>
+								</tr>
+								<tr>
+									<td>特约商户档案：<span class="icbc_pay">*</span></td>
+									<td><input id="icbc_special" type="text"/></td>
+								</tr>
+								<tr>
+									<td>e生活商户档案：<span class="icbc_pay">*</span></td>
+									<td><input id="icbc_life" type="text"/></td>
+								</tr>
+							</table>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="operator_body_right_foot_list" data-menuid="205003">
+						<div class="operator_body_right_foot_item">
+							<p>开票资料</p>
+							<table>
+								<tr>
+									<td>公司名称：<span>*</span></td>
+									<td><input id="operator_name" type="text"/></td>
+								</tr>
+								<tr>
+									<td>税务登记号：<span>*</span></td>
+									<td><input id="operator_number" type="text"/></td>
+								</tr>
+								<tr>
+									<td>公司地址：<span>*</span></td>
+									<td><input id="operator_addr" type="text"/></td>
+								</tr>
+								<tr>
+									<td>联系电话：<span>*</span></td>
+									<td><input id="operator_phone" type="text"/></td>
+								</tr>
+								<tr>
+									<td>开户银行：<span>*</span></td>
+									<td><input id="operator_bank" type="text"/></td>
+								</tr>
+								<tr>
+									<td>银行账号：<span>*</span></td>
+									<td><input id="operator_account" type="text"/></td>
+								</tr>
+							</table>
+						</div>
+						<div class="clear"></div>
+					</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="advertise_board_fixed">
+			<div class="advertise_board_fixed_body">
+				<p><b class="advertise_board_fixed_body_b"></b><span class="advertise_board_fixed_body_clear">×</span></p>
+				<div class="advertise_board_fixed_body_home_ewm"></div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/operator.js"></script>
+</body>
+</html>

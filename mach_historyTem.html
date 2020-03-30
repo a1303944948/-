@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>历史温度</title>
+	<link rel="icon" type="image/x-icon" href="image/logos.jpg"/>
+	<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	<link rel="stylesheet" type="text/css" href="css/machine_status.css"/>
+	<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="js/wm.js"></script>
+	<script type="text/javascript" src="js/object.js"></script>
+	<style type="text/css">
+		html,body{
+			overflow: hidden;
+		}
+		.tem_home{
+			width: 100%;
+			height: auto;
+			overflow: hidden;
+		}
+		.tem_head{
+			width: 100%;
+			height: auto;
+			padding: 10px;
+			background-color: #ffffff;
+		}
+		.tem_head>table{
+			display: inline-block;
+			border-collapse: collapse;
+		}
+		.tem_head>table tr>td{
+			height: 30px;
+			position: relative;
+		}
+		.tem_head>table tr>td>input{
+			width: 180px;
+			height: 30px;
+			padding: 3px 5px;
+			border: 1px #d4d4d4 solid;
+			box-sizing: border-box;
+			border-radius: 4px;
+		}
+		.tem_head>table tr>td>b{
+			border-top: 5px #666666 solid;
+			border-left: 5px rgba(0,0,0,0) solid;
+			border-right: 5px rgba(0,0,0,0) solid;
+			position: absolute;
+			top: 12px;
+			right: 8px;
+			pointer-events: none;
+		}
+		.tem_head_submit{
+			width: 100px;
+			height: 26px;
+			line-height: 26px;
+			background-color: #0C64A8;
+			color: #ffffff;
+			border: none;
+			outline: none;
+			cursor: pointer;
+			border-radius: 5px;
+		}
+		.tem_head_submit:hover{
+		  background-color: #0E76C6;
+		}
+		.tem_head_submit:active{
+		  background-color: #0C64A8;
+		}
+		.tem_head_submit>img{
+			width: 18px;
+			height: 18px;
+			position: relative;
+			top: 4px;
+			margin-right: 5px;
+		}
+		.tem_head_select_ul{
+			display: none;
+			height: auto;
+			border-radius: 4px;
+			background-color: #ffffff;
+			border: 1px #d4d4d4 solid;
+			box-sizing: border-box;
+			position: absolute;
+		}
+		.tem_head_select_ul>li{
+			width: calc(100% - 10px);
+			height: 30px;
+			line-height: 30px;
+			padding: 0px 5px;
+			font-size: 14px;
+			cursor: pointer;
+		}
+		.tem_head_select_ul>li:hover{
+			background-color: #e5e5e5;
+		}
+		.tem_head_select_ul>li:active{
+			background-color: #ffffff;
+		}
+		.tem_fixed{
+			width: 100%;
+			height: auto;
+			background-color: #ffffff;
+			border-top: 1px #e5e5e5 solid;
+		}
+		.tem_fixed>table{
+			border-collapse: collapse;
+		}
+		.tem_fixed>table tr>td{
+			width: 250px;
+			height: 50px;
+			line-height: 50px;
+			padding-left: 5px;
+			padding-right: 5px;
+			font-size: 14px;
+			font-weight: 700;
+			text-align: center;
+			border: 1px #e5e5e5 solid;
+			box-sizing: border-box;
+			border-top: none;
+			border-bottom: none;
+		}
+		.tem_body{
+			width: 100%;
+			height: auto;
+			overflow-y: auto;
+		}
+		.tem_body>div{
+			width: 100%;
+			height: auto;
+		}
+		.tem_body>div>table{
+			border-collapse: collapse;
+		}
+		.tem_body>div:last-child>table{
+			border-bottom: 1px #e5e5e5 solid;
+		}
+		.tem_body>div>table tr>td{
+			width: 250px;
+			height: 40px;
+			line-height: 40px;
+			padding-left: 5px;
+			padding-right: 5px;
+			font-size: 14px;
+			text-align: center;
+			border: 1px #e5e5e5 solid;
+			box-sizing: border-box;
+			border-bottom: none;
+		}
+		.tem_btn{
+		    width: 120px;
+		    height: 30px;
+		    line-height: 30px;
+		    margin-left: 3%;
+		    border: 1px #c3c3c3 solid;
+		    background-color: #ffffff;
+		    color: #000000;
+		    border-radius: 5px;
+		    user-select: none;
+		    outline: none;
+		    cursor: pointer;
+		    position: relative;
+		    top: -10px;
+		}
+		.tem_btn:hover{
+			background-color: #f0f0f0;
+		}
+		.tem_btn:active{
+			background-color: #ffffff;
+		}
+		.tem_btn>img {
+		    width: 20px;
+		    height: 20px;
+		    position: relative;
+		    top: 4px;
+		    margin-right: 4px;
+		}
+	</style>
+</head>
+<body>
+	<div class="tem_home">
+		<div class="tem_head">
+			<table>
+				<tr>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;选择时间：</td>
+					<td><input class="tem_head_select" type="text" value="请选择..." readonly="readonly"/><b></b></td>
+				</tr>
+			</table>
+			<table>
+				<tr>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="tem_head_submit"><img src="image/seachs.png"/>查看温度</button></td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前设备：<span class="tem_head_hostname"></span></td>
+				</tr>
+			</table>
+			<button class="tem_btn"><img src="image/excelDwon.png"/>导出为Excel</button>
+		</div>
+		<div class="tem_fixed">
+			<table id="sales_body_table_head">
+				<tr>
+					<td>记录温度</td>
+					<td>记录时间</td>
+					<td>CPU</td>
+					<td>RAM</td>
+					<td>信号强度</td>
+				</tr>
+			</table>
+		</div>
+		<div class="tem_body" id="sales_body_table">
+		</div>
+	</div>
+	<script type="text/javascript">
+		var temHead = c('tem_head')[0];
+		var headSelect = c('tem_head_select');
+		var startTime = 0;
+		var endTime = 0;
+		var Tian = 86400000;
+		function dateCreat(endtime,starttime){
+			var datez = new Date(starttime);
+			nian = datez.getFullYear();
+			yue = datez.getMonth() + 1;
+			ri = datez.getDate();
+			startTime = nian + '-' + yue + '-' + ri;
+			var date = new Date(endtime);
+			nian = date.getFullYear();
+			yue = date.getMonth() + 1;
+			ri = date.getDate() + 1;
+			endTime = nian + '-' + yue + '-' + ri;
+		}
+		for(var i = 0; i < headSelect.length; i++){
+			var ul = creat('ul');
+			ul.className = "tem_head_select_ul";
+			ul.setAttribute('data-list',i);
+			ul.style.minWidth = headSelect[i].clientWidth + 2 + 'px';
+			ul.style.left = headSelect[i].offsetParent.offsetLeft + 'px';
+			ul.style.top = headSelect[i].offsetParent.offsetTop + 29 + 'px';
+			for(var j = 0; j < TEM[i].length; j++){
+				var li = creat('li');
+				li.innerHTML = TEM[i][j];
+				ul.appendChild(li);
+			}
+			temHead.appendChild(ul);
+			var selectUl = c('tem_head_select_ul');
+			(function(q){
+				headSelect[q].onfocus = function(){
+					selectUl[q].style.display = 'block';
+				};
+				headSelect[q].onblur = function(){
+					selectUl[q].style.display = 'none';
+				};
+			})(i)
+
+			headSelect[0].value = selectUl[i].children[0].innerHTML;
+			var datex = new Date();
+			dateCreat(datex,datex);
+			for(var j = 0; j < selectUl[i].children.length; j++){
+				selectUl[i].children[j].onmousedown = function(){
+					headSelect[this.parentNode.dataset.list].value = this.innerHTML;
+					if(this.innerHTML == '今天'){
+						var dates = new Date();
+						dateCreat(dates,dates);
+					}else if(this.innerHTML == '昨天'){
+						var dates = new Date();
+						dateCreat(dates-Tian,dates-Tian);
+					}else if(this.innerHTML == '最近三天'){
+						var dates = new Date();
+						dateCreat(dates,dates-Tian*2);
+					}else if(this.innerHTML == '最近七天'){
+						var dates = new Date();
+						dateCreat(dates,dates-Tian*6);
+					}
+				}
+			}
+		}
+
+
+		function GetQueryString(name){
+			var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);
+			if(r!=null)return  unescape(r[2]); return null;
+	    }
+	    var machCode = GetQueryString('machCode');
+
+	    //请求机器名称
+	    $.ajax({
+	    	type: 'post',
+	    	url: URLS + '/status/getHostNameByMachCode.json',
+	    	data: {
+				machCode: machCode,
+	    	},
+	    	success: function(msg){
+	    		console.log(msg);
+	    		c('tem_head_hostname')[0].innerHTML = msg.hostName + ' - ' + machCode;
+	    	}
+	    })
+
+	    function timestampToTime(timestamp) {
+	        var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+	        Y = date.getFullYear() + '-';
+	        M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+	        D = date.getDate() + ' ';
+	        h = date.getHours() + ':';
+	        m = date.getMinutes() + ':';
+	        s = date.getSeconds();
+	        return Y+M+D+h+m+s;
+	    }
+
+	    var submit = c('tem_head_submit')[0];
+	    submit.onclick = function(){
+			//请求历史温度
+			if(startTime == 0){
+				alern('请选择时间后再查询!','温馨提醒','ok');
+				return false;
+			}
+			var Start = startTime;
+			var End = endTime;
+			var currentDate = new Date();
+		    var dateDiffS = new Date(Start + ' ' + currentDate.getHours() + ':' + currentDate.getMinutes() + ':' + currentDate.getSeconds());
+		    var dateDiffE = new Date(End + ' ' + currentDate.getHours() + ':' + currentDate.getMinutes() + ':' + currentDate.getSeconds());
+		    Start = worldDateA(dateDiffS.getTime());
+		    End = worldDateA(dateDiffE.getTime());
+			console.log(Start);
+			console.log(End);
+			$.ajax({
+				type: 'post',
+				url: URLS + '/status/getHistoryTem.json',
+				data: {
+					machCode: machCode,
+					startTime: Start,
+					endTime: End,
+				},
+				async: false,
+				success: function(data){
+					console.log(data);
+					var temBody = c('tem_body')[0];
+					temBody.innerHTML = "";
+					temBody.style.height = window.innerHeight - 105 + 'px';
+					for(var i = 0; i < data.length; i++){
+						var div = creat('div');
+						var table = creat('table');
+						var tr = creat('tr');
+						var tda = creat('td');
+						var tdb = creat('td');
+						var tdc = creat('td');
+						var tdd = creat('td');
+						var tde = creat('td');
+						tda.innerHTML = data[i].temperature;
+    					var addTime = timestampToTime(parseInt(data[i].addTime/1000));
+						tdb.innerHTML = addTime;
+						tdc.innerHTML = data[i].cpu;
+						tdd.innerHTML = data[i].ram;
+						tde.innerHTML = data[i].signStrength;
+						tr.appendChild(tda);
+						tr.appendChild(tdb);
+						tr.appendChild(tdc);
+						tr.appendChild(tdd);
+						tr.appendChild(tde);
+						table.appendChild(tr);
+						div.appendChild(table); 
+						temBody.appendChild(div);
+						if(i%2 != 0){
+							temBody.children[i].style.backgroundColor = "#fafafa";
+						}
+					}
+				}
+			})
+	    }
+	    submit.click();
+
+		function tableName(tableNmaeId,excelTable){
+		  var idTmr;
+		  function  getExplorer() {
+		      var explorer = window.navigator.userAgent ;
+		      //ie
+		      if (explorer.indexOf("MSIE") >= 0) {
+		          return 'ie';
+		      }
+		      //firefox
+		      else if (explorer.indexOf("Firefox") >= 0) {
+		          return 'Firefox';
+		      }
+		      //Chrome
+		      else if(explorer.indexOf("Chrome") >= 0){
+		          return 'Chrome';
+		      }
+		      //Opera
+		      else if(explorer.indexOf("Opera") >= 0){
+		          return 'Opera';
+		      }
+		      //Safari
+		      else if(explorer.indexOf("Safari") >= 0){
+		          return 'Safari';
+		      }
+		  }
+		  function method1(tableid) {//整个表格拷贝到EXCEL中
+		      if(getExplorer()=='ie') {
+		          var curTbl = document.getElementById(tableid);
+		          var oXL = new ActiveXObject("Excel.Application");
+
+		          //创建AX对象excel
+		          var oWB = oXL.Workbooks.Add();
+		          //获取workbook对象
+		          var xlsheet = oWB.Worksheets(1);
+		          //激活当前sheet
+		          var sel = document.body.createTextRange();
+		          sel.moveToElementText(curTbl);
+		          //把表格中的内容移到TextRange中
+		          sel.select;
+		          //全选TextRange中内容
+		          sel.execCommand("Copy");
+		          //复制TextRange中内容
+		          xlsheet.Paste();
+		          //粘贴到活动的EXCEL中
+		          oXL.Visible = true;
+		          //设置excel可见属性
+
+		          try {
+		              var fname = oXL.Application.GetSaveAsFilename("Excel.xls", "Excel Spreadsheets (*.xls), *.xls");
+		          } catch (e) {
+		              print("Nested catch caught " + e);
+		          } finally {
+		              oWB.SaveAs(fname);
+
+		              oWB.Close(savechanges = false);
+		              //xls.visible = false;
+		              oXL.Quit();
+		              oXL = null;
+		              //结束excel进程，退出完成
+		              //window.setInterval("Cleanup();",1);
+		              idTmr = window.setInterval("Cleanup();", 1);
+		          }
+		      } else {
+		          tableToExcel('ta')
+		      }
+		  }
+		  function Cleanup() {
+		      window.clearInterval(idTmr);
+		      CollectGarbage();
+		  }
+
+		      // template ： 定义文档的类型，相当于html页面中顶部的<!DOCTYPE> 声明。（个人理解，不确定）
+		      // encodeURIComponent:解码
+		      // unescape() 函数：对通过 escape() 编码的字符串进行解码。
+		      // window.btoa(window.encodeURIComponent(str)):支持汉字进行解码。
+		      // \w ：匹配包括下划线的任何单词字符。等价于’[A-Za-z0-9_]’
+		      // replace()方法：用于在字符串中用一些字符替换另一些字符，或替换一个与正则表达式匹配的子串。
+		      // {(\w+)}：匹配所有 {1个或更多字符} 形式的字符串；此处匹配输出内容是 “worksheet”
+		      // 正则中的() ：是为了提取匹配的字符串。表达式中有几个()就有几个相应的匹配字符串。
+		      // 讲解(/{(\w+)}/g, function(m, p) { return c[p]; } ：
+		      //     /{(\w+)}/g 匹配出所有形式为“{worksheet}”的字符串；
+		      //     function参数：  m  正则所匹配到的内容，即“worksheet”；
+		      //                     p  正则表达式中分组的内容,即“(\w+)”分组中匹配到的内容，为“worksheet”；
+		      //     c ：为object，见下图3
+		      //     c[p] : 为“worksheet”
+
+		  var tableToExcel = (function() {
+		    var uri = 'data:application/vnd.ms-excel;base64,',
+		    template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+		    base64 = function(s) {
+		      return window.btoa(unescape(encodeURIComponent(s)))
+		    },
+		    // 下面这段函数作用是：将template中的变量替换为页面内容ctx获取到的值
+		    format = function(s, c) {
+		        return s.replace(/{(\w+)}/g,
+		                function(m, p) {
+		                  return c[p];
+		                }
+		        )
+		    };
+		    return function(table, name) {
+		      table = document.getElementById(tableNmaeId);
+		      // 获取表单的名字和表单查询的内容
+		      var ctx = {worksheet: name || 'Worksheet', table: d('sales_body_table_head').innerHTML + table.innerHTML};
+		      // format()函数：通过格式操作使任意类型的数据转换成一个字符串
+		      // base64()：进行编码
+		      var link = document.createElement("A");
+		      link.href = uri + base64(format(template, ctx));
+		      var excelDate = new Date();
+
+		      var names = excelDate.getFullYear() + '-' + (excelDate.getMonth()+1) + '-' + excelDate.getDate();
+		      link.download = '历史温度' + names + '.xls';
+		      link.target = '_blank';
+		      document.body.appendChild(link);
+		      link.click();
+		      document.body.removeChild(link);
+		      //window.location.href = uri + base64(format(template, ctx))
+		    }
+		  })()
+		  method1(excelTable);
+		}
+		var excelTable = d('sales_body_table');
+		var temBtn = c('tem_btn')[0];
+		temBtn.onclick = function(){
+		  tableName('sales_body_table',excelTable);
+		}
+	</script>
+</body>
+</html>

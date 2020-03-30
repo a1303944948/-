@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>优惠券</title>
+	<link href="images/logo.jpg" type="image/x-icon" rel="icon"/>
+	<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	<link rel="stylesheet" type="text/css" href="css/coupon.css"/>
+	<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="js/qrcode.min.js"></script>
+	<script type="text/javascript" src="js/wm.js"></script>
+	<script type="text/javascript" src="js/object.js"></script>
+</head>
+<body>
+	<script type="text/javascript" src="js/header.js"></script>
+	<div class="discount_home">
+		<div class="discount_left">
+			<p class="discount_left_p"><span class="discount_left_p_span">请选择设备...</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;全选：<input class="discount_left_p_int" type="checkbox"/></p>
+			<ul class="discount_left_ul"></ul>
+		</div>
+		<div class="discount_right">
+			<div class="discount_right_head">
+				<button id="discount_right_head_btn"><span>+</span>创建</button><button id="discount_right_body_submit" style="margin-right: 25px;"><img src="image/bc.png"/>保存</button>
+			</div>
+			<div class="discount_right_body">
+				<table>
+					<tr>
+						<td>优惠券名称：</td>
+						<td><input id="coupon_name" type="text" placeholder="请输入优惠券名称..." /></td>
+					</tr>
+					<tr>
+						<td>数量：</td>
+						<td><input id="coupon_num" type="text" placeholder="请输入优惠券数量..." /></td>
+					</tr>
+					<tr>
+						<td>面额：</td>
+						<td><input id="coupon_money" type="number" placeholder="请设置金额..." /></td>
+					</tr>
+					<tr>
+						<td>有效截止日期：</td>
+						<td><input id="coupon_date" type="date" placeholder="请选择日期..." /></td>
+					</tr>
+				</table>
+			</div>
+			<div class="discount_right_foot">
+				<div class="discount_right_foot_right">
+					<table>
+						<tr>
+							<td class="discount_right_foot_right_table_td">序号</td>
+							<td class="discount_right_foot_right_table_td">优惠券名称</td>
+							<td class="discount_right_foot_right_table_td">ID</td>
+							<td class="discount_right_foot_right_table_td">数量</td>
+							<td class="discount_right_foot_right_table_td">面额</td>
+							<td class="discount_right_foot_right_table_td">有效期</td>
+							<td class="discount_right_foot_right_table_td">操作</td>
+							<td class="discount_right_foot_right_table_td">关联设备</td>
+						</tr>
+					</table>
+					<div class="discount_right_foot_right_body"></div>
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+		<div class="coupon_fixed">
+			<div class="coupon_fixed_body">
+				<p>优惠券列表<span class="coupon_fixed_body_clear">×</span></p>
+				<div class="coupon_fixed_body_home">
+					<table class="coupon_fixed_body_home_table">
+						<thead class="coupon_fixed_body_home_thead">
+							<tr>
+								<td>序号</td>
+								<td>优惠券名称</td>
+								<td>ID</td>
+								<td>code</td>
+								<td>面额</td>
+								<td>到期时间</td>
+							</tr>
+						</thead>
+						<tbody class="coupon_fixed_body_home_tbody"></tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/coupon.js"></script>
+</body>
+</html>

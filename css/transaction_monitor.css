@@ -1,0 +1,256 @@
+.sales_home{
+  width: 100%;
+  height: auto;
+}
+.sales_head{
+  width: 100%;
+  height: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #f0f0f0;
+}
+.sales_head_table{
+  width: 1200px;
+  height: auto;
+  border-collapse:collapse;
+}
+.sales_head_table tr td:nth-child(odd){
+  width: 120px;
+  font-size: 14px;
+  text-align: right;
+}
+.sales_head_table tr td{
+  width: 240px;
+  height: 30px;
+  padding: 3px 5px;
+  position: relative;
+}
+.sales_head_table tr td>input{
+  width: 94%;
+  height: 100%;
+  border: 1px #d4d4d4 solid;
+  border-radius: 3px;
+  padding-left: 3%;
+  padding-right: 3%;
+  position: relative;
+  z-index: 49;
+  cursor: pointer;
+}
+.timeIntervalUnit{
+  top: 3px;
+  left: 5px;
+}
+.timeIntervalUnitb{
+  visibility: hidden;
+}
+.sales_head_table tr td>b{
+  width: 0px;
+  height: 0px;
+  border-bottom: 5px rgba(0,0,0,0) solid;
+  border-left: 5px rgba(0,0,0,0) solid;
+  border-right: 5px rgba(0,0,0,0) solid;
+  border-top: 5px #656565 solid;
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  cursor: pointer;
+  z-index: 50;
+  pointer-events: none;
+}
+.sales_head_table tr td>span{
+  color: red;
+  position: relative;
+  z-index: 51;
+}
+.sales_head_table tr td>img{
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 7px;
+  right: 8px;
+  cursor: pointer;
+  z-index: 52;
+}
+.device_head_ul{
+  display: none;
+  width: auto;
+  height: auto;
+  border-radius: 3px;
+  background-color: #ffffff;
+  border: 1px #e5e5e5 solid;
+  position: absolute;
+  z-index: 5500;
+  overflow-x: auto;
+  overflow-y: auto;
+}
+.device_head_ul>li{
+  width: auto;
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+  cursor: pointer;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.device_head_ul>li>img{
+  width: 16px;
+  height: 16px;
+  position: relative;
+  top: 2px;
+  margin-right: 4px;
+}
+.device_head_ul>li>a{
+  padding: 3px 5px;
+  border-radius: 3px;
+  background-color: #ffffff;
+  user-select: none;
+}
+.device_head_ul>li>a:hover{
+  background-color: #e5e5e5;
+}
+.device_head_ul>li>a:active{
+  background-color: #ffffff;
+}
+.sales_head_date_controller{
+  background-color: #ffffff;
+}
+.sales_head_selects_ul{
+  display: none;
+  width: 223px;
+  height: auto;
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px #d4d4d4 solid;
+  box-shadow: 0 0 3px #e5e5e5;
+  z-index: 54;
+  position: absolute;
+}
+.sales_head_selects_ul>li{
+  display: inline-block;
+  width: 94%;
+  height: auto;
+  padding-left: 3%;
+  padding-right: 3%;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: #ffffff;
+}
+.sales_head_selects_ul>li:hover{
+  background-color: #e5e5e5;
+}
+.sales_head_selects_ulz{
+  display: none;
+  width: 223px;
+  height: auto;
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px #d4d4d4 solid;
+  box-shadow: 0 0 3px #e5e5e5;
+  z-index: 54;
+  position: absolute;
+}
+.sales_head_selects_ulz>li{
+  display: inline-block;
+  width: 94%;
+  height: auto;
+  padding-left: 3%;
+  padding-right: 3%;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: #ffffff;
+}
+.sales_head_selects_ulz>li:hover{
+  background-color: #e5e5e5;
+}
+.sales_head_tbody_submit{
+  width: 100px;
+  height: 26px;
+  line-height: 26px;
+  border: none;
+  background-color: #0C64A8;
+  color: #ffffff;
+  outline: none;
+  cursor: pointer;
+  border-radius: 5px;
+  position: relative;
+  z-index: 53;
+}
+.sales_head_tbody_submit:hover{
+  background-color: #0E76C6;
+}
+.sales_head_tbody_submit:active{
+  background-color: #0C64A8;
+}
+.sales_head_tbody_submit>img{
+  width: 18px;
+  height: 18px;
+  position: relative;
+  top: 4px;
+  margin-right: 4px;
+}
+
+.sales_body{
+  display: none;
+  width: auto;
+  min-width: 1200px;
+  height: auto;
+  background-color: #ffffff;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  position: relative;
+}
+.sales_body_excel_btn{
+  width: 120px;
+  height: 30px;
+  line-height: 30px;
+  margin-top: 20px;
+  margin-left: 3%;
+  border: 1px #c3c3c3 solid;
+  background-color: #ffffff;
+  color: #000000;
+  border-radius: 5px;
+  user-select: none;
+  outline: none;
+  cursor: pointer;
+}
+.sales_body_excel_btn:hover{
+  background-color: #e5e5e5;
+}
+.sales_body_excel_btn:active{
+  background-color: #ffffff;
+}
+.sales_body_excel_btn>img{
+  width: 20px;
+  height: 20px;
+  position: relative;
+  top: 4px;
+  margin-right: 4px;
+}
+.sales_body_table{
+  width: 94%;
+  height: auto;
+  margin-top: 10px;
+  margin-left: 3%;
+  border-collapse: collapse; 
+}
+.sales_body_table tr th{
+  height: 45px;
+  background-color: #F5F7F8;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px #a4a4a4 solid;
+}
+.sales_body_table tr:nth-child(even){
+  background-color: #F8F9Fa;
+}
+.sales_body_table tr td{
+  height: 34px;
+  line-height: 34px;
+  font-size: 14px;
+  text-align: center;
+  border: 1px #a4a4a4 solid;
+}

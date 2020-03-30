@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>货道管理</title>
+	<link rel="icon" type="image/x-icon" href="image/logos.jpg"/>
+	<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	<link rel="stylesheet" type="text/css" href="css/cargoroad.css"/>
+	<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="js/wm.js"></script>
+	<script type="text/javascript" src="js/object.js"></script>
+</head>
+<body>
+	<script type="text/javascript" src="js/header.js"></script>
+	<div class="operator_home">
+		<div class="operator_body">
+			<div class="operator_body_left">
+				<ul class="operator_body_left_ul"></ul>
+			</div>
+			<div class="operator_body_right">
+				<div class="operator_body_right_head">
+					<button id="body_creat"><span>+</span>创建</button>
+					<button id="body_submit"><img src="image/bc.png"/>保存</button>					
+					<div class="operator_body_right_head_bottom">
+						<ul class="operator_body_right_head_bottom_ul"></ul>
+					</div>
+				</div>
+				<div class="operator_body_right_foot">
+					<div class="operator_body_right_foot_list">
+						<div class="operator_body_right_foot_item">
+							<p>货道管理</p>
+							<table>
+								<tr>
+									<td>货道编号：<span>*</span></td>
+									<td><input id="operator_id" onkeyup="value=value.replace(/[^\w\/\-]/ig,'')" type="text"/></td>
+								</tr>
+								<tr>
+									<td>货道名称：<span>*</span></td>
+									<td><input id="operator_name" type="text"/></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/cargoroad.js"></script>
+</body>
+</html>

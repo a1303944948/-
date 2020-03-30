@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>销售分析</title>
+	<link rel="icon" type="image/x-icon" href="image/logos.jpg"/>
+	<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	<link rel="stylesheet" type="text/css" href="css/sales_analysis.css"/>
+	<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="js/wm.js"></script>
+	<script type="text/javascript" src="js/object.js"></script>
+</head>
+<body>
+	<script type="text/javascript" src="js/header.js"></script>
+	<div class="sales_home">
+		<div class="sales_head">
+			<table class="sales_head_table">
+				<tbody classs="sales_head_tbody">
+					<tr>
+						<td>区域分组</td>
+						<td>
+							<input class="device_head_groupingz" type="text" placeholder="请选择..."/>
+							<b></b>
+						</td>
+						<td>统计方式<span>*</span></td>
+						<td>
+							<input class="sales_head_selects statisticalMethods" type="text" placeholder="请选择..." readonly="readonly"/>
+							<b></b>
+						</td>
+						<td>时间选择<span>*</span></td>
+						<td>
+							<input class="sales_head_selects" type="text" placeholder="请选择..." readonly="readonly"/>
+							<b></b>
+						</td>
+						<td rowspan="3" style="text-align: left; border-left: 5px rgba(0,0,0,0) solid;"><button class="sales_head_tbody_submit"><img src="image/seachs.png">查看报告</button></td>
+					</tr>
+					<tr>
+						<!-- <td>售货机</td>
+						<td><input class="sales_head_select" type="text" placeholder="请选择..."/><b></b></td> -->
+						<td></td>
+						<td></td>
+						<td>支付方式</td>
+						<td><input class="sales_head_selectz paymentMethod" type="text" placeholder="请选择..." readonly="readonly"/><b></b></td>
+						<td class="sales_head_date_start">开始日期<span>*</span></td>
+						<td class="sales_head_date_start"><input class="sales_head_date_controller" type="text" readonly="readonly"/><img src="image/dates.png"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>时间间隔单位<span>*</span></td>
+						<td><input class="sales_head_selectz timeIntervalUnit" type="text" placeholder="请选择..." readonly="readonly"/><b></b></td>
+						<td class="sales_head_date_end">结束日期<span>*</span></td>
+						<td class="sales_head_date_end"><input class="sales_head_date_controller" type="text" readonly="readonly"/><img src="image/dates.png"/></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="sales_body">
+			<div class="sales_body_chart">
+					<p class="sales_body_chart_head">销售分析统计图表（单位：<span>小时</span>）</p>
+					<div class="sales_body_chart_left"></div>
+					<div class="sales_body_chart_right">
+						<div class="sales_body_chart_right_head">
+							<canvas id="sales_body_chart_right_head_canvas" width="0" height="0"></canvas>
+						</div>
+						<div class="sales_body_chart_right_foot"></div>
+					</div>
+					<div class="clear"></div>
+			</div>
+			<button class="sales_body_excel_btn"><img src="image/excelDwon.png"/>导出为Excel</button>
+			<table class="sales_body_table" id="sales_body_table">
+				<tr>
+					<th>时间间隔单位</th>
+					<th>银商</th>
+					<th>支付宝</th>
+					<th>工商</th>
+					<th>微信</th>
+					<th>自定义</th>
+					<th>刷卡</th>
+					<th>现金</th>
+					<th>销售金额总计</th>
+					<th>销售数量总计</th>
+				</tr>
+				<tbody class="sales_body_table_tbody">
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/sales_analysis.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>缴费记录</title>
+	<link rel="icon" type="image/x-icon" href="image/logos.jpg"/>
+	<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	<link rel="stylesheet" type="text/css" href="css/payment_record.css"/>
+	<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="js/wm.js"></script>
+	<script type="text/javascript" src="js/object.js"></script>
+</head>
+<body>
+	<script type="text/javascript" src="js/header.js"></script>
+	<div class="sales_home">
+		<div class="sales_head">
+			<table class="sales_head_table">
+				<tbody classs="sales_head_tbody">
+					<tr>
+						<td>选择年份</td>
+						<td>
+							<input class="wm_select" id="device_head_year" type="text" placeholder="请选择..."/>
+							<b></b>
+						</td>
+						<td>选择月份</td>
+						<td>
+							<input class="wm_select" data-select="[{name:'一月',value:'1'},{name:'二月',value:'2'},{name:'三月',value:'3'},{name:'四月',value:'4'},{name:'五月',value:'5'},{name:'六月',value:'6'},{name:'七月',value:'7'},{name:'八月',value:'8'},{name:'九月',value:'9'},{name:'十月',value:'10'},{name:'十一月',value:'11'},{name:'十二月',value:'12'}]" id="device_head_month" type="name" placeholder="请选择..."/>
+							<b></b>
+						</td>
+						<td rowspan="3" style="text-align: left; border-left: 5px rgba(0,0,0,0) solid;"><button class="sales_head_tbody_submit"><img src="image/seachs.png">查看记录</button></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="sales_body">
+			<button class="sales_body_excel_btn"><img src="image/excelDwon.png"/>导出为Excel</button><button class="sales_body_print_btn"><img src="image/dy.png"/>打印</button>
+			<table class="sales_body_table" id="sales_body_table">
+				<tr>
+					<th>序号</th>
+					<th>运营方</th>
+					<th>订单号</th>
+					<th>金额(元)</th>
+					<th>操作人</th>
+					<th>充值时间</th>
+				</tr>
+				<tbody class="sales_body_table_tbody">
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/payment_record.js"></script>
+</body>
+</html>

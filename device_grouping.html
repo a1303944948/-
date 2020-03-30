@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>区域分组</title>
+	<link rel="icon" type="image/x-icon" href="image/logos.jpg"/>
+	<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	<link rel="stylesheet" type="text/css" href="css/device_grouping.css"/>
+	<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="js/wm.js"></script>
+	<script type="text/javascript" src="js/object.js"></script>
+</head>
+<body>
+	<script type="text/javascript" src="js/header.js"></script>
+	<div class="device_home">
+		<div class="device_head">
+			<table>
+				<tr>
+					<td>区域分组</td>
+					<td><input id="device_head_groupingz" class="device_head_groupingz" type="text" readonly="readonly"/><b></b></td>
+				</tr>
+			</table>
+			<!-- <table>
+				<tr>
+					<td>组负责人</td>
+					<td><input id="device_head_man" type="text"/></td>
+				</tr>
+			</table> -->
+			<table>
+				<tr>
+					<td>选择状态</td>
+					<td><input id="device_head_select" class="device_head_select" type="text" readonly="readonly"><b></b></td>
+				</tr>
+			</table>
+			<table>
+				<tr>
+					<td><button class="device_head_submit"><img src="image/seachs.png"/>搜索</button></td>
+				</tr>
+			</table>
+		</div>
+		<div class="device_body">
+			<div class="device_body_left">
+			</div>
+			<div class="device_body_right">
+				<div class="device_body_right_head">
+					<button id="body_creatbtn"><span>+</span>创建</button>
+					<button id="body_submit"><img src="image/bc.png"/>保存</button>	
+					<div class="device_body_right_head_bottom">
+						<ul class="device_body_right_head_bottom_ul"></ul>
+					</div>
+				</div>
+				<div class="device_body_right_foot">
+					<div class="device_body_right_foot_list" data-menuid="201001">
+						<div class="device_body_right_foot_item">
+							<p>基础信息</p>
+							<table>
+								<tr>
+									<td>区域/组ID：</td>
+									<td><input id="device_id" type="text" disabled="disabled"/></td>
+								</tr>
+								<tr>
+									<td>区域/组名称：<span>*</span></td>
+									<td><input id="device_name" type="text"/></td>
+								</tr>
+								<tr>
+									<td>上级：<span>*</span></td>
+									<td><input style="cursor: pointer; user-select: none;" id="device_grouping" placeholder="请选择..." class="device_head_grouping" type="text" readonly="readonly"/><b></b></td>
+								</tr>
+								<tr>
+									<td>区域/组负责人：</td>
+									<td><input id="device_man" type="text"/></td>
+								</tr>
+								<tr>
+									<td>负责人电话：</td>
+									<td><input id="device_phone" type="text"/></td>
+								</tr>
+								<tr>
+									<td>说明：</td>
+									<td><textarea id="device_explain"></textarea></td>
+								</tr>
+								<tr>
+									<td><input id="device_stop" type="checkbox"/>停用</td>
+									<td>&nbsp;</td>
+								</tr>
+							</table>
+						</div>
+						<div class="clear"></div>
+					</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/device_grouping.js"></script>
+</body>
+</html>

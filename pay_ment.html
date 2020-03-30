@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>充值缴费</title>
+	<link rel="icon" type="image/x-icon" href="image/logos.jpg"/>
+	<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	<link rel="stylesheet" type="text/css" href="css/pay_ment.css"/>
+	<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="js/qrcode.min.js"></script>
+	<script type="text/javascript" src="js/wm.js"></script>
+	<script type="text/javascript" src="js/object.js"></script>
+</head>
+<body>
+	<script type="text/javascript" src="js/header.js"></script>
+	<div class="user_home">
+		<div class="user_head">
+			<table>
+				<tr>
+					<td>区域分组</td>
+					<td><input id="user_head_group" class="user_head_grouping" type="text" readonly="readonly"/><b></b></td>
+				</tr>
+			</table>
+			<table>
+				<tr>
+					<td><button id="user_head_grouping" class="user_head_submit"><img src="image/seachs.png"/>搜索</button></td>
+				</tr>
+			</table>
+		</div>
+		<div class="user_body">
+			<div class="user_body_left">
+			</div>
+			<div class="user_body_right">
+				<p>续费列表：
+					<span class="user_body_right_p_span">
+						批量续费时长：
+						<select class="user_body_right_p_select">
+							<option value="1">1个月</option>
+							<option value="2">2个月</option>
+							<option value="3">3个月</option>
+							<option value="4">4个月</option>
+							<option value="5">5个月</option>
+							<option value="6">6个月</option>
+							<option value="7">7个月</option>
+							<option value="8">8个月</option>
+							<option value="9">9个月</option>
+							<option value="10">10个月</option>
+							<option value="11">11个月</option>
+							<option value="12">12个月</option>
+						</select>
+					</span>
+				</p>
+				<div class="user_body_right_body">
+					<div class="user_body_right_body_head">
+						<div class="user_body_right_body_head_item"><span>序号</span></div>
+						<div class="user_body_right_body_head_item"><span>运营方</span></div>
+						<div class="user_body_right_body_head_item"><span>设备名称</span></div>
+						<div class="user_body_right_body_head_item"><span>使用地址</span></div>
+						<div class="user_body_right_body_head_item"><span>续费时长<br/>(上限12个月)</span></div>
+						<div class="user_body_right_body_head_item"><span>价格</span></div>
+						<div class="user_body_right_body_head_item"><span>服务有效期</span></div>
+						<div class="user_body_right_body_head_item"><span>查看明细</span></div>
+						<div style="clear: both;"></div>
+					</div>
+					<div class="user_body_right_body_foot">
+					</div>
+				</div>
+				<div class="user_body_right_foot">
+					总共选择设备：<span class="user_body_right_foot_num">0</span>台&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					总价格：<span class="user_body_right_foot_pric">0</span>元
+					<button class="user_body_right_foot_btn">续费</button>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="user_body_right_body_foot_fixed">
+		<div class="user_body_right_body_foot_fixed_body">
+			<p>查看设备充值明细!<span class="user_body_right_body_foot_fixed_body_clear">×</span></p>
+			<div class="user_body_right_body_foot_fixed_body_item">
+				<table class="user_body_right_body_foot_fixed_body_table">
+					<thead>
+						<tr>
+							<td>序号</td>
+							<td>运营方</td>
+							<td>设备名称</td>
+							<td>续费时长</td>
+							<td>付款人</td>
+							<td>订单号</td>
+							<td>付款金额</td>
+							<td>充值时间</td>
+							<td>服务有效期(止)</td>
+						</tr>
+					</thead>
+					<tbody class="user_body_right_body_foot_fixed_body_tbody">
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="advertise_board_fixed">
+		<div class="advertise_board_fixed_body">
+			<p>请确认选择的设备无误后支付！<span class="advertise_board_fixed_body_clear">×</span></p>
+			<div class="advertise_board_fixed_body_home">
+				<div class="advertise_board_fixed_body_home_left wx_pay">
+					<img src="image/wx.png"/><span>微信</span>
+				</div>
+				<div class="advertise_board_fixed_body_home_right zfb_pay">
+					<img src="image/zfb.png"/><span>支付宝</span>
+				</div>
+				<div style="clear: both;"></div>
+			</div>
+			<div class="advertise_board_fixed_body_home_ewm">
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/pay_ment.js"></script>
+</body>
+</html>

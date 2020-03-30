@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>货道管理</title>
+	<link rel="icon" type="image/x-icon" href="image/logos.jpg"/>
+	<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	<link rel="stylesheet" type="text/css" href="css/modeltype.css"/>
+	<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="js/wm.js"></script>
+	<script type="text/javascript" src="js/object.js"></script>
+</head>
+<body>
+	<script type="text/javascript" src="js/header.js"></script>
+	<div class="operator_home">
+		<div class="operator_body">
+			<div class="operator_body_left">
+				<ul class="operator_body_left_ul"></ul>
+			</div>
+			<div class="operator_body_right">
+				<div class="operator_body_right_head">
+					<button id="body_creat"><span>+</span>创建</button>
+					<button id="body_submit"><img src="image/bc.png"/>保存</button>					
+					<div class="operator_body_right_head_bottom">
+						<ul class="operator_body_right_head_bottom_ul"></ul>
+					</div>
+				</div>
+				<div class="operator_body_right_foot">
+					<div class="operator_body_right_foot_list">
+						<div class="operator_body_right_foot_item">
+							<p>基本资料</p>
+							<table>
+								<tr>
+									<td>机型编号：<span>*</span></td>
+									<td><input id="model_number" onkeyup="value=value.replace(/[^\w\/\-]/ig,'')" type="text"/></td>
+								</tr>
+								<tr>
+									<td>机型名称：<span>*</span></td>
+									<td><input id="model_name" type="text"/></td>
+								</tr>
+								<tr>
+									<td>英文名称：<span>*</span></td>
+									<td><input id="model_name_en" type="text"/></td>
+								</tr>
+								<tr>
+									<td>服务费用：<span>*</span></td>
+									<td><input id="model_payment" type="number"/></td>
+								</tr>
+								<tr>
+									<td valign="top">货道规格：<span>*</span></td>
+									<td><div id="model_multiple" class="model_multiple"></div></td>
+								</tr>
+								<tr>
+									<td>系统升级：</td>
+									<td><button class="model_update model_btn">版本更新</button><button class="model_push model_btn">系统升级</button></td>
+								</tr>
+							</table>
+						</div>
+						<div class="operator_body_right_foot_item">
+							<p>规格参数</p>
+							<table>
+								<tr>
+									<td>宽度：</td>
+									<td><input id="model_width" type="text"/></td>
+								</tr>
+								<tr>
+									<td>高度：</td>
+									<td><input id="model_height" type="text"/></td>
+								</tr>
+								<tr>
+									<td>深度：</td>
+									<td><input id="model_depth" type="text"/></td>
+								</tr>
+								<tr>
+									<td>重量：</td>
+									<td><input id="model_weight" type="text"/></td>
+								</tr>
+								<tr>
+									<td>工作噪声：</td>
+									<td><input id="model_noise" type="text"/></td>
+								</tr>
+								<tr>
+									<td>额定功率：</td>
+									<td><input id="model_power" type="text"/></td>
+								</tr>
+							</table>
+						</div>
+						<div class="operator_body_right_foot_item">
+							<p>使用环境</p>
+							<table>
+								<tr>
+									<td>环境温度：</td>
+									<td><input id="model_temperature" type="text"/></td>
+								</tr>
+								<tr>
+									<td>环境湿度：</td>
+									<td><input id="model_humidity" type="text"/></td>
+								</tr>
+								<tr>
+									<td>使用环境：</td>
+									<td><input id="model_use" class="model_select" type="text"/><b></b></td>
+								</tr>
+								<tr>
+									<td>工作电压：</td>
+									<td><input id="model_voltage" type="text"/></td>
+								</tr>
+								<tr>
+									<td>保养周期：</td>
+									<td><input id="model_cycle" type="text"/></td>
+								</tr>
+							</table>
+						</div>
+						<div class="operator_body_right_foot_item">
+							<p>配置</p>
+							<table>
+								<tr>
+									<td>工控机：</td>
+									<td><input id="model_computer" type="text"/></td>
+								</tr>
+								<tr>
+									<td>操作系统：</td>
+									<td><input id="model_operatingsys" type="text"/></td>
+								</tr>
+								<tr>
+									<td>路由器：</td>
+									<td><input id="model_router" type="text"/></td>
+								</tr>
+								<tr>
+									<td>显示器1：</td>
+									<td><input id="model_monitorone" type="text"/></td>
+								</tr>
+								<tr>
+									<td>显示器2：</td>
+									<td><input id="model_monitortwo" type="text"/></td>
+								</tr>
+								<tr>
+									<td>扫码器：</td>
+									<td><input id="model_scanner" type="text"/></td>
+								</tr>
+								<tr>
+									<td>人体感应：</td>
+									<td><input id="model_induction" class="model_select" type="text"/><b></b></td>
+								</tr>
+								<tr>
+									<td>杀菌：</td>
+									<td><input id="model_sterilize" type="text"/></td>
+								</tr>
+								<tr>
+									<td>摄像头：</td>
+									<td><input id="model_camera" class="model_select" type="text"/><b></b></td>
+								</tr>
+								<tr>
+									<td>纸硬币器：</td>
+									<td><input id="model_papercoin" class="model_select" type="text"/><b></b></td>
+								</tr>
+								<tr>
+									<td>取货方式：</td>
+									<td><input id="model_method" class="model_select" type="text"/><b></b></td>
+								</tr>
+								<tr>
+									<td>取物口：</td>
+									<td><input id="model_mouth" type="text"/></td>
+								</tr>
+								<tr>
+									<td>制冷类别：</td>
+									<td><input id="model_refrigeration" class="model_select" type="text"/><b></b></td>
+								</tr>
+								<tr>
+									<td>加热类别：</td>
+									<td><input id="model_heating" class="model_select" type="text"/><b></b></td>
+								</tr>
+								<tr>
+									<td valign="top">机型图片：</td>
+									<td><input id="model_image" class="model_image" accept=".jpg,.jpeg,.png,.gif" type="file" /><div id="model_images" class="image_preview"></div>
+										<div id="model_image_view" class="model_image_view">点击选择图片...</div></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="model_update_fixed">
+		<div class="model_update_fixed_body">
+			<p>版本更新<span class="model_update_fixed_clear">×</span></p>
+			<div class="model_update_fixed_home">
+				<table>
+					<tr>
+						<td>客户端文件：</td>
+						<td><input class="model_update_fixed_home_startint model_update_fixed_inta" type="text"/></td>
+						<td>版本号：</td>
+						<td><input class="model_update_fixed_home_endint model_update_fixed_intb" type="text"/></td>
+					</tr>
+					<tr>
+						<td>下位机文件：</td>
+						<td><input class="model_update_fixed_home_startint model_update_fixed_intc" type="text"/></td>
+						<td>版本号：</td>
+						<td><input class="model_update_fixed_home_endint model_update_fixed_intd" type="text"/></td>
+					</tr>
+				</table>
+			</div>
+			<button class="model_update_fixed_btn">保存</button>
+		</div>
+	</div>
+	<div class="model_push_fixed">
+		<div class="model_push_fixed_body">
+			<p>请选择设备<span class="model_push_fixed_clear">×</span><b class="clear"></b></p>
+			<div class="model_push_fixed_home">
+				<table class="model_push_fixed_home_tablea">
+					<tr>
+						<td>客户端：</td>
+						<td style="text-align: left;"><input class="model_push_fixed_home_tablea_int model_push_fixed_home_tablea_inta" type="text" placeholder="请选择客户端"/><b></b></td>
+						<td>下位机：</td>
+						<td style="text-align: left;"><input class="model_push_fixed_home_tablea_int model_push_fixed_home_tablea_intb" type="text" placeholder="请选择下位机"/><b></b></td>
+					</tr>
+				</table>
+			</div>
+			<div class="model_push_fixed_homes" style="height: 370px;">
+				<table class="model_push_fixed_home_tableb">
+					<thead>
+						<tr>
+							<th><input class="model_push_fixed_home_tbody_allbox" type="checkbox"/></th>
+							<th>设备名称</th>
+							<th>设备编号</th>
+							<th>MAC地址</th>
+							<th>运营方</th>
+						</tr>
+					</thead>
+					<tbody class="model_push_fixed_home_tbody">
+					</tbody>
+				</table>
+			</div>
+			<button class="model_push_fixed_btn">升级</button>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/modeltype.js"></script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>广告管理</title>
+	<link rel="icon" type="image/x-icon" href="image/logos.jpg"/>
+	<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	<link rel="stylesheet" type="text/css" href="css/advertise_board.css"/>
+	<link rel="stylesheet" type="text/css" href="lib/import/style.css"/>
+	<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="js/wm.js"></script>
+	<script type="text/javascript" src="js/object.js"></script>
+</head>
+<body>
+	<script type="text/javascript" src="js/header.js"></script>
+	<div class="user_home">
+		<div class="user_head">
+			<table>
+				<tr>
+					<td>区域分组</td>
+					<td><input id="user_head_group" class="user_head_grouping" type="text" readonly="readonly"/><b></b></td>
+				</tr>
+			</table>
+			<table>
+				<tr>
+					<td><button id="user_head_grouping" class="user_head_submit"><img src="image/seachs.png"/>搜索</button></td>
+				</tr>
+			</table>
+		</div>
+		<div class="user_body">
+			<div class="user_body_left">
+			</div>
+			<div class="user_body_right">
+				<div class="user_body_right_foot">
+					<div class="user_body_right_foot_fixed">
+						<table class="user_body_right_foot_fixed_table">
+							<thead class="user_body_right_foot_fixed_thead">
+								<tr>
+									<td>序号</td>
+									<td>类型</td>
+									<td>资源</td>
+									<td>播放时长(S)</td>
+									<td>开始时间</td>
+									<td>结束时间</td>
+									<td>广告位</td>
+									<td>操作</td>
+								</tr>
+							</thead>
+							<tbody class="user_body_right_foot_fixed_tbody">
+								<tr class="user_body_right_foot_fixed_tbody_head">
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="user_body_right_foot_foot_left">
+						<button class="user_body_right_foot_foot_upload"><img src="image/upload.png"/>上传资源</button>
+					</div>
+					<div class="user_body_right_foot_foot">
+						<button class="user_body_right_foot_foot_add"><img src="image/tj.png"/>添加广告</button>
+						<button class="user_body_right_foot_foot_more"><img src="image/fzd.png"/>复制到</button>
+						<button class="user_body_right_foot_foot_sum"><img src="image/bc.png"/>保存</button>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="advertise_board_upload_fixed">
+		<div class="advertise_board_upload_fixed_body">
+			<p>请上传文件 <span class="advertise_board_upload_fixed_body_clear">×</span></p>
+			<div class="advertise_board_upload_fixed_body_home">
+					<table class="advertise_board_upload_fixed_body_home_table">
+					<thead>
+						<tr>
+							<td>链接/URL</td>
+							<td>资源类型</td>
+							<td>广告名称</td>
+							<td>操作</td>
+						</tr>
+					</thead>
+					<tbody class="advertise_board_upload_fixed_body_home_tbody"></tbody>
+				</table>
+				<table class="advertise_board_upload_fixed_body_home_tableS">
+					<thead>
+						<tr>
+							<td>上传文件</td>
+							<td>选择文件类型</td>
+							<td>广告名称</td>
+							<td>操作</td>
+						</tr>
+					</thead>
+					<tbody class="advertise_board_upload_fixed_body_home_tbodyS"></tbody>
+				</table>
+			</div>
+			<button class="advertise_board_upload_fixed_body_home_add">添加</button>
+			<!--<button class="advertise_board_upload_fixed_body_submit">保存</button>-->
+		</div>
+	</div>
+	<div class="advertise_board_fixed">
+		<div class="advertise_board_fixed_body">
+			<p>请选择设备 <span class="advertise_board_fixed_body_clear">×</span></p>
+			<div class="advertise_board_fixed_body_home">
+				<ul class="advertise_board_fixed_body_home_ul"></ul>
+			</div>
+			<button class="advertise_board_fixed_body_submit">应用</button>
+		</div>
+	</div>
+	<div class="advertise_board_view_fixed">
+	</div>
+	<script type="text/javascript" src="js/advertise_board.js"></script>
+	<script type="text/javascript" src="lib/plupload-2.1.2/js/plupload.full.min.js"></script>
+	<script type="text/javascript" src="lib/import/upload.js"></script>
+</body>
+</html>

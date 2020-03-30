@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>库存报表</title>
+	<link rel="icon" type="image/x-icon" href="image/logos.jpg"/>
+	<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	<link rel="stylesheet" type="text/css" href="css/inventory_statistics.css"/>
+	<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="js/wm.js"></script>
+	<script type="text/javascript" src="js/object.js"></script>
+</head>
+<body>
+	<script type="text/javascript" src="js/header.js"></script>
+	<div class="sales_home">
+		<div class="sales_head">
+			<table class="sales_head_table">
+				<tbody classs="sales_head_tbody">
+					<tr>
+						<td>区域分组</td>
+						<td>
+							<input class="device_head_groupingz" id="device_head_groupingz" readonly="readonly" type="text" placeholder="请选择..."/>
+							<b></b>
+						</td>
+						<td>选择设备</td>
+						<td>
+							<input class="device_head_groupingz wm_select" id="device_head_groupingz_mach" readonly="readonly" type="text" placeholder="请选择..."/>
+							<b></b>
+						</td>
+						<!-- <td>过期时间</td>
+						<td>
+							<input class="device_head_groupingz sales_head_date_controller" id="device_head_groupingz_time" readonly="readonly" type="text" placeholder="请选择..."/>
+							<b></b>
+						</td> -->
+						<td></td>
+						<td rowspan="3" style="text-align: left; border-left: 5px rgba(0,0,0,0) solid;"><button class="sales_head_tbody_submit"><img src="image/seachs.png">查看报告</button></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="sales_body">
+			<button class="sales_body_excel_btn"><img src="image/excelDwon.png"/>导出为Excel</button>
+			<button class="sales_body_print_btn"><img src="image/dy.png"/>打印</button>
+			<table class="sales_body_table" id="sales_body_table">
+				<thead class="sales_body_thead">
+					<tr>
+						<td class="sales_body_thead_title" colspan="5"></td>
+						<td class="sales_body_thead_date" colspan="3"></td>
+					</tr>
+					<tr>
+						<th>商品名称</th>
+						<th>配置数量</th>
+						<th>库存数量</th>
+						<th>售卖数量</th>
+						<th>过期数量</th>
+						<th>过期位置</th>
+						<th>现有数量</th>
+						<th>补入数量</th>
+					</tr>
+				</thead>
+				<tbody class="sales_body_table_tbody">
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/inventory_statistics.js"></script>
+</body>
+</html>

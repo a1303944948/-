@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>销售分析</title>
+	<link rel="icon" type="image/x-icon" href="image/logos.jpg"/>
+	<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	<link rel="stylesheet" type="text/css" href="css/sales_report.css"/>
+	<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="js/wm.js"></script>
+	<script type="text/javascript" src="js/object.js"></script>
+</head>
+<body>
+	<script type="text/javascript" src="js/header.js"></script>
+	<div class="sales_home">
+		<div class="sales_head">
+			<table class="sales_head_table">
+				<tbody classs="sales_head_tbody">
+					<tr>
+						<td>区域分组</td>
+						<td>
+							<input class="device_head_groupingz" type="text" placeholder="请选择..."/>
+							<b></b>
+						</td>
+						<td>统计方式<span>*</span></td>
+						<td>
+							<input class="sales_head_selects statisticalMethods" type="text" placeholder="请选择..." readonly="readonly"/>
+							<b></b>
+						</td>
+						<td>时间选择<span>*</span></td>
+						<td>
+							<input class="sales_head_selects" type="text" placeholder="请选择..." readonly="readonly"/>
+							<b></b>
+						</td>
+						<td rowspan="3" style="text-align: left; border-left: 5px rgba(0,0,0,0) solid;"><button class="sales_head_tbody_submit"><img src="image/seachs.png">查看报告</button></td>
+					</tr>
+					<tr>
+						<!-- <td>售货机</td>
+						<td><input class="sales_head_select" type="text" placeholder="请选择..."/><b></b></td> -->
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td class="sales_head_date_start">开始日期<span>*</span></td>
+						<td class="sales_head_date_start"><input class="sales_head_date_controller" type="text" readonly="readonly"/><img src="image/dates.png"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td class="sales_head_date_end">结束日期<span>*</span></td>
+						<td class="sales_head_date_end"><input class="sales_head_date_controller" type="text" readonly="readonly"/><img src="image/dates.png"/></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="sales_body">
+			<button class="sales_body_excel_btn"><img src="image/excelDwon.png"/>导出为Excel</button>
+			<table class="sales_body_table" id="sales_body_table">
+				<tr>
+					<th id="sales_body_table_tha">设备名称</th>
+					<th id="sales_body_table_thb">设备编号</th>
+					<th>销售数量</th>
+					<th>销售总金额</th>
+					<th>微信</th>
+					<th>支付宝</th>
+					<th>银商</th>
+					<th>工行</th>
+					<th>现金</th>
+					<th>刷卡</th>
+					<th>自定义</th>
+					<th>其他</th>
+				</tr>
+				<tbody class="sales_body_table_tbody">
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/sales_report.js"></script>
+</body>
+</html>

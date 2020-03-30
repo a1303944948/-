@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>售货机状态</title>
+	<link rel="icon" type="image/x-icon" href="image/logos.jpg"/>
+	<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	<link rel="stylesheet" type="text/css" href="css/machine_status.css"/>
+	<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="js/wm.js"></script>
+	<script type="text/javascript" src="js/object.js"></script>
+</head>
+<body>
+	<script type="text/javascript" src="js/header.js"></script>
+	<div class="machine_home">
+		<div class="machine_home_head">
+			<table class="machine_home_head_table machine_home_head_tablea">
+				<tr>
+					<td>区域分组</td>
+					<td>
+						<input type="text" class="device_head_groupingz" placeholder="请选择..." readonly="readonly">
+						<b></b>
+					</td>
+				</tr>
+			</table>
+			<table class="machine_home_head_table machine_home_head_tablec">
+				<tr>
+					<td>机器型号</td>
+					<td class="machine_home_head_table_list"><input class="machine_home_head_table_model" type="text" placeholder="请选择..." readonly="readonly"><b></b></td>
+				</tr>
+			</table>
+			<table class="machine_home_head_table machine_home_head_tableb">
+				<!-- <tr>
+					<td>售货机编码</td>
+					<td><input type="text" placeholder="请输入售货机编码"></td>
+				</tr> -->
+				<tr>
+					<td>售货机状态</td>
+					<td class="machine_home_head_table_list"><input class="machine_home_head_table_status" type="text" placeholder="请选择..." readonly="readonly"><b></b></td>
+				</tr>
+			</table>
+			<table class="machine_home_head_table machine_home_head_tablec">
+				<tr>
+					<td rowspan="2"><button class="machine_home_head_submit"><img src="image/seachs.png">查看状态</button></td>
+					<td></td>
+				</tr>
+			</table>
+		</div>
+		<div class="machine_home_foot">
+			<p>售货机总数：<span id="machine_home_foot_total">0</span></p>
+			<table class="machine_home_foot_header">
+				<tr>
+					<td class="machine_home_foot_header_item">售货机名称</td>
+					<td class="machine_home_foot_header_item">售货机编号</td>
+					<td class="machine_home_foot_header_item">机型</td>
+					<td class="machine_home_foot_header_item">设备状态</td>
+					<td class="machine_home_foot_header_item">销售状态</td>
+					<td class="machine_home_foot_header_item">温度</td>
+					<td class="machine_home_foot_header_item">信号强度</td>
+					<td class="machine_home_foot_header_item">脱机12小时</td>
+					<td class="machine_home_foot_header_item">脱机24小时</td>
+					<td class="machine_home_foot_header_item">最后交易状态</td>
+					<td class="machine_home_foot_header_item">12小时未交易</td>
+					<td class="machine_home_foot_header_item">24小时未交易</td>
+					<td class="machine_home_foot_header_item">现下位机版本/要求下位机版本</td>
+					<td class="machine_home_foot_header_item">现客户端版本/要求客户端版本</td>
+					<td class="clear"></td>
+				</tr>
+			</table>
+			<div class="machine_home_foot_body">
+				<div class="machine_home_foot_body_table"></div>
+			</div>
+			<!-- <div id="page_mark" class="wm_pagemark" data-length="[0,1,10]" data-pagetype='1'></div> -->
+		</div>
+	</div>
+	<script type="text/javascript" src="js/machine_status.js"></script>
+</body>
+</html>

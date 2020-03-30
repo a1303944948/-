@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>公告管理</title>
+	<link rel="icon" type="image/x-icon" href="image/logos.jpg"/>
+	<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	<link rel="stylesheet" type="text/css" href="css/notice_board.css"/>
+	<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="js/wm.js"></script>
+	<script type="text/javascript" src="js/object.js"></script>
+</head>
+<body>
+	<script type="text/javascript" src="js/header.js"></script>
+	<div class="operator_home">
+		<div class="operator_body">
+			<div class="operator_body_left">
+				<ul class="operator_body_left_ul"></ul>
+			</div>
+			<div class="operator_body_right">
+				<div class="operator_body_right_head">
+					<button id="body_creat"><span>+</span>创建</button>
+					<button id="body_submit"><img src="image/bc.png"/>保存</button>					
+					<div class="operator_body_right_head_bottom">
+						<ul class="operator_body_right_head_bottom_ul"></ul>
+					</div>
+				</div>
+				<div class="operator_body_right_foot">
+					<div class="operator_body_right_foot_list">
+						<div class="operator_body_right_foot_item">
+							<p>公告管理</p>
+							<table>
+								<tr>
+									<td>公告标题：<span>*</span></td>
+									<td><input id="operator_id" type="text"/></td>
+								</tr>
+								<tr>
+									<td>公告正文：<span>*</span></td>
+									<td><textarea id="operator_name"></textarea></td>
+								</tr>
+								<tr>
+									<td>公告类型：<span>*</span></td>
+									<td><input id="normal_notice" type='radio' name='notice' checked/>常规通告&nbsp;&nbsp;&nbsp;<input id="alert_notice" type='radio' name='notice'/>弹窗通告</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/notice_board.js"></script>
+</body>
+</html>
