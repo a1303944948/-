@@ -73,55 +73,55 @@ function start(){
   }
 
   //渲染点击事件
-  var statisticalMethods = c('statisticalMethods')[0];
-  var timeIntervalUnita = c('timeIntervalUnita')[0];
-  var timeIntervalUnitb = c('timeIntervalUnitb')[0];
-  for(var i = 0; i < selects.length; i++){
-    selects_ul[i].style.left = selects[i].offsetParent.offsetLeft + 5 + 'px';
-    selects_ul[i].style.top = selects[i].offsetParent.offsetTop + selects[i].offsetParent.clientHeight - 4 + 'px';
-    (function(q){
-      //点击input框时的显示隐藏
-      selects[q].onfocus = function(){
-        selects_ul[q].style.display = 'inline-block';
-      }
-      selects[q].onblur = function(){
-        //交易类型的两种标签
-        if(this.value == '销售'){
-            timeIntervalUnita.style.visibility = 'visible';
-            timeIntervalUnitb.style.visibility = 'hidden';
-        }
-        if(this.value == '退款'){
-            timeIntervalUnita.style.visibility = 'hidden';
-            timeIntervalUnitb.style.visibility = 'visible';
-        }
-        selects_ul[q].style.display = 'none';
-      }
-      //点击ul时的显示隐藏
-      selects[q].parentNode.children[1].onfocus = function(){
-        selects_ul[q].style.display = 'inline-block';
-      }
-      selects[q].parentNode.children[1].onblur = function(){
-        selects_ul[q].style.display = 'none';
-      }
-    })(i)
-    //将ul中选中的数据渲染到input框中
-    for(var j = 0; j < selects_ul[i].children.length; j++){
-      if(j%2 == 0){
-        selects_ul[i].children[j].onmousedown = function(){
-          selects[this.offsetParent.dataset.list].value = this.innerHTML;
-        }
-      };
-    }
+  // var statisticalMethods = c('statisticalMethods')[0];
+  // var timeIntervalUnita = c('timeIntervalUnita')[0];
+  // var timeIntervalUnitb = c('timeIntervalUnitb')[0];
+  // for(var i = 0; i < selects.length; i++){
+  //   selects_ul[i].style.left = selects[i].offsetParent.offsetLeft + 5 + 'px';
+  //   selects_ul[i].style.top = selects[i].offsetParent.offsetTop + selects[i].offsetParent.clientHeight - 4 + 'px';
+  //   (function(q){
+  //     //点击input框时的显示隐藏
+  //     selects[q].onfocus = function(){
+  //       selects_ul[q].style.display = 'inline-block';
+  //     }
+  //     selects[q].onblur = function(){
+  //       //交易类型的两种标签
+  //       if(this.value == '销售'){
+  //           timeIntervalUnita.style.visibility = 'visible';
+  //           timeIntervalUnitb.style.visibility = 'hidden';
+  //       }
+  //       if(this.value == '退款'){
+  //           timeIntervalUnita.style.visibility = 'hidden';
+  //           timeIntervalUnitb.style.visibility = 'visible';
+  //       }
+  //       selects_ul[q].style.display = 'none';
+  //     }
+  //     //点击ul时的显示隐藏
+  //     selects[q].parentNode.children[1].onfocus = function(){
+  //       selects_ul[q].style.display = 'inline-block';
+  //     }
+  //     selects[q].parentNode.children[1].onblur = function(){
+  //       selects_ul[q].style.display = 'none';
+  //     }
+  //   })(i)
+  //   //将ul中选中的数据渲染到input框中
+  //   for(var j = 0; j < selects_ul[i].children.length; j++){
+  //     if(j%2 == 0){
+  //       selects_ul[i].children[j].onmousedown = function(){
+  //         selects[this.offsetParent.dataset.list].value = this.innerHTML;
+  //       }
+  //     };
+  //   }
 
-    //给下拉框元素默认选中第一个值
-    selects[i].value = selects_ul[i].children[0].innerHTML;
-  }
+  //   //给下拉框元素默认选中第一个值
+  //   selects[i].value = selects_ul[i].children[0].innerHTML;
+  // }
 
 
 
   //第二种类渲染
   //给下拉框元素创建下拉内容
-  $.ajax({
+  /*$.ajax({
     url: URLX + '/jf/com/report/dealtype.json',
     type: 'post',
     data: {},
@@ -134,9 +134,9 @@ function start(){
         LISTS.unshift('');
       }
     }
-  })
+  })*/
 
-  var selectz = c('sales_head_selectz');  //第二种类input下拉框(携带value值的下拉框)
+  /*var selectz = c('sales_head_selectz');  //第二种类input下拉框(携带value值的下拉框)
   var selects_ulz = c('sales_head_selects_ulz');
 
   for(var i = 0; i < selectz.length; i++){
@@ -152,9 +152,9 @@ function start(){
       ul.appendChild(br);
     }
     sales_head.appendChild(ul);
-  }
+  }*/
 
-  //渲染点击事件
+  /*//渲染点击事件
   for(var i = 0; i < selectz.length; i++){
 
     //给下拉框元素默认选中第一个值
@@ -205,7 +205,7 @@ function start(){
         }
       };
     }
-  }
+  }*/
 
   //点击页面任意处关闭下拉框
   /*document.onclick = function(){
@@ -234,21 +234,16 @@ function selesForm(){
     var salesBody = c('sales_body')[0];                         //底部渲染数据部分
 
     if(deviceHeadGroupingz.name == ""){
-      alern('设备不能为空！');
+      alern('请先选择设备！');
       return false;
     }
     salesBody.style.display = 'block';
-    $.ajax({
-      type: 'post',
-      url: URLX + '/jf/com/inventory/report.json',
-      data: {
-        machCode: deviceHeadGroupingz.name,
-        mark: 'ASC',
-      },
-      dataType: 'json',
+    ajax({
+      type: 'get',
+      url: URLS + '/stock/'+deviceHeadGroupingz.name+'/report?orderBy=ASC',
       success: function(data){
         console.log(data);
-        tableRendering(data.reportEntity);
+        tableRendering(data.resultObject);
       }
     })
   }
@@ -259,36 +254,26 @@ function selesForm(){
     if(c('sales_body_table_cargo')[0].children[0].innerHTML == '↓' && count == 1){
       count = 0;
       c('sales_body_table_cargo')[0].children[0].innerHTML = '↑';
-      $.ajax({
-        type: 'post',
-        url: URLX + '/jf/com/inventory/report.json',
-        data: {
-          machCode: deviceHeadGroupingz.name,
-          mark: 'ASC',
-        },
-        dataType: 'json',
+      ajax({
+        type: 'get',
+        url: URLS + '/stock/'+deviceHeadGroupingz.name+'/report?orderBy=ASC',
         success: function(data){
           count = 1;
           console.log(data);
-          tableRendering(data.reportEntity);
+          tableRendering(data.resultObject);
         }
       })
     }
     if(c('sales_body_table_cargo')[0].children[0].innerHTML == '↑' && count == 1){
       count = 0;
       c('sales_body_table_cargo')[0].children[0].innerHTML = '↓';
-      $.ajax({
-        type: 'post',
-        url: URLX + '/jf/com/inventory/report.json',
-        data: {
-          machCode: deviceHeadGroupingz.name,
-          mark: 'DESC',
-        },
-        dataType: 'json',
+      ajax({
+        type: 'get',
+        url: URLS + '/stock/'+deviceHeadGroupingz.name+'/report?orderBy=DESC',
         success: function(data){
           count = 1;
           console.log(data);
-          tableRendering(data.reportEntity);
+          tableRendering(data.resultObject);
         }
       })
     }
@@ -301,76 +286,72 @@ selesForm();
 //底部table渲染
 function tableRendering(allDate){
   var table = c('sales_body_table_tbody')[0];
+  var numTotol = 0; //商品总计
   table.innerHTML = '';
+  log(allDate);
   for(var i = 0; i < allDate.length; i++){
     var tr = creat('tr');
-    var td1 = creat('td');
-    var td2 = creat('td');
-    var td3 = creat('td');
-    var td4 = creat('td');
-    var td5 = creat('td');
-    var td6 = creat('td');
-    var td7 = creat('td');
-    var td8 = creat('td');
-    var td9 = creat('td');
-    td1.innerHTML = allDate[i].machName;
-    td2.innerHTML = allDate[i].machCode;
-    td3.innerHTML = allDate[i].cargo;
-    td4.innerHTML = allDate[i].cargoType;
-    td5.innerHTML = allDate[i].waresName;
-    td6.innerHTML = allDate[i].waresId;
-    td7.innerHTML = allDate[i].number;
-    td8.innerHTML = allDate[i].waresPrice;
-    td9.innerHTML = worldDateTime(new Date(allDate[i].addTime).getTime());
-    tr.appendChild(td1);
-    tr.appendChild(td2);
-    tr.appendChild(td3);
-    tr.appendChild(td4);
-    tr.appendChild(td5);
-    tr.appendChild(td6);
-    tr.appendChild(td7);
-    tr.appendChild(td8);
-    tr.appendChild(td9);
+    var td = creats(7,'td');
+    td[0].innerHTML = allDate[i].machName;
+    td[1].innerHTML = allDate[i].deviceId;
+    td[2].innerHTML = allDate[i].goodsLane;
+    td[3].innerHTML = allDate[i].itemName;
+    td[4].innerHTML = allDate[i].itemId;
+    td[5].innerHTML = allDate[i].stockNum;
+    td[6].innerHTML = allDate[i].subOrder;
+    tr.setAppend(td)
     table.appendChild(tr);
+    numTotol += allDate[i].stockNum;
   }
+  var tr = creat('tr');
+  var td = creats(2,'td');
+  td[0].innerHTML = '剩余商品数量总计';
+  td[0].colSpan = 2;
+  td[0].style.backgroundColor = '#FCFBAA';
+  td[1].innerHTML = numTotol;
+  td[1].colSpan = 5;
+  td[1].style.backgroundColor = '#FCFBAA';
+  tr.setAppend(td)
+  table.appendChild(tr);
 
-  var salesBodyTableTbodyBtn = c('sales_body_table_tbody_btn');
-  for(var i = 0; i < salesBodyTableTbodyBtn.length; i++){
-    (function(q){
-      salesBodyTableTbodyBtn[q].onclick = function(){
-        var Type = this.parentNode.parentNode.dataset.type;
-        if(Type == "wechat"){
 
-        }else if(Type == "alipay"){
+  // var salesBodyTableTbodyBtn = c('sales_body_table_tbody_btn');
+  // for(var i = 0; i < salesBodyTableTbodyBtn.length; i++){
+  //   (function(q){
+  //     salesBodyTableTbodyBtn[q].onclick = function(){
+  //       var Type = this.parentNode.parentNode.dataset.type;
+  //       if(Type == "wechat"){
 
-        }else if(Type == "SilverMerchant"){
+  //       }else if(Type == "alipay"){
+
+  //       }else if(Type == "SilverMerchant"){
           
-        }else if(Type == "icbc"){
+  //       }else if(Type == "icbc"){
           
-        }else{
-          alern('该交易类型不支持退款！');
-          return false;
-        }
-        d('refund_mark').value = "";
-        c('refund_fixed')[0].style.display = 'block';
-        var refundOrderId = d('refund_orderId');
-        var refundComm = d('refund_comm');
-        var refundTime = d('refund_time');
-        var refundMoney = d('refund_money');
-        var refundStatus = d('refund_status');
-        var refundType = d('refund_type');
-        var refundConsumer = d('refund_consumer');
-        refundOrderId.innerHTML = this.parentNode.parentNode.dataset.orderid;
-        refundOrderId.setAttribute('data-value',Type);
-        refundComm.innerHTML = this.parentNode.parentNode.dataset.comm;
-        refundTime.innerHTML = this.parentNode.parentNode.dataset.time;
-        refundMoney.innerHTML = this.parentNode.parentNode.dataset.money;
-        refundStatus.innerHTML = this.parentNode.parentNode.dataset.status;
-        refundType.innerHTML = this.parentNode.parentNode.dataset.mark;
-        refundConsumer.innerHTML = this.parentNode.parentNode.dataset.consumer;
-      }
-    })(i)
-  }
+  //       }else{
+  //         alern('该交易类型不支持退款！');
+  //         return false;
+  //       }
+  //       d('refund_mark').value = "";
+  //       c('refund_fixed')[0].style.display = 'block';
+  //       var refundOrderId = d('refund_orderId');
+  //       var refundComm = d('refund_comm');
+  //       var refundTime = d('refund_time');
+  //       var refundMoney = d('refund_money');
+  //       var refundStatus = d('refund_status');
+  //       var refundType = d('refund_type');
+  //       var refundConsumer = d('refund_consumer');
+  //       refundOrderId.innerHTML = this.parentNode.parentNode.dataset.orderid;
+  //       refundOrderId.setAttribute('data-value',Type);
+  //       refundComm.innerHTML = this.parentNode.parentNode.dataset.comm;
+  //       refundTime.innerHTML = this.parentNode.parentNode.dataset.time;
+  //       refundMoney.innerHTML = this.parentNode.parentNode.dataset.money;
+  //       refundStatus.innerHTML = this.parentNode.parentNode.dataset.status;
+  //       refundType.innerHTML = this.parentNode.parentNode.dataset.mark;
+  //       refundConsumer.innerHTML = this.parentNode.parentNode.dataset.consumer;
+  //     }
+  //   })(i)
+  // }
 }
 
 function tableName(tableNmaeId,excelTable){

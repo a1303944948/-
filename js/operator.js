@@ -152,11 +152,10 @@ function start(){
 		}
 	}*/
 	//监听复选框事件
-	let wechatPayOn = new OnChange('wechat_pay');
+	let wechatPayOn = new OnChange('elem_enable');
 	let alipayPayOn = new OnChange('alipay_pay');
 	let silverPayOn = new OnChange('silver_pay');
-	let icbcPayOn = new OnChange('icbc_pay');
-	d('wechat_pay').onchange = function(){
+	d('elem_enable').onchange = function(){
 		if(this.checked){
 			wechatPayOn.yes('wechat_pay');
 		}else{
@@ -177,13 +176,6 @@ function start(){
 			silverPayOn.no('silver_pay');
 		}
 	};
-	d('icbc_pay').onchange = function(){
-		if(this.checked){
-			icbcPayOn.yes('icbc_pay');
-		}else{
-			icbcPayOn.no('icbc_pay');
-		}
-	}
 }
 function OnChange(String){
 	this.yes = function(value){
@@ -240,182 +232,64 @@ function startbody(l){
 					orightFootItem[j].style.display = 'block';
 				}
 				//详细信息内容渲染
- 				$.ajax({
-					type: 'post',
-					url: URLZ + '/operate/getOperate.json',
-					data: {
-						operatorID: thatName,
-					},
+ 				ajax({
+					type: 'get',
+					url: URLS + '/store/'+ thatName +'/search',
 					dataType: 'json',
 					success: function(data){
-						var detailedOperatorId = d('detailed_operator_id');							//运营方ID
-						var detailedOperatorNumbering = d('detailed_operator_numbering');			//运营方编号
-						var detailedOperatorCompanyname = d('detailed_operator_companyname');		//公司名称
-						var detailedOperatorCompanyaddress = d('detailed_operator_companyaddress');	//公司地址
-						var detailedOperatorPrincipal = d('detailed_operator_principal');			//运营方负责人
+						log(data);
+						//详细信息渲染
+						var detailedOperatorId = d('detailed_operator_id');							//店铺ID
+						var detailedOperatorCompanyname = d('detailed_operator_name');				//店铺名称
+						var detailedOperatorCompanyaddress = d('detailed_operator_address');		//店铺地址
+						var detailedOperatorPrincipal = d('detailed_operator_principal');			//店铺负责人
 						var detailedOperatorPhone = d('detailed_operator_phone');					//联系手机
-						var detailedOperatorSparephone = d('detailed_operator_sparephone');			//备用手机
-						var detailedOperatorEmail = d('detailed_operator_email');					//Email邮箱
 						var detailedOperatorStop = d('detailed_operator_stop');						//是否停用
-						var detailedOperatorIsFree = d('detailed_operator_isFree');					//是否免费
-						detailedOperatorId.value = data.operatorID;
+						detailedOperatorId.value = data.resultObject.id;
 						detailedOperatorId.disabled = "disabled";
-						detailedOperatorNumbering.value = data.operator;
-						detailedOperatorCompanyname.value = data.company;
-						detailedOperatorCompanyaddress.value = data.location;
-						detailedOperatorPrincipal.value = data.principal;
-						detailedOperatorPhone.value = data.phone1;
-						detailedOperatorSparephone.value = data.phone2;
-						detailedOperatorEmail.value = data.email;
-						if(data.mark == '0'){
-							detailedOperatorStop.checked = "checked";
+						detailedOperatorCompanyname.value = data.resultObject.storeName;
+						detailedOperatorCompanyaddress.value = data.resultObject.storeAddress;
+						detailedOperatorPrincipal.value = data.resultObject.storePrincipal;
+						detailedOperatorPhone.value = data.resultObject.storeTel;
+						data.resultObject.storedeleted == 0?detailedOperatorStop.checked = "checked":detailedOperatorStop.checked = false;
+						count = 1;
+
+						//平台关联饿了么信息渲染
+						var elemEnable = d('elem_enable');						//停用启用
+						var elemStoreId = d('elem_store_id');					//平台ID
+						var elemStoreKey = d('elem_store_key');					//应用Key
+						var elemStoreSecret = d('elem_store_secret');			//应用Secret
+						var elemStoreRedirecturl = d('elem_store_redirecturl');	//回调URL
+						var elemStoreUrl = d('elem_store_url');					//店铺URL
+						var elemStoreUser = d('elem_store_user');				//店铺账号
+						var elemStorePass = d('elem_store_pass');				//店铺密码
+						var elemStorePushUrl = d('elem_store_pushUrl');			//推送地址
+						if(data.resultObject.elmPlatform){
+							elemStoreId.name = data.resultObject.id;
+							elemStoreId.value = data.resultObject.elmPlatform.storeId;
+							data.resultObject.elmPlatform.platformdeleted == 1?elemEnable.checked = "checked":elemEnable.checked = false;
+							elemStoreKey.value = data.resultObject.elmPlatform.storeAppKey;
+							elemStoreSecret.value = data.resultObject.elmPlatform.storeAppSecret;
+							elemStoreRedirecturl.value = data.resultObject.elmPlatform.redirectUrl;
+							elemStoreUrl.value = data.resultObject.elmPlatform.storeUrl;
+							elemStoreUser.value = data.resultObject.elmPlatform.storeAccountNumber;
+							elemStorePass.value = data.resultObject.elmPlatform.storePass;
+							elemStorePushUrl.value = data.resultObject.elmPlatform.pushUrl;
 						}else{
-							detailedOperatorStop.checked = false;
-						}
-						if(data.isFree == 1){
-							detailedOperatorIsFree.checked = "checked";
-						}else{
-							detailedOperatorIsFree.checked = false;
+							elemStoreId.name = data.resultObject.id;
+							elemStoreId.value = '';
+							elemEnable.checked = false;
+							elemStoreKey.value = '';
+							elemStoreSecret.value = '';
+							elemStoreRedirecturl.value = '';
+							elemStoreUrl.value = '';
+							elemStoreUser.value = '';
+							elemStorePass.value = '';
+							elemStorePushUrl.value = '';
 						}
 					}
 				})
-				//账户配置内容渲染
-				$.ajax({
-					type: 'post',
-					url: URLS + '/paycenter/getPaycenter.json',
-					data: {
-						operatorID: thatName,
-					},
-					dataType: 'json',
-					success: function(data){
-						if(JSON.stringify(data) == "{}"){
-							var wechatPay = d('wechat_pay');			//微信支付
-							var wechatPass = d('wechat_pass');			//微信密钥
-							var wechatId = d('wechat_id');				//微信公众号id
-							var wechatSecret = d('wechat_secret');		//微信公众号secret
-							var wecahtShanghu = d('wecaht_shanghu');		//微信商户号
-							var wecahtFile = d('wecahtFile');				//微信商户号
-							var wecahtFileValue = d('wecahtFile_value');	//微信商户号
-							wechatPay.checked = false;
-							wechatPass.value = "";
-							wechatId.value = "";
-							wechatSecret.value = "";
-							wecahtShanghu.value = "";
-							readers = "";
-							wecahtFileValue.innerHTML = "";
-
-							var alipayPay = d('alipay_pay');			//支付宝支付
-							var alipayId = d('alipay_id');				//支付宝应用id
-							var alipayPrivpay = d('alipay_privpay');		//支付宝私钥
-							var alipayPublicpay = d('alipay_publicpay');	//支付宝公钥
-							alipayPay.checked = false;
-							alipayId.value = "";
-							alipayPrivpay.value = "";
-							alipayPublicpay.value = "";
-
-							var silverPay = d('silver_pay');			//银商支付
-							var silverShanghu = d('silver_shanghu');		//银商平台商户号
-							var silverEnd = d('silver_end');				//银商终端号
-							var silverJshanghu = d('silver_jshanghu');	//银商机构商户号
-							var silverNews = d('silver_news');			//银商消息来源
-							var silverNumber = d('silver_number');		//银商来源编号
-							var silverTest = d('silver_test');			//银商测试环境MD5
-							silverPay.checked = false;
-							silverShanghu.value = "";
-							silverEnd.value = "";
-							silverJshanghu.value = "";
-							silverNews.value = "";
-							silverNumber.value = "";
-							silverTest.value = "";
-
-							var icbcPay = d('icbc_pay');				//工行支付
-							var icbcPublicpay = d('icbc_publicpay');		//工行网关公钥
-							var icbcAppid = d('icbc_appid');				//工行appid
-							var icbcPrivpay = d('icbc_privpay');			//工行私钥
-							var icbcSpecial = d('icbc_special');			//工行商户档案
-							var icbcLife = d('icbc_life');				//工行e生活商户档案
-							icbcPay.checked = false;
-							icbcPublicpay.value = "";
-							icbcAppid.value = "";
-							icbcPrivpay.value = "";
-							icbcSpecial.value = "";
-							icbcLife.value = "";
-						}else{
-							var wechatPay = d('wechat_pay');			//微信支付
-							var wechatPass = d('wechat_pass');			//微信密钥
-							var wechatId = d('wechat_id');				//微信公众号id
-							var wechatSecret = d('wechat_secret');		//微信公众号secret
-							var wecahtShanghu = d('wecaht_shanghu');		//微信商户号
-							var wecahtFile = d('wecahtFile');				//微信商户号
-							var wecahtFileValue = d('wecahtFile_value');	//微信商户号
-							if(data.wxMark == 0){
-								wechatPay.checked = false;
-							}else{
-								wechatPay.checked = 'checked';
-							}
-							wechatPass.value = data.pass;
-							wechatId.value = data.user;
-							wechatSecret.value = data.wxAPPSecret;
-							wecahtShanghu.value = data.mch_id;
-							readers = data.fileRealName;
-							wecahtFileValue.innerHTML = data.fileRealName;
-
-							var alipayPay = d('alipay_pay');			//支付宝支付
-							var alipayId = d('alipay_id');				//支付宝应用id
-							var alipayPrivpay = d('alipay_privpay');		//支付宝私钥
-							var alipayPublicpay = d('alipay_publicpay');	//支付宝公钥
-							if(data.zfMark == 0){
-								alipayPay.checked = false;
-							}else{
-								alipayPay.checked = 'checked';
-							}
-							alipayId.value = data.appid;
-							alipayPrivpay.value = data.sdkpass;
-							alipayPublicpay.value = data.sdkuser;
-
-							var silverPay = d('silver_pay');			//银商支付
-							var silverShanghu = d('silver_shanghu');		//银商平台商户号
-							var silverEnd = d('silver_end');				//银商终端号
-							var silverJshanghu = d('silver_jshanghu');	//银商机构商户号
-							var silverNews = d('silver_news');			//银商消息来源
-							var silverNumber = d('silver_number');		//银商来源编号
-							var silverTest = d('silver_test');			//银商测试环境MD5
-							if(data.ysMark == 0){
-								silverPay.checked = false;
-							}else{
-								silverPay.checked = 'checked';
-							}
-							silverShanghu.value = data.silver_merchant;
-							silverEnd.value = data.silver_end;
-							silverJshanghu.value = data.silver_mechanism;
-							silverNews.value = data.silver_news;
-							silverNumber.value = data.silver_number;
-							silverTest.value = data.silver_md5;
-
-							var icbcPay = d('icbc_pay');				//工行支付
-							var icbcPublicpay = d('icbc_publicpay');		//工行网关公钥
-							var icbcAppid = d('icbc_appid');				//工行appid
-							var icbcPrivpay = d('icbc_privpay');			//工行私钥
-							var icbcSpecial = d('icbc_special');			//工行商户档案
-							var icbcLife = d('icbc_life');				//工行e生活商户档案
-							if(data.ghMark == 0){
-								icbcPay.checked = false;
-							}else{
-								icbcPay.checked = 'checked';
-							}
-							icbcPublicpay.value = data.apigw_public_key;
-							icbcAppid.value = data.app_id;
-							icbcPrivpay.value = data.my_private_key;
-							icbcSpecial.value = data.merId;
-							icbcLife.value = data.storecode;
-						}
-						new OnChange('wechat_pay');
-						new OnChange('alipay_pay');
-						new OnChange('silver_pay');
-						new OnChange('icbc_pay');
-					}
-				})
-				//开票资料内容渲染
+				/*//开票资料内容渲染
 				$.ajax({
 					type: 'post',
 					url: URLS + '/invoice/getInvoice.json',
@@ -439,7 +313,7 @@ function startbody(l){
 							d('operator_account').value = "";	//银行账号
 						}
 					}
-				})
+				})*/
 			}
 		})(i)
 	}
@@ -462,151 +336,11 @@ c('operator_home_head_submit')[0].onclick = function(){
 	}
 };
 
-var wecahtFile = d('wecahtFile');//获取上传的文件内容
-var readers;
-wecahtFile.onchange = function(){
-	var reader = new FileReader();
-	reader.readAsDataURL(this.files[0]);
-	reader.onload=function(oFREvent){
-		readers = oFREvent.target.result;
-		var wecahtFileValue = d('wecahtFile_value');
-		wecahtFileValue.innerHTML = wecahtFile.value;
-	}
-};
-
-//判断运营方ID是否重复
-d('detailed_operator_id').onchange = function(){
-	for(var i = 0; i < DATALEFT.length; i++){
-		if(this.value == DATALEFT[i].operatorID){
-			alern('运营方代码已存在');
-			this.value = "";
-			return false;
-		}
-	}
-}
-
-/*支付测试事件（提供给运营方进行便捷检测支付配置是否完善所用）*/
-//微信支付测试
-d('wechatTest').onclick = function(){
-	var ErrorString = "";
-	var wechatObject = {};
-	var detailedOperatorId = d('detailed_operator_id').value;	//运营方ID
-	var wechatPass = d('wechat_pass').value;					//微信密钥
-	var wechatId = d('wechat_id').value;						//微信公众号id
-	var wechatSecret = d('wechat_secret').value;				//微信公众号secret
-	var wecahtShanghu = d('wecaht_shanghu').value;				//微信商户号
-	var wecahtFileValue = d('wecahtFile_value');				//检测p12文件是否存在
-	wechatObject.operatorID = detailedOperatorId;
-	wechatObject.pass = wechatPass;
-	wechatObject.user = wechatId;
-	wechatObject.wxAPPSecret = wechatSecret;
-	wechatObject.mch_id = wecahtShanghu;
-	if(detailedOperatorId === ''){
-		ErrorString += "运营方ID不能为空<br/>";
-	}
-	if(wechatPass === ''){
-		ErrorString += "微信API密钥不能为空<br/>";
-	}
-	if(wechatId === ''){
-		ErrorString += "微信公众号id不能为空</br>";
-	}
-	if(wechatSecret === ''){
-		ErrorString += "微信APPSecret不能为空</br>";
-	}
-	if(wecahtShanghu === ''){
-		ErrorString += "微信商户号不能为空</br>";
-	}
-	if(wecahtFileValue === ''){
-		ErrorString += "微信Pcks12证书不能为空</br>";
-	}
-	if(ErrorString !== ""){
-		alern(ErrorString);
-		return false;
-	}
-	$.ajax({
-		type: 'post',
-		url: URLS + '/paycenter/test/wechat/qrcode.json',
-		data: {
-			obj: JSON.stringify(wechatObject),
-		},
-		success: function(data){
-			if(data.code == 10001){
-				c("advertise_board_fixed_body_home_ewm")[0].innerHTML = "";
-				var qrcode = new QRCode(c("advertise_board_fixed_body_home_ewm")[0], {
-		            width : 220,//设置宽高
-		            height : 220,
-		        });
-	   			qrcode.makeCode(data.wechat);
-				c('advertise_board_fixed')[0].style.display = 'block';
-				c('advertise_board_fixed_body')[0].style.marginTop = -(c('advertise_board_fixed_body')[0].clientHeight / 2) + 50 + 'px';
-			}else{
-				alern(data.msg);
-			}
-		},
-		error: function(){
-			alern('未知错误');
-		}
-	})
-
-}
-//支付宝支付测试
-d('alipayTest').onclick = function(){
-	var ErrorString = "";
-	var alipayObject = {};
-	var detailedOperatorId = d('detailed_operator_id').value;	//运营方ID
-	var alipayId = d('alipay_id').value;						//支付宝应用id
-	var alipayPrivpay = d('alipay_privpay').value;				//支付宝私钥
-	var alipayPublicpay = d('alipay_publicpay').value;			//支付宝公钥
-	alipayObject.operatorID = detailedOperatorId;
-	alipayObject.appid = alipayId;
-	alipayObject.sdkpass = alipayPrivpay;
-	alipayObject.sdkuser = alipayPublicpay;
-	if(detailedOperatorId === ''){
-		ErrorString += "运营方ID不能为空<br/>";
-	}
-	if(alipayId === ''){
-		ErrorString += "支付宝APPID不能为空<br/>";
-	}
-	if(alipayPrivpay === ''){
-		ErrorString += "支付宝私钥不能为空<br/>";
-	}
-	if(alipayPublicpay === ''){
-		ErrorString += "支付宝公钥不能为空<br/>";
-	}
-	if(ErrorString !== ""){
-		alern(ErrorString);
-		return false;
-	}
-	$.ajax({
-		type: 'post',
-		url: URLS + '/paycenter/test/alipay/qrcode.json',
-		data: {
-			obj: JSON.stringify(alipayObject),
-		},
-		success: function(data){
-			if(data.code == 10001){
-				c("advertise_board_fixed_body_home_ewm")[0].innerHTML = "";
-				var qrcode = new QRCode(c("advertise_board_fixed_body_home_ewm")[0], {
-		            width : 220,//设置宽高
-		            height : 220,
-		        });
-	   			qrcode.makeCode(data.alipay);
-				c('advertise_board_fixed')[0].style.display = 'block';
-				c('advertise_board_fixed_body')[0].style.marginTop = -(c('advertise_board_fixed_body')[0].clientHeight / 2) + 50 + 'px';
-			}else{
-				alern(data.msg);
-			}
-		},
-		error: function(){
-			alern('未知错误');
-		}
-	})
-}
-
 c('advertise_board_fixed_body_clear')[0].onclick = function(){
 	c('advertise_board_fixed')[0].style.display = 'none';
 };
 
+var count = 0;
 function submit(){
 	var bodyCreat = d('body_creat');
 	//创建
@@ -616,332 +350,123 @@ function submit(){
 		for(var i = 0; i < orightFootItem.length; i++){
 			orightFootItem[i].style.display = 'block';
 		}
-		d('detailed_operator_id').value = "";								//运营方ID
-		d('detailed_operator_id').disabled = false;
-		d('detailed_operator_numbering').value = "";						//运营方编号
-		d('detailed_operator_companyname').value = "";						//公司名称
-		d('detailed_operator_companyaddress').value = "";					//公司地址
-		d('detailed_operator_principal').value = "";						//运营方负责人
-		d('detailed_operator_phone').value = "";							//联系手机
-		d('detailed_operator_sparephone').value = "";						//备用手机
-		d('detailed_operator_email').value = "";							//Email邮箱
-		d('detailed_operator_stop').checked = false;						//是否停用
-		d('detailed_operator_isFree').checked = false;						//是否免费
+
+		//清空详细信息
+		d('detailed_operator_id').value = "";						//运营方ID
+		d('detailed_operator_name').value = "";						//公司名称
+		d('detailed_operator_address').value = "";					//公司地址
+		d('detailed_operator_principal').value = "";				//运营方负责人
+		d('detailed_operator_phone').value = "";					//联系手机
+		d('detailed_operator_stop').checked = false;				//是否停用
+
+		//饿了么信息清空
+		d('elem_enable').checked = false;								//停用启用
+		d('elem_store_id').name = '';										//店铺ID
+		d('elem_store_id').value = '';										//平台ID
+		d('elem_store_key').value = '';					//应用Key
+		d('elem_store_secret').value = '';			//应用Secret
+		d('elem_store_redirecturl').value = '';	//回调URL
+		d('elem_store_url').value = '';					//店铺URL
+		d('elem_store_user').value = '';				//店铺账号
+		d('elem_store_pass').value = '';				//店铺密码
+		d('elem_store_pushUrl').value = '';			//推送地址
 
 		var BodyLeftList = c('operator_body_left_list');
 		for(var j = 0; j < BodyLeftList.length; j++){
 			BodyLeftList[j].style.backgroundColor = "rgba(0,0,0,0)";
 		}
+		count = 0;
 
-		var wechatPay = d('wechat_pay');				//微信支付
-		var wechatPass = d('wechat_pass');				//微信密钥
-		var wechatId = d('wechat_id');					//微信公众号id
-		var wechatSecret = d('wechat_secret');			//微信公众号secret
-		var wecahtShanghu = d('wecaht_shanghu');		//微信商户号
-		var wecahtFile = d('wecahtFile');				//微信商户号
-		var wecahtFileValue = d('wecahtFile_value');	//微信商户号
-		wechatPay.checked = false;
-		wechatPass.value = "";
-		wechatId.value = "";
-		wechatSecret.value = "";
-		wecahtShanghu.value = "";
-		readers = "";
-		wecahtFileValue.innerHTML = "";
-
-		var alipayPay = d('alipay_pay');			//支付宝支付
-		var alipayId = d('alipay_id');				//支付宝应用id
-		var alipayPrivpay = d('alipay_privpay');		//支付宝私钥
-		var alipayPublicpay = d('alipay_publicpay');	//支付宝公钥
-		alipayPay.checked = false;
-		alipayId.value = "";
-		alipayPrivpay.value = "";
-		alipayPublicpay.value = "";
-
-		var silverPay = d('silver_pay');			//银商支付
-		var silverShanghu = d('silver_shanghu');		//银商平台商户号
-		var silverEnd = d('silver_end');				//银商终端号
-		var silverJshanghu = d('silver_jshanghu');	//银商机构商户号
-		var silverNews = d('silver_news');			//银商消息来源
-		var silverNumber = d('silver_number');		//银商来源编号
-		var silverTest = d('silver_test');			//银商测试环境MD5
-		silverPay.checked = false;
-		silverShanghu.value = "";
-		silverEnd.value = "";
-		silverJshanghu.value = "";
-		silverNews.value = "";
-		silverNumber.value = "";
-		silverTest.value = "";
-
-		var icbcPay = d('icbc_pay');				//工行支付
-		var icbcPublicpay = d('icbc_publicpay');		//工行网关公钥
-		var icbcAppid = d('icbc_appid');				//工行appid
-		var icbcPrivpay = d('icbc_privpay');			//工行私钥
-		var icbcSpecial = d('icbc_special');			//工行商户档案
-		var icbcLife = d('icbc_life');				//工行e生活商户档案
-		icbcPay.checked = false;
-		icbcPublicpay.value = "";
-		icbcAppid.value = "";
-		icbcPrivpay.value = "";
-		icbcSpecial.value = "";
-		icbcLife.value = "";
-		new OnChange('wechat_pay');
-		new OnChange('alipay_pay');
-		new OnChange('silver_pay');
-		new OnChange('icbc_pay');
-
-		//清空开票资料
+		/*//清空开票资料
 		d('operator_name').value = "";
 		d('operator_number').value = "";
 		d('operator_addr').value = "";
 		d('operator_phone').value = "";
 		d('operator_bank').value = "";
-		d('detailed_account').value = "";
+		d('detailed_account').value = "";*/
 	};
+	var userInfo = JSON.parse(sessionStorage.loginUserName);
 	bodySubmit.onclick = function(){
-		var count = 0;
 		//详细信息提交
-		var detailedOperatorId = d('detailed_operator_id').value;							//运营方ID
-		var detailedOperatorNumbering = d('detailed_operator_numbering').value;				//运营方编号
-		var detailedOperatorCompanyname = d('detailed_operator_companyname').value;			//公司名称
-		var detailedOperatorCompanyaddress = d('detailed_operator_companyaddress').value;	//公司地址
-		var detailedOperatorPrincipal = d('detailed_operator_principal').value;				//运营方负责人
-		var detailedOperatorPhone = d('detailed_operator_phone').value;						//联系手机
-		var detailedOperatorSparephone = d('detailed_operator_sparephone').value;			//备用手机
-		var detailedOperatorEmail = d('detailed_operator_email').value;						//Email邮箱
-		var detailedOperatorStop = d('detailed_operator_stop').checked;						//是否停用
-		var detailedOperatorIsFree = d('detailed_operator_isFree').checked;					//是否免费
-		if(detailedOperatorId == ''){
-			alern('运营方ID不能为空');
-			return false;
-		}
-		if(detailedOperatorNumbering == ''){
-			alern('运营方编号不能为空');
+		var detailedOperatorId = d('detailed_operator_id').value;					//店铺ID
+		var detailedOperatorCompanyname = d('detailed_operator_name').value;		//店铺名称
+		var detailedOperatorCompanyaddress = d('detailed_operator_address').value;	//店铺地址
+		var detailedOperatorPrincipal = d('detailed_operator_principal').value;		//店铺负责人
+		var detailedOperatorPhone = d('detailed_operator_phone').value;				//联系电话
+		var detailedOperatorStop = d('detailed_operator_stop').checked;				//是否停用
+		if(detailedOperatorCompanyname == ''){
+			alern('店铺名称不能为空');
 			return false;
 		}
 		if(detailedOperatorStop){
-			detailedOperatorStop = '0';
+			detailedOperatorStop = 0;
 		}else{
-			detailedOperatorStop = '1';
+			detailedOperatorStop = 1;
 		}
-		if(detailedOperatorIsFree){
-			detailedOperatorIsFree = 1;
-		}else{
-			detailedOperatorIsFree = 0;
-		}
-		$.ajax({
+
+		var obj = {};
+		obj.id = detailedOperatorId;
+		obj.storeName = detailedOperatorCompanyname;
+		obj.storeAddress = detailedOperatorCompanyaddress;
+		obj.storePrincipal = detailedOperatorPrincipal;
+		obj.storeTel = detailedOperatorPhone;
+		obj.storedeleted = detailedOperatorStop;
+
+		//饿了么信息提交
+		var elemEnable = d('elem_enable');						//停用启用
+		var elemStoreId = d('elem_store_id');					//平台ID
+		var elemStoreKey = d('elem_store_key');					//应用Key
+		var elemStoreSecret = d('elem_store_secret');			//应用Secret
+		var elemStoreRedirecturl = d('elem_store_redirecturl');	//回调URL
+		var elemStoreUrl = d('elem_store_url');					//店铺URL
+		var elemStoreUser = d('elem_store_user');				//店铺账号
+		var elemStorePass = d('elem_store_pass');				//店铺密码
+		var elemStorePushUrl = d('elem_store_pushUrl');			//推送地址
+		var objs = {};
+		objs.storeId = Number(elemStoreId.value);
+		objs.storeAppKey = elemStoreKey.value;
+		objs.storeAppSecret = elemStoreSecret.value;
+		objs.redirectUrl = elemStoreRedirecturl.value;
+		objs.storeUrl = elemStoreUrl.value;
+		objs.storeAccountNumber = elemStoreUser.value;
+		objs.storePass = elemStorePass.value;
+		objs.pushUrl = elem_store_pushUrl.value;
+		//objs.relatedId = Number(elemStoreId.name)?Number(elemStoreId.name):data.resultObject.id;
+		objs.platformdeleted = elemEnable.checked?1:0;
+
+		var param = count == 0?'/store/basis/add':'/store/basis/update';			//详细信息
+		//var elemTj = count == 0?'/store/platform/add':'/store/platform/update';	//平台关联
+
+		ajax({
 			type: 'post',
-			url: URLZ + '/operate/saveOperate.json',
+			url: URLS + param,
 			data: {
-				operatorID: detailedOperatorId,
-				operator: detailedOperatorNumbering,
-				company: detailedOperatorCompanyname,
-				location: detailedOperatorCompanyaddress,
-				principal: detailedOperatorPrincipal,
-				phone1: detailedOperatorPhone,
-				phone2: detailedOperatorSparephone,
-				email: detailedOperatorEmail,
-				mark: detailedOperatorStop,
-				isFree: detailedOperatorIsFree,
+				obj: JSON.stringify(obj),	//详细信息
+				objs: JSON.stringify(objs),	//平台信息
 			},
 			success: function(data){
-				count++;
-				if(count == 2){
-					alern('保存成功');
-					start();
-					c('operator_home_head_submit')[0].click();
-				}
-			}
-		})
-		//支付配置提交
-		var wecahtFile = d('wecahtFile');//p12文件上传
-		if(wecahtFile != undefined){
-			if(wecahtFile.value != ''){
-				if(wecahtFile.value.split('.')[wecahtFile.value.split('.').length-1] != 'p12'){
-					alern('p12证书格式不正确！');
-					return false;
-				};
-				if(wecahtFile.files[0].size > 1024000){
-					alern('p12证书文件不得大于1MB');
-					return false;
-				};
-			}
-		}
-
-		var ErrorString = "";
-		var wechatObject = {};
-		var wechatPay = d('wechat_pay').checked;			//微信支付
-		if(wechatPay){
-			wechatPay = '1';
-		}else{
-			wechatPay = '0';
-		}
-		var wechatPass = d('wechat_pass').value;			//微信密钥
-		var wechatId = d('wechat_id').value;				//微信公众号id
-		var wechatSecret = d('wechat_secret').value;		//微信公众号secret
-		var wecahtShanghu = d('wecaht_shanghu').value;		//微信商户号
-		var wecahtFileValue = d('wecahtFile_value');		//检测p12文件是否存在
-		wechatObject.wechatPay = wechatPay;
-		wechatObject.wechatPass = wechatPass;
-		wechatObject.wechatId = wechatId;
-		wechatObject.wechatSecret = wechatSecret;
-		wechatObject.wecahtShanghu = wecahtShanghu;
-		if(wechatPay === '1'){
-			if(wechatPass === ''){
-				ErrorString += "微信API密钥不能为空<br/>";
-			}
-			if(wechatId === ''){
-				ErrorString += "微信公众号id不能为空</br>";
-			}
-			if(wechatSecret === ''){
-				ErrorString += "微信APPSecret不能为空</br>";
-			}
-			if(wecahtShanghu === ''){
-				ErrorString += "微信商户号不能为空</br>";
-			}
-			if(wecahtFileValue === ''){
-				ErrorString += "微信Pcks12证书不能为空</br>";
-			}
-		}
-
-		var alipayObject = {};
-		var alipayPay = d('alipay_pay').checked;			//支付宝支付
-		if(alipayPay){
-			alipayPay = '1';
-		}else{
-			alipayPay = '0';
-		}
-		var alipayId = d('alipay_id').value;				//支付宝应用id
-		var alipayPrivpay = d('alipay_privpay').value;		//支付宝私钥
-		var alipayPublicpay = d('alipay_publicpay').value;	//支付宝公钥
-		alipayObject.alipayPay = alipayPay;
-		alipayObject.alipayId = alipayId;
-		alipayObject.alipayPrivpay = alipayPrivpay;
-		alipayObject.alipayPublicpay = alipayPublicpay;
-		if(alipayPay === '1'){
-			if(alipayId === ''){
-				ErrorString += "支付宝APPID不能为空<br/>";
-			}
-			if(alipayPrivpay === ''){
-				ErrorString += "支付宝私钥不能为空<br/>";
-			}
-			if(alipayPublicpay === ''){
-				ErrorString += "支付宝公钥不能为空<br/>";
-			}
-		}
-
-		var silverObject = {};
-		var silverPay = d('silver_pay').checked;			//银商支付
-		if(silverPay){
-			silverPay = '1';
-		}else{
-			silverPay = '0';
-		}
-		var silverShanghu = d('silver_shanghu').value;		//银商平台商户号
-		var silverEnd = d('silver_end').value;				//银商终端号
-		var silverJshanghu = d('silver_jshanghu').value;	//银商机构商户号
-		var silverNews = d('silver_news').value;			//银商消息来源
-		var silverNumber = d('silver_number').value;		//银商来源编号
-		var silverTest = d('silver_test').value;			//银商测试环境MD5
-		silverObject.silverPay = silverPay;
-		silverObject.silverShanghu = silverShanghu;
-		silverObject.silverEnd = silverEnd;
-		silverObject.silverJshanghu = silverJshanghu;
-		silverObject.silverNews = silverNews;
-		silverObject.silverNumber = silverNumber;
-		silverObject.silverTest = silverTest;
-		if(silverPay === '1'){
-			if(silverShanghu === ''){
-				ErrorString += "银商平台商户号不能为空<br/>";
-			}
-			if(silverEnd === ''){
-				ErrorString += "银商终端号不能为空<br/>";
-			}
-			if(silverJshanghu === ''){
-				ErrorString += "银商机构商户号不能为空<br/>";
-			}
-			if(silverNews === ''){
-				ErrorString += "银商消息来源不能为空<br/>";
-			}
-			if(silverNumber === ''){
-				ErrorString += "银商来源编号不能为空<br/>";
-			}
-			if(silverTest === ''){
-				ErrorString += "银商测试环境MD5不能为空<br/>";
-			}
-		}
-
-		var icbcObject = {};
-		var icbcPay = d('icbc_pay').checked;				//工行支付
-		if(icbcPay){
-			icbcPay = '1';
-		}else{
-			icbcPay = '0';
-		}
-		var icbcPublicpay = d('icbc_publicpay').value;		//工行网关公钥
-		var icbcAppid = d('icbc_appid').value;				//工行appid
-		var icbcPrivpay = d('icbc_privpay').value;			//工行私钥
-		var icbcSpecial = d('icbc_special').value;			//工行商户档案
-		var icbcLife = d('icbc_life').value;				//工行e生活商户档案
-		icbcObject.icbcPay = icbcPay;
-		icbcObject.icbcPublicpay = icbcPublicpay;
-		icbcObject.icbcAppid = icbcAppid;
-		icbcObject.icbcPrivpay = icbcPrivpay;
-		icbcObject.icbcSpecial = icbcSpecial;
-		icbcObject.icbcLife = icbcLife;
-		if(icbcPay === '1'){
-			if(icbcPublicpay === ''){
-				ErrorString += "工行网关公钥不能为空<br/>";
-			}
-			if(icbcAppid === ''){
-				ErrorString += "工行appid不能为空<br/>";
-			}
-			if(icbcPrivpay === ''){
-				ErrorString += "工行私钥不能为空<br/>";
-			}
-			if(icbcSpecial === ''){
-				ErrorString += "工行特约商户档案不能为空<br/>";
-			}
-			if(icbcLife === ''){
-				ErrorString += "工行e生活商户档案不能为空<br/>";
-			}
-		}
-		/*console.log(JSON.stringify(wechatObject));
-		console.log(JSON.stringify(alipayObject));
-		console.log(JSON.stringify(silverObject));
-		console.log(JSON.stringify(icbcObject));
-		console.log(readers);
-		console.log(detailedOperatorId);*/
-		if(ErrorString !== ""){
-			alern(ErrorString);
-			return false;
-		}
-
-		if(readers == undefined){
-			readers = "";
-		};
-		$.ajax({
-			type: 'post',
-			url: URLS + '/paycenter/savePaycenter.json',
-			data: {
-				wxData: JSON.stringify(wechatObject),
-				zfData: JSON.stringify(alipayObject),
-				ysData: JSON.stringify(silverObject),
-				ghData: JSON.stringify(icbcObject),
-				baseFile: readers,
-				operatorID: detailedOperatorId,
-			},
-			success: function(data){
-				count++;
-				if(count == 2){
-					alert(data.msg);
-					start();
-					c('operator_home_head_submit')[0].click();
-					location.reload();
-				}
+				log(data);
+				alern(data.msg);
+				start();
+				c('operator_home_head_submit')[0].click();
+				// 平台信息保存
+				// ajax({
+				// 	type: 'post',
+				// 	url: URLS + elemTj,
+				// 	data: {
+				// 		obj: JSON.stringify(obj),
+				// 	},
+				// 	success: function(data){
+				// 		log(data);
+				// 		alern(data.msg);
+				// 		start();
+				// 		c('operator_home_head_submit')[0].click();
+				// 	}
+				// })
 			}
 		})
 
-		//开票资料上传
+		/*//开票资料上传
 		var operatorName = d('operator_name').value;		//公司名称
 		var operatorNumber = d('operator_number').value;	//税务登记号
 		var operatorAddr = d('operator_addr').value;		//公司地址
@@ -966,10 +491,86 @@ function submit(){
 			success: function(data){
 				console.log(data);
 			}
-		})
+		})*/
 	}
 }
+
+function platform(){		//平台关联模块
+	//饿了么平台授权按钮
+	d('elem_store_authorize').onclick = function(){
+		var elemEnable = d('elem_enable');						//停用启用
+		var elemStoreId = d('elem_store_id');					//平台ID
+		var elemStoreKey = d('elem_store_key');					//应用Key
+		var elemStoreSecret = d('elem_store_secret');			//应用Secret
+		var elemStoreRedirecturl = d('elem_store_redirecturl');	//回调URL
+		var elemStoreUrl = d('elem_store_url');					//店铺URL
+		var elemStoreUser = d('elem_store_user');				//店铺账号
+		var elemStorePass = d('elem_store_pass');				//店铺密码
+		var elemStorePushUrl = d('elem_store_pushUrl');			//推送地址
+		
+		var elemError;
+		elemError = elemStoreId.value?'':'平台ID不能为空<br/>';
+		elemError += elemStoreKey.value?'':'应用Key不能为空<br/>';
+		elemError += elemStoreSecret.value?'':'应用secret不能为空<br/>';
+		elemError += elemStoreRedirecturl.value?'':'回调URL不能为空<br/>';
+		elemError += elemStoreUrl.value?'':'店铺URL不能为空<br/>';
+		elemError += elemStorePass.value?'':'店铺密码不能为空';
+
+		if(elemError){
+			alern(elemError);
+			return false;
+		}
+
+		var obj = {};
+		obj.storeId = elemStoreId.value;
+		obj.storeAppKey = elemStoreKey.value;
+		obj.storeAppSecret = elemStoreSecret.value;
+		obj.redirectUrl = elemStoreRedirecturl.value;
+		obj.storeUrl = elemStoreUrl.value;
+		obj.storeAccountNumber = elemStoreUser.value;
+		obj.storePass = elemStorePass.value;
+		obj.pushUrl = elem_store_pushUrl.value;
+		obj.relatedId = elemStoreId.name;
+		obj.platformdeleted = elemEnable.checked?1:0;
+
+		ajax({
+			type: 'post',
+			url: URLS + '/store/platform/authorization',
+			data: {
+				obj: JSON.stringify(obj),
+			},
+			success: function(data){
+				log(data);
+				if(data.status == 10001 && data.resultObject.url){
+					window.open(data.resultObject.url,"饿了么授权","height=600,width=800,top=100,left=200,toolbar=no,menubar=no");
+				}else if(data.status == 10001 && data.resultObject.tokenCode){
+					alern('该店铺已经有绑定的饿了么商家！');
+				}else{
+					alern(data.msg);
+				}
+			}
+		})
+	}
+
+	//饿了么取消授权按钮
+	d('elem_store_authdelete').onclick = function(){
+		if(confirm('确认要取消饿了么商家授权吗？取消后可重新绑定其他饿了么商家！')){
+			ajax({
+				type: 'post',
+				url: URLS + '/store/platform/delete',
+				data: {
+					storeId: Number(d('elem_store_id').value),
+				},
+				success: function(data){
+					alern(data.msg);
+				}
+			})
+		}
+	}
+}
+
 
 start();
 startbody(1);
 submit();
+platform();		//平台关联模块

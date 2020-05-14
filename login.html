@@ -10,12 +10,10 @@
 	<script type="text/javascript" src="js/wm.js"></script>
 </head>
 <body>
-	<div class="head">鸿丰智能终端管理系统</div>
-	<canvas id="canvas">您的浏览器暂不支持canvas</canvas>
 	<div class="body">
-		<img class="img" alt="logo" src="images/logo.png"/>
+		<p>稻吟网络科技有限公司</p>
 		<div class="login">
-			<p>账户登录<span id="switching" title="中英文切换">中文/English</span></p>
+			<p>账户登录</p>
 			<div class="login_user">
 				<div class="login_user_left"><img src="images/user.png"/></div>
 				<div class="login_user_right"><input id="username" type="text" placeholder="请输入账号" /></div>
@@ -30,92 +28,15 @@
 			<button class="login_btn">登 &nbsp;&nbsp;&nbsp;录</button>
 		</div>
 	</div>
-	<div class="foot">
-		<p>版权所有©浙江嘉丰机电有限公司 浙ICP备88888888号 技术支持：研发中心-技术部门<img class="locat" src="images/logos.png"/></p>
-		<p>地址：浙江省嘉善县罗星街道金秀路128号 电话：+86 573 84068800  传真：+86 573 84062345  Email:viderimart@hontechgroup.com</p>
-	</div>
 	<script type="text/javascript">
 		//var URLZ = 'http://7daqrw.natappfree.cc/bg-uc';
 		//var URLZ = 'http://test.hontech-rdcenter.com:8080/bg-uc';
-		var URLZ = 'https://api.hontech-rdcenter.com:8443/bg-uc';
+		//var URLZ = 'https://api.hontech-rdcenter.com:8443/bg-uc';
 		//var URLZ = 'http://hfrd.hontech-rdcenter.com:8080/hontechgroup';
 		//var URLZ = 'http://10.1.8.34:8080/bg-uc';
-		//var URLZ = 'http://10.1.8.36:8080/bg-uc';
-		var Width = window.innerWidth;				//画布的宽度
-		var Height = window.innerHeight - 220;		//画布的高度
-		var context = d('canvas');					//定义一个画布
-		var record = [];							//记录圆的初始数据
-		c('body')[0].style.width = Width;
-		c('body')[0].style.height = Height;
-		c('body')[0].style.top = -Height - 100 + 'px';
-		c('img')[0].style.top = Height/2 - 100 + 'px';
-		c('login')[0].style.top = Height/2 - 72 + 'px';
-		var col = ['red','blue','green','pink','orange','yellow'];	//圆的边框色
-		cxt = context.getContext('2d');
-
-		context.width = Width;
-		context.height = Height;
-		context.style.backgroundColor = 'rgba(0,53,117,1)';
+		var URLZ = 'https://api.daoyin.tech:8443';
 		//context.style.backgroundColor = 'rgba(0,73,162,1)';
-
-		window.addEventListener('resize', function(e){
-			record = [];
-			context.width = Width = window.innerWidth;
-			context.height = Height = window.innerHeight - 220;
-			//c('img')[0].style.top = Height/2 - 100 + 'px';
-			//c('login')[0].style.top = Height/2 - 72 + 'px';
-			back(1);
-	    },false);
-
-		function back(o){
-			for(var i = 0; i < 300; i++){
-				var r = Math.random()*3;
-				var x = (Width-r*4)*Math.random() + r*2;
-				var y = (Height-r*4)*Math.random() + r*2;
-				var c = col[parseInt(Math.random()*6)];
-				var ox = Math.random()*o;
-				var oy = Math.random()*o;
-				if(ox >= o/2){
-					ox = ox - o;
-				}
-				if(oy >= o/2){
-					oy = oy - o;
-				}
-
-				cxt.beginPath();
-				cxt.arc(x,y,r,0,2*Math.PI);
-				cxt.shadowBlur = 10;
-				cxt.shadowColor = c;
-				cxt.fillStyle = 'rgba(255,255,255,0.7)';
-				cxt.fill();
-
-				record.push({'x':x,'y':y,'r':r,'c':c,'ox':ox,'oy':oy});
-			}
-		}
-		back(1);
-		console.log(record);
-		setInterval(function(){
-			context.width = Width = window.innerWidth;
-			context.height = Height = window.innerHeight - 220;
-			for(var i = 0; i < record.length; i++){
-				var vx = record[i].x += record[i].ox;
-				var vy = record[i].y += record[i].oy;
-				if(record[i].x <= 0|| record[i].x >= Width || record[i].y <= 0 || record[i].y >= Height){
-					record[i].x = (Width-record[i].r*4)*Math.random() + record[i].r*2;
-					record[i].y = (Height-record[i].r*4)*Math.random() + record[i].r*2;
-				}
-				cxt.beginPath();
-				cxt.arc(vx,vy,record[i].r,0,2*Math.PI);
-				cxt.shadowBlur = 10;
-				cxt.shadowColor = record[i].c;
-				cxt.fillStyle = 'rgba(255,255,255,0.7)';
-				cxt.fill();
-			}
-		},20)
-
-		c('locat')[0].onclick = function(){
-			window.open("http://www.hontech-rdcenter.com");
-		}
+		c('login')[0].style.marginTop = -(Number(c('login')[0].clientHeight)/2)/2 + 'px';
 
 		window.onkeydown = function(e){
 			if(e.keyCode == 13){
@@ -133,15 +54,14 @@
 				alern('密码不能为空');
 				return false;
 			}
-			$.ajax({
+			ajax({
 				type: 'get',
-				url: URLZ + '/jf/bg/basic/new/login.json',
-				data: {
-					username: username,
-					password: password
-				},
+				url: URLZ + '/jf/bg/basic/new/login.json?username=' + username + '&password=' + password,
+				dataType: 'json',
 				success: function(data){
+					log(data);
 					if(data.status == "success"){
+						data.user.token = data.token;
 						sessionStorage.loginUserName = JSON.stringify(data.user);
 						window.location.href = 'index.html?menuid=100000';
 					}else{
@@ -149,10 +69,7 @@
 					}
 				}
 			})
-		}
-		d('switching').onclick = function(){
-			window.location.href = 'en/login.html';
-		}
+		};
 	</script>
 </body>
 </html>

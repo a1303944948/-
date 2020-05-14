@@ -52,7 +52,7 @@ function start(){
 	obody.style.height = window.innerHeight - Head.clientHeight - 119 + 'px';
 
 	//渲染货道规格
-	var modelMultiple = d('model_multiple');
+	/*var modelMultiple = d('model_multiple');
 	$.ajax({
 		type: 'post',
 		url: URLS + '/jxzd/goods.json',
@@ -75,7 +75,7 @@ function start(){
 			divClear.className = 'clear';
 			modelMultiple.appendChild(divClear);
 		}
-	});
+	});*/
 
 	//DATAHEAD = listMenu();
 
@@ -153,96 +153,96 @@ function start(){
 		}
 	}
 	//渲染顶部运营方下拉框
-	var operatorSelect = c('operator_selects')[0];
-	var operatorSelectUl = c('operator_select_uls')[0];
-	if(operatorSelectUl != undefined){
-		operatorSelectUl.parentNode.removeChild(operatorSelectUl);
-	};
+	// var operatorSelect = c('operator_selects')[0];
+	// var operatorSelectUl = c('operator_select_uls')[0];
+	// if(operatorSelectUl != undefined){
+	// 	operatorSelectUl.parentNode.removeChild(operatorSelectUl);
+	// };
 
-	DATALEFT = groupitem(1);
-	function operatorSel(){
-		var ul = creat('ul');
-		ul.className = "operator_select_uls";
-		ul.style.minWidth = operatorSelect.clientWidth + 'px';
-		for(i = 0; i < DATALEFT.length; i++){
-			var li = creat('li');
-			li.innerHTML = DATALEFT[i].text;
-			li.setAttribute('data-value',DATALEFT[i].operatorID);
-			ul.appendChild(li);
-		}
-		operatorSelect.parentNode.appendChild(ul);
-		var operatorSelectUl = c('operator_select_uls')[0];
-		operatorSelect.onfocus = function(){
-			operatorSelectUl.style.display = "inline";
-		}
-		operatorSelect.onblur = function(){
-			operatorSelectUl.style.display = "none";
-		}
-		operatorSelect.value = operatorSelectUl.children[0].innerHTML;
-		operatorSelect.name = operatorSelectUl.children[0].dataset.value;
-		for(var i = 0; i < operatorSelectUl.children.length; i++){
-			operatorSelectUl.children[i].onmousedown = function(){
-				operatorSelect.value = this.innerHTML;
-				operatorSelect.name = this.dataset.value;
-			}
-		}
-	}
-	if(loginUserName.operatorID == 1){
-		operatorSel();
-	}else{
-		$.ajax({
-			type: 'post',
-			url: URLS + '/operate/getOperate.json',
-			data: {
-				operatorID: loginUserName.operatorID,
-			},
-			success: function(data){
+	// DATALEFT = groupitem(1);
+	// function operatorSel(){
+	// 	var ul = creat('ul');
+	// 	ul.className = "operator_select_uls";
+	// 	ul.style.minWidth = operatorSelect.clientWidth + 'px';
+	// 	for(i = 0; i < DATALEFT.length; i++){
+	// 		var li = creat('li');
+	// 		li.innerHTML = DATALEFT[i].text;
+	// 		li.setAttribute('data-value',DATALEFT[i].operatorID);
+	// 		ul.appendChild(li);
+	// 	}
+	// 	operatorSelect.parentNode.appendChild(ul);
+	// 	var operatorSelectUl = c('operator_select_uls')[0];
+	// 	operatorSelect.onfocus = function(){
+	// 		operatorSelectUl.style.display = "inline";
+	// 	}
+	// 	operatorSelect.onblur = function(){
+	// 		operatorSelectUl.style.display = "none";
+	// 	}
+	// 	operatorSelect.value = operatorSelectUl.children[0].innerHTML;
+	// 	operatorSelect.name = operatorSelectUl.children[0].dataset.value;
+	// 	for(var i = 0; i < operatorSelectUl.children.length; i++){
+	// 		operatorSelectUl.children[i].onmousedown = function(){
+	// 			operatorSelect.value = this.innerHTML;
+	// 			operatorSelect.name = this.dataset.value;
+	// 		}
+	// 	}
+	// }
+	// if(loginUserName.operatorID == 1){
+	// 	operatorSel();
+	// }else{
+	// 	$.ajax({
+	// 		type: 'post',
+	// 		url: URLS + '/operate/getOperate.json',
+	// 		data: {
+	// 			operatorID: loginUserName.operatorID,
+	// 		},
+	// 		success: function(data){
 
-				var ul = creat('ul');
-				ul.className = "operator_select_uls";
-				ul.style.minWidth = operatorSelect.clientWidth + 'px';
-				var li = creat('li');
-				li.innerHTML = data.operator;
-				li.setAttribute('data-value',data.operatorID);
-				ul.appendChild(li);
-				operatorSelect.parentNode.appendChild(ul);
-				var operatorSelectUl = c('operator_select_uls')[0];
-				operatorSelect.onfocus = function(){
-					operatorSelectUl.style.display = "inline";
-				}
-				operatorSelect.onblur = function(){
-					operatorSelectUl.style.display = "none";
-				}
-				operatorSelect.value = operatorSelectUl.children[0].innerHTML;
-				operatorSelect.name = operatorSelectUl.children[0].dataset.value;
-				for(var i = 0; i < operatorSelectUl.children.length; i++){
-					operatorSelectUl.children[i].onmousedown = function(){
-						operatorSelect.value = this.innerHTML;
-						operatorSelect.name = this.dataset.value;
-					}
-				}
-			}
-		})
-	}
+	// 			var ul = creat('ul');
+	// 			ul.className = "operator_select_uls";
+	// 			ul.style.minWidth = operatorSelect.clientWidth + 'px';
+	// 			var li = creat('li');
+	// 			li.innerHTML = data.operator;
+	// 			li.setAttribute('data-value',data.operatorID);
+	// 			ul.appendChild(li);
+	// 			operatorSelect.parentNode.appendChild(ul);
+	// 			var operatorSelectUl = c('operator_select_uls')[0];
+	// 			operatorSelect.onfocus = function(){
+	// 				operatorSelectUl.style.display = "inline";
+	// 			}
+	// 			operatorSelect.onblur = function(){
+	// 				operatorSelectUl.style.display = "none";
+	// 			}
+	// 			operatorSelect.value = operatorSelectUl.children[0].innerHTML;
+	// 			operatorSelect.name = operatorSelectUl.children[0].dataset.value;
+	// 			for(var i = 0; i < operatorSelectUl.children.length; i++){
+	// 				operatorSelectUl.children[i].onmousedown = function(){
+	// 					operatorSelect.value = this.innerHTML;
+	// 					operatorSelect.name = this.dataset.value;
+	// 				}
+	// 			}
+	// 		}
+	// 	})
+	// }
 }
 
 function startbody(){
 	//获取运营方下拉框数据
 	DATALEFT = groupitem(1);
 	//获取商品数据
-	var commodityOperators = d('commodity_operators');
-	var commodityStatus = d('commodity_status');
-	$.ajax({
-		type: 'post',
-		url: URLZ + '/jf/bg/basic/gdsm/searchObjParam.json',
-		data: {
-			operatorID: loginUserName.operatorID,
-			status: commodityStatus.name,
-		},
-		success: function(data){
-			startbodyleft(data.obj);
-		}
-	});
+	// var commodityOperators = d('commodity_operators');
+	// var commodityStatus = d('commodity_status');
+	// $.ajax({
+	// 	type: 'post',
+	// 	url: URLZ + '/jf/bg/basic/gdsm/searchObjParam.json',
+	// 	data: {
+	// 		operatorID: loginUserName.operatorID,
+	// 		status: commodityStatus.name,
+	// 	},
+	// 	success: function(data){
+	// 		startbodyleft(data.obj);
+	// 	}
+	// });
 	/*$.ajax({
 		type: 'post',
 		url: URLZ + '/jf/bg/basic/gdsm/getParam.json',
@@ -269,8 +269,9 @@ function startbodyleft(commmodityLeft){
 	for(var i = 0; i < commmodityLeft.length; i++){
 		var divList = creat('li');
 		divList.className = 'operator_body_left_list';
-		divList.innerHTML = '<img src="image/spgl.png" /><span>' + commmodityLeft[i].waresName + '</span><div class="clear"></div>';
-		divList.setAttribute('data-value',commmodityLeft[i].waresId);
+		divList.innerHTML = '<img src="image/spgl.png" /><span>' + commmodityLeft[i].itemName + '</span><div class="clear"></div>';
+		divList.setAttribute('data-value',commmodityLeft[i].itemId);
+		//divList.setAttribute('data-specs',JSON.stringify(commmodityLeft[i].specs));
 		ul.appendChild(divList);
 	}
 	obodyLeft.appendChild(ul);
@@ -292,141 +293,152 @@ function startbodyleft(commmodityLeft){
 					orightFootItem[j].style.display = 'block';
 				}
 				//渲染运营方下拉框
-				var operatorSelect = c('operator_select')[0];
-				var operatorSelectUl = c('operator_select_ul')[0];
-				if(operatorSelectUl != undefined){
-					operatorSelectUl.parentNode.removeChild(operatorSelectUl);
-				};
-				function operatorSel(){
-					var ul = creat('ul');
-					ul.className = "operator_select_ul";
-					ul.style.minWidth = operatorSelect.clientWidth + 'px';
-					for(j = 0; j < DATALEFT.length; j++){
-						var li = creat('li');
-						li.innerHTML = DATALEFT[j].text;
-						li.setAttribute('data-value',DATALEFT[j].operatorID);
-						ul.appendChild(li);
-					}
-					operatorSelect.parentNode.appendChild(ul);
-					var operatorSelectUl = c('operator_select_ul')[0];
-					operatorSelect.onfocus = function(){
-						operatorSelectUl.style.display = "inline";
-					}
-					operatorSelect.onblur = function(){
-						operatorSelectUl.style.display = "none";
-					}
-					operatorSelect.value = operatorSelectUl.children[0].innerHTML;
-					operatorSelect.name = operatorSelectUl.children[0].dataset.value;
-					for(var j = 0; j < operatorSelectUl.children.length; j++){
-						operatorSelectUl.children[j].onmousedown = function(){
-							operatorSelect.value = this.innerHTML;
-							operatorSelect.name = this.dataset.value;
-						}
-					}
-				}
-				if(loginUserName.operatorID == 1){
-					operatorSel();
-				}else{
-					$.ajax({
-						type: 'post',
-						url: URLS + '/operate/getOperate.json',
-						data: {
-							operatorID: loginUserName.operatorID,
-						},
-						success: function(data){
+				// var operatorSelect = c('operator_select')[0];
+				// var operatorSelectUl = c('operator_select_ul')[0];
+				// if(operatorSelectUl != undefined){
+				// 	operatorSelectUl.parentNode.removeChild(operatorSelectUl);
+				// };
+				// function operatorSel(){
+				// 	var ul = creat('ul');
+				// 	ul.className = "operator_select_ul";
+				// 	ul.style.minWidth = operatorSelect.clientWidth + 'px';
+				// 	for(j = 0; j < DATALEFT.length; j++){
+				// 		var li = creat('li');
+				// 		li.innerHTML = DATALEFT[j].text;
+				// 		li.setAttribute('data-value',DATALEFT[j].operatorID);
+				// 		ul.appendChild(li);
+				// 	}
+				// 	operatorSelect.parentNode.appendChild(ul);
+				// 	var operatorSelectUl = c('operator_select_ul')[0];
+				// 	operatorSelect.onfocus = function(){
+				// 		operatorSelectUl.style.display = "inline";
+				// 	}
+				// 	operatorSelect.onblur = function(){
+				// 		operatorSelectUl.style.display = "none";
+				// 	}
+				// 	operatorSelect.value = operatorSelectUl.children[0].innerHTML;
+				// 	operatorSelect.name = operatorSelectUl.children[0].dataset.value;
+				// 	for(var j = 0; j < operatorSelectUl.children.length; j++){
+				// 		operatorSelectUl.children[j].onmousedown = function(){
+				// 			operatorSelect.value = this.innerHTML;
+				// 			operatorSelect.name = this.dataset.value;
+				// 		}
+				// 	}
+				// }
+				// if(loginUserName.operatorID == 1){
+				// 	operatorSel();
+				// }else{
+				// 	$.ajax({
+				// 		type: 'post',
+				// 		url: URLS + '/operate/getOperate.json',
+				// 		data: {
+				// 			operatorID: loginUserName.operatorID,
+				// 		},
+				// 		success: function(data){
 
-							var ul = creat('ul');
-							ul.className = "operator_select_ul";
-							ul.style.minWidth = operatorSelect.clientWidth + 'px';
-							var li = creat('li');
-							li.innerHTML = data.operator;
-							li.setAttribute('data-value',data.operatorID);
-							ul.appendChild(li);
-							operatorSelect.parentNode.appendChild(ul);
-							var operatorSelectUl = c('operator_select_ul')[0];
-							operatorSelect.onfocus = function(){
-								operatorSelectUl.style.display = "inline";
-							}
-							operatorSelect.onblur = function(){
-								operatorSelectUl.style.display = "none";
-							}
-							operatorSelect.value = operatorSelectUl.children[0].innerHTML;
-							operatorSelect.name = operatorSelectUl.children[0].dataset.value;
-							for(var i = 0; i < operatorSelectUl.children.length; i++){
-								operatorSelectUl.children[i].onmousedown = function(){
-									operatorSelect.value = this.innerHTML;
-									operatorSelect.name = this.dataset.value;
-								}
-							}
-						}
-					})
-				}
+				// 			var ul = creat('ul');
+				// 			ul.className = "operator_select_ul";
+				// 			ul.style.minWidth = operatorSelect.clientWidth + 'px';
+				// 			var li = creat('li');
+				// 			li.innerHTML = data.operator;
+				// 			li.setAttribute('data-value',data.operatorID);
+				// 			ul.appendChild(li);
+				// 			operatorSelect.parentNode.appendChild(ul);
+				// 			var operatorSelectUl = c('operator_select_ul')[0];
+				// 			operatorSelect.onfocus = function(){
+				// 				operatorSelectUl.style.display = "inline";
+				// 			}
+				// 			operatorSelect.onblur = function(){
+				// 				operatorSelectUl.style.display = "none";
+				// 			}
+				// 			operatorSelect.value = operatorSelectUl.children[0].innerHTML;
+				// 			operatorSelect.name = operatorSelectUl.children[0].dataset.value;
+				// 			for(var i = 0; i < operatorSelectUl.children.length; i++){
+				// 				operatorSelectUl.children[i].onmousedown = function(){
+				// 					operatorSelect.value = this.innerHTML;
+				// 					operatorSelect.name = this.dataset.value;
+				// 				}
+				// 			}
+				// 		}
+				// 	})
+				// }
 				//详细信息内容渲染
-				var detailedOperatorId = d('commodity_operator');							//运营方
+				//var detailedOperatorId = d('commodity_operator');							//运营方
 				var detailedOperatorNumbering = d('commodity_num');							//商品编号
+				var detailedCommodityElemid = d('commodity_elemid');						//饿了么ID
 				var detailedOperatorCompanyname = d('commodity_name');						//商品名称
 				var detailedOperatorCompanyaddress = d('commodity_price');					//标准价格
-				var commodityShelf = d('commodity_shelf');									//保质期
-				var detailedOperatorPrincipal = c('model_multiple_div');					//货道规格
-				var detailedOperatorPhone = c('detailed_operator_star');					//推荐星值
+				//var commodityShelf = d('commodity_shelf');								//保质期
+				//var detailedOperatorPrincipal = c('model_multiple_div');					//货道规格
+				//var detailedOperatorPhone = c('detailed_operator_star');					//推荐星值
 				var commodityCode = d('commodity_code');									//条码编号
-				var detailedOperatorSparephone = d('commodity_Infrared');					//红外加热
-				var detailedOperatorEmail = d('commodity_microwave');						//微波加热
-				var commodityCooling = d('commodity_cooling');								//散热时间
-				var commodityCooking = d('commodity_cooking');								//烹饪温度
-				var commodityType = d('commodity_type');									//工艺类型
-				var commoditySupplier = d('commodity_supplier');							//供应商
+				//var detailedOperatorSparephone = d('commodity_Infrared');					//红外加热
+				var detailedOperatorEmail = d('commodity_microwave');						//加热时间
+				var detailedOperatorNot = d('detailed_operator_not');						//非设备商品
+				//var commodityCooling = d('commodity_cooling');							//散热时间
+				//var commodityCooking = d('commodity_cooking');							//烹饪温度
+				//var commodityType = d('commodity_type');									//工艺类型
+				//var commoditySupplier = d('commodity_supplier');							//供应商
 				var detailedOperatorPickimg = c('detailed_operator_pickimg')[0];			//选餐图片
 				var detailedOperatorOrderimg = c('detailed_operator_orderimg')[0];			//下单图片
-				var detailedOperatorIngredientimg = c('detailed_operator_ingredientimg')[0];//商品介绍
-				var commodityRemark = d('commodity_remark');								//备注
+				//var detailedOperatorIngredientimg = c('detailed_operator_ingredientimg')[0];//商品介绍
+				//var commodityRemark = d('commodity_remark');								//备注
 				var detailedOperatorStop = d('detailed_operator_stop');						//停用
-				detailedOperatorId.value = commmodityLeft[q].operParty;
-				detailedOperatorId.name = commmodityLeft[q].operatorID;
-				detailedOperatorNumbering.value = commmodityLeft[q].waresId;
-				detailedOperatorCompanyname.value = commmodityLeft[q].waresName;
-				detailedOperatorCompanyaddress.value = commmodityLeft[q].waresPrice;
-				commodityShelf.value = commmodityLeft[q].quaGuaPeriod;
+				//detailedOperatorId.value = commmodityLeft[q].operParty;
+				//detailedOperatorId.name = commmodityLeft[q].operatorID;
+				detailedOperatorNumbering.value = commmodityLeft[q].itemId;
+				detailedCommodityElemid.value = commmodityLeft[q].itemElmId;
+				detailedCommodityElemid.setAttribute('data-value',JSON.stringify(commmodityLeft[q].specs))
+				detailedOperatorCompanyname.value = commmodityLeft[q].itemName;
+				detailedOperatorCompanyaddress.value = commmodityLeft[q].itemPrice;
+				//commodityShelf.value = commmodityLeft[q].quaGuaPeriod;
 				//detailedOperatorPrincipal.value = commmodityLeft[q].principal;
 				//detailedOperatorPhone.value = commmodityLeft[q].phone1;
-				var theGoodsModel = commmodityLeft[q].theGoodsModel.split(',');
-				for(var j = 0; j < detailedOperatorPrincipal.length; j++){
-					detailedOperatorPrincipal[j].children[0].checked = false;
-				}
-				for(var j = 0; j < detailedOperatorPrincipal.length; j++){
-					for(var k = 0; k < theGoodsModel.length; k++){
-						if(detailedOperatorPrincipal[j].children[0].name == theGoodsModel[k]){
-							detailedOperatorPrincipal[j].children[0].checked = 'checked';
-						}
-					}
-				}
-				for(var j = 0; j < detailedOperatorPhone.length; j++){
-					detailedOperatorPhone[j].children[0].src = "image/dxs.png";
-				}
-				for(var j = 0; j < commmodityLeft[q].starValue; j++){
-					detailedOperatorPhone[j].children[0].src = "image/dx.png";
-				}
-				commodityCode.value = commmodityLeft[q].barCodeNo;
-				detailedOperatorSparephone.value = commmodityLeft[q].infraredheating;
-				detailedOperatorEmail.value = commmodityLeft[q].microwaveheating;
-				commodityCooling.value = commmodityLeft[q].heatDissipationTime;
-				commodityCooking.value = commmodityLeft[q].cooking;
-				commoditySupplier.value = commmodityLeft[q].supplier;
-				commodityType.value = commmodityLeft[q].workmanshipName;
-				commodityType.setAttribute('data-value',commmodityLeft[q].workmanshipId);
-				detailedOperatorPickimg.innerHTML = commmodityLeft[q].waresImage1;
-				d('detailed_operator_pickimg').setAttribute('data-url',commmodityLeft[q].waresImage1);
-				detailedOperatorOrderimg.innerHTML = commmodityLeft[q].waresImage2;
-				d('detailed_operator_orderimg').setAttribute('data-url',commmodityLeft[q].waresImage2);
-				if(commmodityLeft[q].waresImage3 !== undefined){
-					detailedOperatorIngredientimg.innerHTML = commmodityLeft[q].waresImage3;
-					d('detailed_operator_ingredientimg').setAttribute('data-url',commmodityLeft[q].waresImage3);
+				// var theGoodsModel = commmodityLeft[q].theGoodsModel.split(',');
+				// for(var j = 0; j < detailedOperatorPrincipal.length; j++){
+				// 	detailedOperatorPrincipal[j].children[0].checked = false;
+				// }
+				// for(var j = 0; j < detailedOperatorPrincipal.length; j++){
+				// 	for(var k = 0; k < theGoodsModel.length; k++){
+				// 		if(detailedOperatorPrincipal[j].children[0].name == theGoodsModel[k]){
+				// 			detailedOperatorPrincipal[j].children[0].checked = 'checked';
+				// 		}
+				// 	}
+				// }
+				// for(var j = 0; j < detailedOperatorPhone.length; j++){
+				// 	detailedOperatorPhone[j].children[0].src = "image/dxs.png";
+				// }
+				// for(var j = 0; j < commmodityLeft[q].starValue; j++){
+				// 	detailedOperatorPhone[j].children[0].src = "image/dx.png";
+				// }
+				commodityCode.value = commmodityLeft[q].itemBarCode;
+				//detailedOperatorSparephone.value = commmodityLeft[q].infraredheating;
+				detailedOperatorEmail.value = commmodityLeft[q].itemHeatingTime;
+				//commodityCooling.value = commmodityLeft[q].heatDissipationTime;
+				//commodityCooking.value = commmodityLeft[q].cooking;
+				//commoditySupplier.value = commmodityLeft[q].supplier;
+				//commodityType.value = commmodityLeft[q].workmanshipName;
+				//commodityType.setAttribute('data-value',commmodityLeft[q].workmanshipId);
+				detailedOperatorPickimg.innerHTML = commmodityLeft[q].itemShowImg;
+				d('detailed_operator_pickimg').setAttribute('data-url',commmodityLeft[q].itemShowImg);
+				detailedOperatorOrderimg.innerHTML = commmodityLeft[q].itemOrderImg;
+				d('detailed_operator_orderimg').setAttribute('data-url',commmodityLeft[q].itemOrderImg);
+				// if(commmodityLeft[q].waresImage3 !== undefined){
+				// 	detailedOperatorIngredientimg.innerHTML = commmodityLeft[q].waresImage3;
+				// 	d('detailed_operator_ingredientimg').setAttribute('data-url',commmodityLeft[q].waresImage3);
+				// }else{
+				// 	detailedOperatorIngredientimg.innerHTML = "";
+				// 	d('detailed_operator_ingredientimg').setAttribute('data-url','');
+				// }
+				//commodityRemark.value = commmodityLeft[q].remark;
+				log(commmodityLeft[q]);
+				log(commmodityLeft[q].outGoods);
+				if(commmodityLeft[q].outGoods){
+					detailedOperatorNot.checked = false;
 				}else{
-					detailedOperatorIngredientimg.innerHTML = "";
-					d('detailed_operator_ingredientimg').setAttribute('data-url','');
+					detailedOperatorNot.checked = "checked";
 				}
-				commodityRemark.value = commmodityLeft[q].remark;
-				if(commmodityLeft[q].dltflag == '0'){
+				if(commmodityLeft[q].deleted == '0'){
 					detailedOperatorStop.checked = "checked";
 				}else{
 					detailedOperatorStop.checked = false;
@@ -443,17 +455,14 @@ c('operator_home_head_submit')[0].onclick = function(){
 	for(var i = 0; i < orightFootItem.length; i++){
 		orightFootItem[i].style.display = 'none';
 	}
-	var commodityOperators = d('commodity_operators');
+	//var commodityOperators = d('commodity_operators');
 	var commodityStatus = d('commodity_status');
-	$.ajax({
-		type: 'post',
-		url: URLZ + '/jf/bg/basic/gdsm/searchObjParam.json',
-		data: {
-			operatorID: commodityOperators.name,
-			status: commodityStatus.name,
-		},
+	ajax({
+		type: 'get',
+		url: URLZ + '/item/get?deleted=' + commodityStatus.name,
 		success: function(data){
-			startbodyleft(data.obj);
+			log(data);
+			Object.is(data.status,10001)?startbodyleft(data.resultObject):alern(data.msg);
 		}
 	})
 }
@@ -524,7 +533,7 @@ function UploadOss(num){
 						alern(tbodyFileError);
 						return false;
 					}*/
-					set_upload_param(up,'', false,'offical-web/hontech-rdcenter/commodity_board/');//commodity_board
+					set_upload_param(up,'', false,'ceshi/');//commodity_board
 				};
 			},
 
@@ -540,7 +549,7 @@ function UploadOss(num){
 				});
 			},
 			BeforeUpload: function(up, file) {
-				set_upload_param(up, file.name, true,'offical-web/hontech-rdcenter/commodity_board/');
+				set_upload_param(up, file.name, true,'ceshi/');
 			},
 			UploadFile: function(){
 				count = 1;
@@ -627,7 +636,7 @@ function UploadOss(num){
 }
 
 //商品介绍OSS文件上传
-function UploadOssS(){
+/*function UploadOssS(){
 	var uploader = new plupload.Uploader({
 		runtimes : 'html5,flash,silverlight,html4',
 		browse_button : d('detailed_operator_ingredientimg'),
@@ -722,7 +731,7 @@ function UploadOssS(){
 							alern('保存失败！');
 						}
 					});*/
-					alern('上传成功！');
+					/*alern('上传成功！');
 					console.log('upload to oss success, object name:' + get_uploaded_object_name() + ' 回调服务器返回的内容是:' + info.response);
 					//document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = 'upload to oss success, object name:' + get_uploaded_object_name() + ' 回调服务器返回的内容是:' + info.response;
 				}
@@ -765,9 +774,9 @@ function UploadOssS(){
 	});
 	uploader.init();
 }
-UploadOssS();
+UploadOssS();*/
 
-var operatorStars = 0;
+//var operatorStars = 0;
 function submit(){
 	var bodyCreat = d('body_creat');
 	var bodySubmit = d('body_submit');
@@ -779,22 +788,22 @@ function submit(){
 		console.log(that.value);
 	}*/
 
-	var operatorStar = c('detailed_operator_star');	//推荐星值打星
-	for(var i = 0; i < operatorStar.length; i++){
-		(function(q){
-			operatorStar[q].onclick = function(){
-				for(var j = 0; j < operatorStar.length; j++){
-					operatorStar[j].children[0].src = 'image/dxs.png';
-				}
-				for(var j = 0; j < (q+1); j++){
-					operatorStar[j].children[0].src = 'image/dx.png';
-					operatorStars = j+1;
-				}
-			}
-		})(i)
-	}
+	// var operatorStar = c('detailed_operator_star');	//推荐星值打星
+	// for(var i = 0; i < operatorStar.length; i++){
+	// 	(function(q){
+	// 		operatorStar[q].onclick = function(){
+	// 			for(var j = 0; j < operatorStar.length; j++){
+	// 				operatorStar[j].children[0].src = 'image/dxs.png';
+	// 			}
+	// 			for(var j = 0; j < (q+1); j++){
+	// 				operatorStar[j].children[0].src = 'image/dx.png';
+	// 				operatorStars = j+1;
+	// 			}
+	// 		}
+	// 	})(i)
+	// }
 
-	d('commodity_Infrared').onchange = function(){
+	/*d('commodity_Infrared').onchange = function(){
 		if(this.value > 600){
 			this.value = 0;
 			alern('红外加热时长必须介于0 - 600');
@@ -807,10 +816,10 @@ function submit(){
 			this.value = 0;
 			alern('红外加热时长不能为空！');
 		}
-	}
-	d('commodity_Infrared').oninput = function(){
+	}*/
+	/*d('commodity_Infrared').oninput = function(){
 		this.value=this.value.replace(/[^0-9]/);
-	}
+	}*/
 
 	d('commodity_microwave').onchange = function(){
 		if(this.value > 600){
@@ -830,7 +839,7 @@ function submit(){
 		this.value=this.value.replace(/[^0-9]/);
 	}
 
-	d('commodity_cooking').onchange = function(){
+	/*d('commodity_cooking').onchange = function(){
 		if(this.value > 300){
 			this.value = 0;
 			alern('烹饪温度必须介于0 - 300');
@@ -843,10 +852,10 @@ function submit(){
 			this.value = 0;
 			alern('烹饪温度不能为空！');
 		}
-	}
-	d('commodity_cooking').oninput = function(){
+	}*/
+	/*d('commodity_cooking').oninput = function(){
 		this.value=this.value.replace(/[^0-9]/);
-	}
+	}*/
 
 	//标准价格
 	d('commodity_price').oninput = function(){
@@ -882,7 +891,7 @@ function submit(){
 	let detailedOperatorImgS = c('detailed_operator_imgs');
 	let	OperatorPickimgBase = d('detailed_operator_pickimg').dataset.url;			//创建选餐图片
 	let	OperatorOrderimgBase = d('detailed_operator_orderimg').dataset.url;			//创建下单图片
-	let	OperatorIngredientimgBase = d('detailed_operator_ingredientimg').dataset.url;	//创建商品介绍
+	//let	OperatorIngredientimgBase = d('detailed_operator_ingredientimg').dataset.url;	//创建商品介绍
 	var imageFixed = c('image_fixed')[0];
 	let imageFixeds = c('image_fixeds')[0];
 	/*OperatorPickimg.onchange = function(e){
@@ -954,62 +963,62 @@ function submit(){
 			alern('未上传图片');
 		}
 	}
-	operatorIngredientimgBtn.onclick = function(){
-		let thisSplit = this.previousSibling.previousSibling.dataset.url.split('.');
-		if(this.previousSibling.previousSibling.dataset.url){
-			if(thisSplit[thisSplit.length-1] == 'mp4'||thisSplit[thisSplit.length-1] == '3gp'||thisSplit[thisSplit.length-1] == 'avi'){
-				loading('加载资源');
-				imageFixeds.innerHTML = '';
-				let video = creat('video');
-				video.autoplay = 'autoplay';
-				video.controls = 'controls';
-				video.src = this.previousSibling.previousSibling.dataset.url;
-				imageFixeds.appendChild(video);
-				imageFixeds.children[0].oncanplay = function(){
-					loadingClear();
-					imageFixeds.style.display = 'block';
-					imageFixeds.children[0].style.height = 'auto';
-					imageFixeds.children[0].style.width = 'auto';
-					if(imageFixeds.clientHeight < imageFixeds.children[0].clientHeight){
-						imageFixeds.children[0].style.height = imageFixeds.clientHeight - 50 + 'px';
-					}
-					if(imageFixeds.clientWidth < imageFixeds.children[0].clientWidth){
-						imageFixeds.children[0].style.width = imageFixeds.clientWidth - 50 + 'px';
-					}
-					imageFixeds.children[0].style.marginTop = (imageFixeds.clientHeight - imageFixeds.children[0].clientHeight)/2 + 'px';
-				}
-				imageFixeds.children[0].onerror = function(){
-					alern('发生错误或是该资源不存在！');
-					loadingClear();
-				}
-			}else{
-				loading('加载资源');
-				imageFixeds.style.display = 'block';
-				imageFixeds.innerHTML = '';
-				let img = creat('img');
-				img.src = this.previousSibling.previousSibling.dataset.url;
-				imageFixeds.appendChild(img);
-				imageFixeds.children[0].onload = function(){
-					loadingClear();
-					imageFixeds.children[0].style.height = 'auto';
-					imageFixeds.children[0].style.width = 'auto';
-					if(imageFixeds.clientHeight < imageFixeds.children[0].clientHeight){
-						imageFixeds.children[0].style.height = imageFixeds.clientHeight - 50 + 'px';
-					}
-					if(imageFixeds.clientWidth < imageFixeds.children[0].clientWidth){
-						imageFixeds.children[0].style.width = imageFixeds.clientWidth - 50 + 'px';
-					}
-					imageFixeds.children[0].style.marginTop = (imageFixeds.clientHeight - imageFixeds.children[0].clientHeight)/2 + 'px';
-				}
-				imageFixeds.children[0].onerror = function(){
-					alern('发生错误或是该资源不存在！');
-					loadingClear();
-				}
-			}
-		}else{
-			alern('未上传资源');
-		}
-	}
+	// operatorIngredientimgBtn.onclick = function(){
+	// 	let thisSplit = this.previousSibling.previousSibling.dataset.url.split('.');
+	// 	if(this.previousSibling.previousSibling.dataset.url){
+	// 		if(thisSplit[thisSplit.length-1] == 'mp4'||thisSplit[thisSplit.length-1] == '3gp'||thisSplit[thisSplit.length-1] == 'avi'){
+	// 			loading('加载资源');
+	// 			imageFixeds.innerHTML = '';
+	// 			let video = creat('video');
+	// 			video.autoplay = 'autoplay';
+	// 			video.controls = 'controls';
+	// 			video.src = this.previousSibling.previousSibling.dataset.url;
+	// 			imageFixeds.appendChild(video);
+	// 			imageFixeds.children[0].oncanplay = function(){
+	// 				loadingClear();
+	// 				imageFixeds.style.display = 'block';
+	// 				imageFixeds.children[0].style.height = 'auto';
+	// 				imageFixeds.children[0].style.width = 'auto';
+	// 				if(imageFixeds.clientHeight < imageFixeds.children[0].clientHeight){
+	// 					imageFixeds.children[0].style.height = imageFixeds.clientHeight - 50 + 'px';
+	// 				}
+	// 				if(imageFixeds.clientWidth < imageFixeds.children[0].clientWidth){
+	// 					imageFixeds.children[0].style.width = imageFixeds.clientWidth - 50 + 'px';
+	// 				}
+	// 				imageFixeds.children[0].style.marginTop = (imageFixeds.clientHeight - imageFixeds.children[0].clientHeight)/2 + 'px';
+	// 			}
+	// 			imageFixeds.children[0].onerror = function(){
+	// 				alern('发生错误或是该资源不存在！');
+	// 				loadingClear();
+	// 			}
+	// 		}else{
+	// 			loading('加载资源');
+	// 			imageFixeds.style.display = 'block';
+	// 			imageFixeds.innerHTML = '';
+	// 			let img = creat('img');
+	// 			img.src = this.previousSibling.previousSibling.dataset.url;
+	// 			imageFixeds.appendChild(img);
+	// 			imageFixeds.children[0].onload = function(){
+	// 				loadingClear();
+	// 				imageFixeds.children[0].style.height = 'auto';
+	// 				imageFixeds.children[0].style.width = 'auto';
+	// 				if(imageFixeds.clientHeight < imageFixeds.children[0].clientHeight){
+	// 					imageFixeds.children[0].style.height = imageFixeds.clientHeight - 50 + 'px';
+	// 				}
+	// 				if(imageFixeds.clientWidth < imageFixeds.children[0].clientWidth){
+	// 					imageFixeds.children[0].style.width = imageFixeds.clientWidth - 50 + 'px';
+	// 				}
+	// 				imageFixeds.children[0].style.marginTop = (imageFixeds.clientHeight - imageFixeds.children[0].clientHeight)/2 + 'px';
+	// 			}
+	// 			imageFixeds.children[0].onerror = function(){
+	// 				alern('发生错误或是该资源不存在！');
+	// 				loadingClear();
+	// 			}
+	// 		}
+	// 	}else{
+	// 		alern('未上传资源');
+	// 	}
+	// }
 	imageFixed.onclick = function(){
 		this.style.display = 'none';
 	}
@@ -1018,15 +1027,15 @@ function submit(){
 	}
 
 	//商品介绍资源清空按钮
-	d('detailed_operator_ingredientimg_delete_btn').onclick = function(){
-		if(c('detailed_operator_imgs')[0].innerHTML){
-			c('detailed_operator_imgs')[0].setAttribute('data-url',c('detailed_operator_imgs')[0].innerHTML);
-			c('detailed_operator_imgs')[0].innerHTML = '';
-			d('detailed_operator_ingredientimg').setAttribute('data-url','');
-		}else{
-			alern('没有内容！');
-		}
-	}
+	// d('detailed_operator_ingredientimg_delete_btn').onclick = function(){
+	// 	if(c('detailed_operator_imgs')[0].innerHTML){
+	// 		c('detailed_operator_imgs')[0].setAttribute('data-url',c('detailed_operator_imgs')[0].innerHTML);
+	// 		c('detailed_operator_imgs')[0].innerHTML = '';
+	// 		d('detailed_operator_ingredientimg').setAttribute('data-url','');
+	// 	}else{
+	// 		alern('没有内容！');
+	// 	}
+	// }
 
 	bodyCreat.onclick = function(){
 		type = 1;
@@ -1034,146 +1043,157 @@ function submit(){
 		for(var i = 0; i < orightFootItem.length; i++){
 			orightFootItem[i].style.display = 'block';
 		}
-		d('commodity_operator').value = "";									//运营方
-		d('commodity_operator').name = "";									//运营方
+		//d('commodity_operator').value = "";								//运营方
+		//d('commodity_operator').name = "";								//运营方
 		d('commodity_num').value = "";										//商品编号
+		d('commodity_elemid').value = "";									//饿了么ID
 		d('commodity_name').value = "";										//商品名称
 		d('commodity_price').value = "";									//标准价格
-		d('commodity_shelf').value = "";									//保质期
-		for(var i = 0; i < d('model_multiple').children.length-1; i++){		//货道规格
-			d('model_multiple').children[i].children[0].checked = false;
-		}
-		for(var i = 0; i < c('detailed_operator_star').length; i++){		//推荐星值
-			c('detailed_operator_star')[i].children[0].src = "image/dxs.png";
-		}
-		operatorStars = 0;
+		//d('commodity_shelf').value = "";									//保质期
+		// for(var i = 0; i < d('model_multiple').children.length-1; i++){	//货道规格
+		// 	d('model_multiple').children[i].children[0].checked = false;
+		// }
+		// for(var i = 0; i < c('detailed_operator_star').length; i++){		//推荐星值
+		// 	c('detailed_operator_star')[i].children[0].src = "image/dxs.png";
+		// }
+		//operatorStars = 0;
 		d('commodity_code').value = "";										//条形编码
-		d('commodity_Infrared').value = "0";								//红外加热
-		d('commodity_microwave').value = "0";								//微博加热
-		d('commodity_cooling').value = "15";								//散热时间
-		d('commodity_cooking').value = "0";									//烹饪温度
-		d('commodity_supplier').value = "";									//供应商
+		//d('commodity_Infrared').value = "0";								//红外加热
+		d('commodity_microwave').value = "0";								//加热时间
+		//d('commodity_cooling').value = "15";								//散热时间
+		//d('commodity_cooking').value = "0";								//烹饪温度
+		//d('commodity_supplier').value = "";								//供应商
 		c('detailed_operator_pickimg')[0].innerHTML = "";					//选餐图片
 		d('detailed_operator_pickimg').value = "";					
 		d('detailed_operator_pickimg').setAttribute('data-url','');					
 		c('detailed_operator_orderimg')[0].innerHTML = "";					//下单图片
 		d('detailed_operator_orderimg').value = "";
 		d('detailed_operator_orderimg').setAttribute('data-url','');					
-		c('detailed_operator_ingredientimg')[0].innerHTML = "";				//商品介绍
-		d('detailed_operator_ingredientimg').value = "";
-		d('detailed_operator_ingredientimg').setAttribute('data-url','');			
-		d('commodity_remark').value = "";									//备注
+		//c('detailed_operator_ingredientimg')[0].innerHTML = "";			//商品介绍
+		//d('detailed_operator_ingredientimg').value = "";
+		//d('detailed_operator_ingredientimg').setAttribute('data-url','');			
+		//d('commodity_remark').value = "";									//备注
+		d('detailed_operator_not').checked = false;							//非设备商品
 		d('detailed_operator_stop').checked = false;						//停用启用
 		
 		var BodyLeftList = c('operator_body_left_list');
 		for(var j = 0; j < BodyLeftList.length; j++){
 			BodyLeftList[j].style.backgroundColor = "rgba(0,0,0,0)";
 		}
+		WmStartSelect();
 
 		//渲染运营方下拉框
-		var operatorSelect = c('operator_select')[0];
-		var operatorSelectUl = c('operator_select_ul')[0];
-		if(operatorSelectUl != undefined){
-			operatorSelectUl.parentNode.removeChild(operatorSelectUl);
-		};
-		function operatorSel(){
-			var ul = creat('ul');
-			ul.className = "operator_select_ul";
-			ul.style.minWidth = operatorSelect.clientWidth + 'px';
-			for(i = 0; i < DATALEFT.length; i++){
-				var li = creat('li');
-				li.innerHTML = DATALEFT[i].text;
-				li.setAttribute('data-value',DATALEFT[i].operatorID);
-				ul.appendChild(li);
-			}
-			operatorSelect.parentNode.appendChild(ul);
-			var operatorSelectUl = c('operator_select_ul')[0];
-			operatorSelect.onfocus = function(){
-				operatorSelectUl.style.display = "inline";
-			}
-			operatorSelect.onblur = function(){
-				operatorSelectUl.style.display = "none";
-			}
-			operatorSelect.value = operatorSelectUl.children[0].innerHTML;
-			operatorSelect.name = operatorSelectUl.children[0].dataset.value;
-			for(var i = 0; i < operatorSelectUl.children.length; i++){
-				operatorSelectUl.children[i].onmousedown = function(){
-					operatorSelect.value = this.innerHTML;
-					operatorSelect.name = this.dataset.value;
-				}
-			}
-		}
-		if(loginUserName.operatorID == 1){
-			operatorSel();
-		}else{
-			$.ajax({
-				type: 'post',
-				url: URLS + '/operate/getOperate.json',
-				data: {
-					operatorID: loginUserName.operatorID,
-				},
-				success: function(data){
+		// var operatorSelect = c('operator_select')[0];
+		// var operatorSelectUl = c('operator_select_ul')[0];
+		// if(operatorSelectUl != undefined){
+		// 	operatorSelectUl.parentNode.removeChild(operatorSelectUl);
+		// };
+		// function operatorSel(){
+		// 	var ul = creat('ul');
+		// 	ul.className = "operator_select_ul";
+		// 	ul.style.minWidth = operatorSelect.clientWidth + 'px';
+		// 	for(i = 0; i < DATALEFT.length; i++){
+		// 		var li = creat('li');
+		// 		li.innerHTML = DATALEFT[i].text;
+		// 		li.setAttribute('data-value',DATALEFT[i].operatorID);
+		// 		ul.appendChild(li);
+		// 	}
+		// 	operatorSelect.parentNode.appendChild(ul);
+		// 	var operatorSelectUl = c('operator_select_ul')[0];
+		// 	operatorSelect.onfocus = function(){
+		// 		operatorSelectUl.style.display = "inline";
+		// 	}
+		// 	operatorSelect.onblur = function(){
+		// 		operatorSelectUl.style.display = "none";
+		// 	}
+		// 	operatorSelect.value = operatorSelectUl.children[0].innerHTML;
+		// 	operatorSelect.name = operatorSelectUl.children[0].dataset.value;
+		// 	for(var i = 0; i < operatorSelectUl.children.length; i++){
+		// 		operatorSelectUl.children[i].onmousedown = function(){
+		// 			operatorSelect.value = this.innerHTML;
+		// 			operatorSelect.name = this.dataset.value;
+		// 		}
+		// 	}
+		// }
+		// if(loginUserName.operatorID == 1){
+		// 	operatorSel();
+		// }else{
+		// 	$.ajax({
+		// 		type: 'post',
+		// 		url: URLS + '/operate/getOperate.json',
+		// 		data: {
+		// 			operatorID: loginUserName.operatorID,
+		// 		},
+		// 		success: function(data){
 
-					var ul = creat('ul');
-					ul.className = "operator_select_ul";
-					ul.style.minWidth = operatorSelect.clientWidth + 'px';
-					var li = creat('li');
-					li.innerHTML = data.operator;
-					li.setAttribute('data-value',data.operatorID);
-					ul.appendChild(li);
-					operatorSelect.parentNode.appendChild(ul);
-					var operatorSelectUl = c('operator_select_ul')[0];
-					operatorSelect.onfocus = function(){
-						operatorSelectUl.style.display = "inline";
-					}
-					operatorSelect.onblur = function(){
-						operatorSelectUl.style.display = "none";
-					}
-					operatorSelect.value = operatorSelectUl.children[0].innerHTML;
-					operatorSelect.name = operatorSelectUl.children[0].dataset.value;
-					for(var i = 0; i < operatorSelectUl.children.length; i++){
-						operatorSelectUl.children[i].onmousedown = function(){
-							operatorSelect.value = this.innerHTML;
-							operatorSelect.name = this.dataset.value;
-						}
-					}
-				}
-			})
-		}
+		// 			var ul = creat('ul');
+		// 			ul.className = "operator_select_ul";
+		// 			ul.style.minWidth = operatorSelect.clientWidth + 'px';
+		// 			var li = creat('li');
+		// 			li.innerHTML = data.operator;
+		// 			li.setAttribute('data-value',data.operatorID);
+		// 			ul.appendChild(li);
+		// 			operatorSelect.parentNode.appendChild(ul);
+		// 			var operatorSelectUl = c('operator_select_ul')[0];
+		// 			operatorSelect.onfocus = function(){
+		// 				operatorSelectUl.style.display = "inline";
+		// 			}
+		// 			operatorSelect.onblur = function(){
+		// 				operatorSelectUl.style.display = "none";
+		// 			}
+		// 			operatorSelect.value = operatorSelectUl.children[0].innerHTML;
+		// 			operatorSelect.name = operatorSelectUl.children[0].dataset.value;
+		// 			for(var i = 0; i < operatorSelectUl.children.length; i++){
+		// 				operatorSelectUl.children[i].onmousedown = function(){
+		// 					operatorSelect.value = this.innerHTML;
+		// 					operatorSelect.name = this.dataset.value;
+		// 				}
+		// 			}
+		// 		}
+		// 	})
+		// }
 	}
 	bodySubmit.onclick = function(){
 		//详细信息提交
-		var commodityOperator = d('commodity_operator').name;			//运营方ID
-		var commodityOperatorV = d('commodity_operator').value;			//运营方名称
+		//var commodityOperator = d('commodity_operator').name;			//运营方ID
+		//var commodityOperatorV = d('commodity_operator').value;		//运营方名称
 		var commodityNum = d('commodity_num').value;					//商品编号
+		var commodityElemid = d('commodity_elemid').value;				//饿了么ID
+		var commodityElemidvalue = d('commodity_elemid').dataset.value;	//饿了么商品规格
 		var commodityName = d('commodity_name').value;					//商品名称
 		var commodityPrice = d('commodity_price').value;				//标准价格
-		var commodityShelf = d('commodity_shelf').value;				//保质期
-		var modelMultipleDiv = "";										//货道规格
-		for(var i = 0; i < c('model_multiple_div').length; i++){
-			if(c('model_multiple_div')[i].children[0].checked){
-				modelMultipleDiv += c('model_multiple_div')[i].children[0].name + ",";
-			}
-		}
-		var modelMultipleDivs = "";
-		for(var i = 0; i < modelMultipleDiv.length-1; i++){
-			modelMultipleDivs += modelMultipleDiv[i];
-		}								//推荐星值
+		//var commodityShelf = d('commodity_shelf').value;				//保质期
+		//var modelMultipleDiv = "";										//货道规格
+		// for(var i = 0; i < c('model_multiple_div').length; i++){
+		// 	if(c('model_multiple_div')[i].children[0].checked){
+		// 		modelMultipleDiv += c('model_multiple_div')[i].children[0].name + ",";
+		// 	}
+		// }
+		// var modelMultipleDivs = "";
+		// for(var i = 0; i < modelMultipleDiv.length-1; i++){
+		// 	modelMultipleDivs += modelMultipleDiv[i];
+		// }								//推荐星值
 		var commodityCode = d('commodity_code').value;					//条形编码
-		var commodityInfrared = d('commodity_Infrared').value;			//红外加热
-		var commodityMicrowave = d('commodity_microwave').value;		//微博加热
-		var commodityCooling = d('commodity_cooling').value;			//散热时间
-		var commodityCooking = d('commodity_cooking').value;			//烹饪温度
-		var commoditySupplier = d('commodity_supplier').value;			//供应商
-		var commodityType = d('commodity_type').dataset.value;			//工艺类型(编号)
-		var commodityTypeName = d('commodity_type').value;				//工艺类型(名称)
+		//var commodityInfrared = d('commodity_Infrared').value;		//红外加热
+		var commodityMicrowave = d('commodity_microwave').value;		//加热时间
+		//var commodityCooling = d('commodity_cooling').value;			//散热时间
+		//var commodityCooking = d('commodity_cooking').value;			//烹饪温度
+		//var commoditySupplier = d('commodity_supplier').value;			//供应商
+		//var commodityType = d('commodity_type').dataset.value;			//工艺类型(编号)
+		//var commodityTypeName = d('commodity_type').value;				//工艺类型(名称)
 		OperatorPickimgBase = d('detailed_operator_pickimg').dataset.url;			//创建选餐图片
 		OperatorOrderimgBase = d('detailed_operator_orderimg').dataset.url;			//创建下单图片
-		OperatorIngredientimgBase = d('detailed_operator_ingredientimg').dataset.url;	//创建商品介绍
+		//OperatorIngredientimgBase = d('detailed_operator_ingredientimg').dataset.url;	//创建商品介绍
 		var OperatorPickimgBases = d('detailed_operator_pickimg').dataset.url;			//修改选餐图片
 		var OperatorOrderimgBases = d('detailed_operator_orderimg').dataset.url;		//修改下单图片
-		var OperatorIngredientimgBases = d('detailed_operator_ingredientimg').dataset.url;	//修改商品介绍
-		var commodityRemark = d('commodity_remark').value;				//备注
+		//var OperatorIngredientimgBases = d('detailed_operator_ingredientimg').dataset.url;	//修改商品介绍
+		//var commodityRemark = d('commodity_remark').value;				//备注
+
+	 	if(d('detailed_operator_not').checked){						//非设备商品
+	 		var detailedOperatorNot = false;
+	 	}else{
+	 		var detailedOperatorNot = true;
+	 	}
 	 	if(d('detailed_operator_stop').checked){						//停用启用
 	 		var detailedOperatorStop = 0;
 	 	}else{
@@ -1181,157 +1201,132 @@ function submit(){
 	 	}
 	 	var commodityError = "";
 
-		if(d('commodity_operator').value == ""||d('commodity_operator').name== ""){
-			commodityError += '运营方不能为空<br/>';
-		}
-		if(d('commodity_name').value == ""){
+		// if(d('commodity_operator').value == ""||d('commodity_operator').name== ""){
+		// 	commodityError += '运营方不能为空<br/>';
+		// }
+		if(!commodityName){
 			commodityError += '商品名称不能为空<br/>';
 		}
-		if(d('commodity_price').value == ""){
+		if(!commodityPrice){
 			commodityError += '标准价格不能为空<br/>';
 		}
-		if(modelMultipleDivs == ""){
+		if(!commodityCode){
 			commodityError += '货道规格不能为空<br/>';
 		}
-		if(d('commodity_shelf').value == ""){
-			commodityError += '保质期不能为空<br/>';
-		}
+		// if(d('commodity_shelf').value == ""){
+		// 	commodityError += '保质期不能为空<br/>';
+		// }
 		if(commodityError != ""){
 			alern(commodityError);
 			return false;
 		}
-		loading();
-		//检测条码是否重复
-		$.ajax({
-			type: 'post',
-			url: URLZ + '/jf/bg/basic/gdsm/check.json',
-			data: {
-				opreatorId: d('commodity_operator').name,
-				barCodeNo: d('commodity_code').value,
-			},
-			async: false,
-			success: function(data){
-				if(data.obj != 0){
-					if(data.obj.waresId != commodityNum){
-						alern('条码与'+data.obj.waresName+'重复!');
-						d('commodity_code').value = "";
-						loadingClear();
-						return false;
-					}
-				}
 				
-				var commodityobj = new Object();
-				commodityobj.operatorID = commodityOperator;
-				commodityobj.operParty = commodityOperatorV;
-				commodityobj.waresId = commodityNum;
-				commodityobj.waresName = commodityName;
-				commodityobj.waresPrice = commodityPrice;
-				commodityobj.quaGuaPeriod = commodityShelf;
-				commodityobj.theGoodsModel = modelMultipleDivs;
-				commodityobj.starValue = operatorStars;
-				commodityobj.barCodeNo = commodityCode;
-				commodityobj.infraredheating = commodityInfrared;
-				commodityobj.microwaveheating = commodityMicrowave;
-				commodityobj.heatDissipationTime = commodityCooling;
-				commodityobj.cooking = commodityCooking;
-				commodityobj.supplier = commoditySupplier;
-				commodityobj.workmanshipId = commodityType;
-				commodityobj.workmanshipName = commodityTypeName;
-				commodityobj.remark = commodityRemark;
-				commodityobj.dltflag = detailedOperatorStop;
-				commodityobj.updateBy = loginUserName.empcode;
-				if(type == 1){
-					$.ajax({
-						type: 'post',
-						url: URLS + '/jf/bg/basic/gdsm/add.json',
-						data: {
-							obj: JSON.stringify(commodityobj),
-							picture1: OperatorPickimgBase,
-							picture2: OperatorOrderimgBase,
-							picture3: OperatorIngredientimgBase,
-						},
-						success: function(data){
-							alert('保存成功');
-							loadingClear();
-							startbody();
-							c('operator_home_head_submit')[0].click();
-						}
-					})
-				}else if(type == 0){
-					if(OperatorPickimgBase != ""){
-						OperatorPickimgBases = OperatorPickimgBase;
-					}
-					if(OperatorOrderimgBase != ""){
-						OperatorOrderimgBases = OperatorOrderimgBase;
-					}
-					if(OperatorIngredientimgBase != ""){
-						OperatorIngredientimgBases = OperatorIngredientimgBase;
-					}
-					$.ajax({
-						type: 'post',
-						url: URLS + '/jf/bg/basic/gdsm/update.json',
-						data: {
-							obj: JSON.stringify(commodityobj),
-							picture1: OperatorPickimgBases,
-							picture2: OperatorOrderimgBases,
-							picture3: OperatorIngredientimgBases,
-						},
-						success: function(data){
-							for(let i = 0; i < detailedOperatorImg.length; i++){
-								if(detailedOperatorImg[i].dataset.url){
-									$.ajax({
-										type: 'post',
-										url: URLS + '/oss/upload/deleteOssUrl.json',
-										data: {
-											ossUrl: detailedOperatorImg[i].dataset.url,
-											setUrl: 'offical-web/hontech-rdcenter/commodity_board/',
-										},
-										async: false,
-										success: function(data){
-											if(data.result === 1){
-												console.log('OSS资源删除成功！');
-											}else if(data.result === 0){
-												console.log('OSS资源删除失败！');
-											}else{
-												console.log('OSS资源删除出现未知错误！');
-											}
-										}
-									})
-								}
-							}
-							for(let i = 0; i < detailedOperatorImgS.length; i++){
-								if(detailedOperatorImgS[i].dataset.url){
-									$.ajax({
-										type: 'post',
-										url: URLS + '/oss/upload/deleteOssUrl.json',
-										data: {
-											ossUrl: detailedOperatorImgS[i].dataset.url,
-											setUrl: 'offical-web/hontech-rdcenter/commodity_board/',
-										},
-										async: false,
-										success: function(data){
-											if(data.result === 1){
-												console.log('OSS资源删除成功！');
-											}else if(data.result === 0){
-												console.log('OSS资源删除失败！');
-											}else{
-												console.log('OSS资源删除出现未知错误！');
-											}
-										}
-									})
-								}
-							}
-							alert('保存成功');
-							loadingClear();
-							startbody();
-							c('operator_home_head_submit')[0].click();
-						}
-					})
-				}else{
-					alern('请先点击创建或选择商品！');
+		var commodityobj = new Object();
+		commodityobj.itemName = commodityName;
+		commodityobj.itemPrice = commodityPrice;
+		commodityobj.itemId = commodityNum;
+		commodityobj.itemStarValue = 1;
+		commodityobj.itemBarCode = commodityCode;
+		commodityobj.itemHeatingTime = commodityMicrowave;
+		commodityobj.itemHeatingTimeUnit = 's';
+		commodityobj.isOutGoods = detailedOperatorNot;
+		//commodityobj.starValue = operatorStars;
+		commodityobj.itemShowImg = OperatorPickimgBase;
+		commodityobj.itemOrderImg = OperatorOrderimgBase;
+		commodityobj.itemElmId = commodityElemid?commodityElemid:0;
+		commodityobj.itemMeituanId = 0;
+		commodityobj.itemKryId = 0;
+		commodityobj.deleted = detailedOperatorStop;
+		!commodityElemidvalue?commodityobj.specs = []:commodityobj.specs = JSON.parse(commodityElemidvalue);
+		if(type == 1){
+			$.ajax({
+				type: 'post',
+				url: URLS + '/item/add',
+				data: {
+					obj: JSON.stringify(commodityobj),
+				},
+				setHeader: {
+					username: loginUserName.empcode,
+					token: loginUserName.token
+				},
+				success: function(data){
+					alert('保存成功');
+					loadingClear();
+					startbody();
+					c('operator_home_head_submit')[0].click();
 				}
+			})
+		}else if(type == 0){
+			if(OperatorPickimgBase != ""){
+				OperatorPickimgBases = OperatorPickimgBase;
 			}
-		})
+			if(OperatorOrderimgBase != ""){
+				OperatorOrderimgBases = OperatorOrderimgBase;
+			}
+			$.ajax({
+				type: 'post',
+				url: URLS + '/item/update',
+				data: {
+					obj: JSON.stringify(commodityobj),
+				},
+				setHeader: {
+					username: loginUserName.empcode,
+					token: loginUserName.token
+				},
+				success: function(data){
+					for(let i = 0; i < detailedOperatorImg.length; i++){
+						if(detailedOperatorImg[i].dataset.url){
+							$.ajax({
+								type: 'post',
+								url: URLS + '/oss/upload/deleteOssUrl.json',
+								data: {
+									ossUrl: detailedOperatorImg[i].dataset.url,
+									setUrl: 'ceshi/',
+								},
+								async: false,
+								success: function(data){
+									if(data.result === 1){
+										console.log('OSS资源删除成功！');
+									}else if(data.result === 0){
+										console.log('OSS资源删除失败！');
+									}else{
+										console.log('OSS资源删除出现未知错误！');
+									}
+								}
+							})
+						}
+					}
+					for(let i = 0; i < detailedOperatorImgS.length; i++){
+						if(detailedOperatorImgS[i].dataset.url){
+							$.ajax({
+								type: 'post',
+								url: URLS + '/oss/upload/deleteOssUrl.json',
+								data: {
+									ossUrl: detailedOperatorImgS[i].dataset.url,
+									setUrl: 'ceshi/',
+								},
+								async: false,
+								success: function(data){
+									if(data.result === 1){
+										console.log('OSS资源删除成功！');
+									}else if(data.result === 0){
+										console.log('OSS资源删除失败！');
+									}else{
+										console.log('OSS资源删除出现未知错误！');
+									}
+								}
+							})
+						}
+					}
+					alert('保存成功');
+					loadingClear();
+					startbody();
+					c('operator_home_head_submit')[0].click();
+				}
+			})
+		}else{
+			alern('请先点击创建或选择商品！');
+		}
 	}
 }
 
@@ -1340,72 +1335,112 @@ d('detailed_operator_delete').onclick = function(){
 	var CommodityNum = d('commodity_num').value;	//商品编号
 	var DetailedOperatorPickimg = c('detailed_operator_pickimg')[0].innerHTML;				//商品图片
 	var DetailedOperatorOrderimg = c('detailed_operator_orderimg')[0].innerHTML;			//下单图片
-	var DetailedOperatorIngredientimg = c('detailed_operator_ingredientimg')[0].innerHTML;	//商品介绍
 	CommodityNum?commodityGetData(1):commodityGetData(2);
 
 	function commodityGetData(num){
 		if(num == 1){
-			$.ajax({
-				type: 'post',
-				url: URLS + '/jf/bg/basic/gdsm/judge.json',
-				data: {
-					id: CommodityNum,
-				},
-				success: function(data){
-					console.log(data);
-					if(data.code == 10001||data.code == 10002){
-						if(confirm(data.msg)){
-							loading();
-							$.ajax({
-								type: 'post',
-								url: URLS + '/jf/bg/basic/gdsm/remove.json',
-								data: {
-									id: CommodityNum,
-								},
-								success: function(msg){
-									alern(msg.msg);
-									loadingClear();
-									startbody();
-									c('operator_home_head_submit')[0].click();
-									if(msg.code == 10001){
-										var DetailedOperatorImages = [];
-										DetailedOperatorPickimg?DetailedOperatorImages.push(DetailedOperatorPickimg):false;
-										DetailedOperatorOrderimg?DetailedOperatorImages.push(DetailedOperatorOrderimg):false;
-										DetailedOperatorIngredientimg?DetailedOperatorImages.push(DetailedOperatorIngredientimg):false;
-										console.log(DetailedOperatorImages);
-										for(var i = 0; i < DetailedOperatorImages.length; i++){
-											$.ajax({
-												type: 'post',
-												url: URLS + '/oss/upload/deleteOssUrl.json',
-												data: {
-													ossUrl: DetailedOperatorImages[i],
-													setUrl: 'offical-web/hontech-rdcenter/commodity_board/',
-												},
-												async: false,
-												success: function(data){
-													if(data.result === 1){
-														console.log('OSS资源删除成功！');
-													}else if(data.result === 0){
-														console.log('OSS资源删除失败！');
-													}else{
-														console.log('OSS资源删除出现未知错误！');
-													}
-												}
-											})
+			if(confirm('确认删除商品?')){
+				loading();
+				$.ajax({
+					type: 'post',
+					url: URLS + '/item/delete',
+					data: {
+						itemId: CommodityNum,
+					},
+					success: function(msg){
+						log(msg);
+						alern(msg.msg);
+						loadingClear();
+						startbody();
+						c('operator_home_head_submit')[0].click();
+						if(msg.status == 10001){
+							var DetailedOperatorImages = [];
+							DetailedOperatorPickimg?DetailedOperatorImages.push(DetailedOperatorPickimg):false;
+							DetailedOperatorOrderimg?DetailedOperatorImages.push(DetailedOperatorOrderimg):false;
+							for(var i = 0; i < DetailedOperatorImages.length; i++){
+								log(DetailedOperatorImages[i]);
+								$.ajax({
+									type: 'post',
+									url: URLS + '/oss/upload/deleteOssUrl.json',
+									data: {
+										ossUrl: DetailedOperatorImages[i],
+										setUrl: 'ceshi/',
+									},
+									success: function(data){
+										if(data.result === 1){
+											console.log('OSS资源删除成功！');
+										}else if(data.result === 0){
+											console.log('OSS资源删除失败！');
+										}else{
+											console.log('OSS资源删除出现未知错误！');
 										}
 									}
-								}
-							})
+								})
+							}
 						}
-					}else{
-						alern(data.msg);
 					}
-				}
-			});
+				})
+			}
 		}else if(num == 2){
 			alern('没有指定要删除的商品！');
 			return false;
 		}
+	}
+}
+
+//查询功能
+d('search_commodity').onclick = function(){
+	var shopId = d('shop_id').value;
+	if(!shopId){
+		alern('请输入店铺ID后再点查询！');
+		return false;
+	}
+	ajax({
+		type: 'post',
+		url: URLS + '/item/elm/get',
+		data: {
+			storeId: shopId,
+		},
+		setHeader: {
+			username: loginUserName.empcode,
+			token: loginUserName.token,
+			shopId: shopId,
+		},
+		dataType: 'json',
+		success: function(data){
+			log(data);
+			if(Object.is(data.status,10001)){
+				commoditySelect(data.resultObject);
+			}else{
+				alern(data.msg);
+			}
+		}
+	})
+}
+
+
+//商品导入功能
+function commoditySelect(data){
+	log(data);
+	var commodityElemid = d('commodity_elemid');	//饿了么商品ID
+	var commodityName = d('commodity_name');		//商品名称
+	var commodityPrice = d('commodity_price');		//商品价格
+
+	var operatorBodyRightFootItemUl = c('operator_body_right_foot_item_ul')[0];
+	operatorBodyRightFootItemUl.innerHTML = "";
+	log(operatorBodyRightFootItemUl);
+	log(data);
+	for(var i = 0; i < data.length; i++){
+		var li = creat('li');
+		li.innerHTML = data[i].name;
+		li.value = data[i].id;
+		li.setAttribute('data-value',JSON.stringify(data[i].specs));
+		li.onmousedown = function(){
+			commodityElemid.value = this.value;
+			commodityElemid.setAttribute('data-value',this.dataset.value);
+			commodityPrice.value = JSON.parse(this.dataset.value)[0].price;
+		}
+		operatorBodyRightFootItemUl.appendChild(li);
 	}
 }
 

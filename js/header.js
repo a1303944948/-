@@ -7,7 +7,7 @@ document.writeln("						<img src=\'image/logo.jpg\'/>");
 document.writeln("					</a>");
 document.writeln("				</div>");
 document.writeln("				<div class=\'header_title\'>");
-document.writeln("					鸿丰智能终端管理系统");
+document.writeln("					稻吟网络科技有限公司");
 document.writeln("				</div>");
 document.writeln("			</div>");
 document.writeln("			<div class=\'header_right_bottom\'>");
@@ -16,16 +16,9 @@ document.writeln("				</div>");
 document.writeln("				<div class=\'header_user\'>");
 document.writeln("					欢迎，"+loginUserName.name+"<b></b>");
 document.writeln("					<div class=\'header_user_slip\'>");
-document.writeln("						<span id='pay_ment'><img src=\'image/czjf.png\'>充值缴费</span>");
+//document.writeln("						<span id='pay_ment'><img src=\'image/czjf.png\'>充值缴费</span>");
 document.writeln("						<span id='edit_pass'><img src=\'image/zhgl.png\'>修改密码</span>");
 document.writeln("						<span id='exit_login'><img src=\'image/tc.png\'>安全退出</span>");
-document.writeln("					</div>");
-document.writeln("				</div>");
-document.writeln("				<div class=\'header_notice\'>");
-document.writeln("					<img src=\'image/xxtz.png\' title=\'系统通知\'/><b class=\'header_notice_b\'></b>");
-document.writeln("					<div class=\'header_notice_list\'>");
-document.writeln("						<div class=\'header_notice_list_top\'></div><div class=\'clear\'></div>");
-document.writeln("						<ul class=\'header_notice_list_ul\'></ul>");
 document.writeln("					</div>");
 document.writeln("				</div>");
 document.writeln("				<div class=\'clear\'></div>");
@@ -35,170 +28,6 @@ document.writeln("		</div>");
 document.writeln("		<div class=\'clear\'></div>");
 document.writeln("	</header>");
 document.writeln("	<div class=\'header\'></div>");
-
-//系统公告通知
-function noticed(){
-	var headerNotice = c('header_notice')[0];
-	var headerNoticeList = c('header_notice_list')[0];
-	var timor,clearTimor;
-
-	//系统公告的头部展开收起效果
-	headerNotice.onmouseenter = function(){
-		headerNotice.style.backgroundColor = '#323F52';
-		headerNoticeList.style.display = 'block';
-		//如果检测到存在未被执行的隐藏事件将被立即清除
-		if(clearTimor !== undefined){
-			clearTimeout(clearTimor);
-		}
-		timor = setTimeout(function(){
-			headerNoticeList.style.opacity = '1';
-			headerNoticeList.style.top = '50px';
-			clearTimeout(timor);
-		},15);
-	}
-	headerNotice.onmouseleave = function(){
-		headerNotice.style.backgroundColor = 'transparent';
-		headerNoticeList.style.opacity = '0';
-		headerNoticeList.style.top = '30px';
-		//如果检测到存在未被执行的隐藏事件将被立即清除
-		if(clearTimor !== undefined){
-			clearTimeout(clearTimor);
-		}
-		clearTimor = setTimeout(function(){
-			headerNoticeList.style.display = 'none';
-			clearTimeout(clearTimor);
-			clearTimor = undefined;
-		},300)
-	}
-
-	var headerNoticeB = c('header_notice_b')[0];	//未查看消息条数统计
-	//系统公告的主要内容渲染
-	var alertNoticeArr = [];		//弹窗消息汇总
-	$.ajax({
-		type: 'post',
-		url: URLX + '/jf/announcement/search.json',
-		data: {
-			id: '',
-			deleted: 0,
-			usercode: loginUserName.empcode,
-		},
-		success: function(data){
-			var headerNoticeListUl = c('header_notice_list_ul')[0];
-			headerNoticeListUl.innerHTML = '';
-			if(!data.objs){
-				var li = creat('li');
-				li.innerHTML = '暂无公告';
-				headerNoticeListUl.appendChild(li);
-				headerNoticeB.style.opacity = '0';
-				return false;
-			}else{
-				data.objs.reverse();
-			}
-			var headerNoticeBCount = 0;	//未查看消息条数统计
-			for(var i = 0; i < data.objs.length; i++){
-				var li = creat('li');
-				li.setAttribute('data-value',JSON.stringify(data.objs[i]));
-				if(!data.objs[i].usercode){
-					if(data.objs[i].type === 1){
-						headerNoticeBCount++;
-						li.innerHTML = data.objs[i].title + '<b></b>';
-					}else if(data.objs[i].type === 2){
-						li.innerHTML = data.objs[i].title;
-						var alertNoticeObj = {};
-						alertNoticeObj.title = data.objs[i].title;
-						alertNoticeObj.content = data.objs[i].content;
-						alertNoticeArr.push(alertNoticeObj);
-						var headerNoticeListUlLiObj = {};
-						headerNoticeListUlLiObj.id = data.objs[i].id;
-						headerNoticeListUlLiObj.usercode = loginUserName.empcode;
-						$.ajax({
-							type: 'post',
-							url: URLX + '/jf/announcement/update.json',
-							data: {
-								obj: JSON.stringify(headerNoticeListUlLiObj),
-							},
-							success: function(msg){
-							}
-						})
-					}
-				}else{
-					var isNull = 1;
-					for(var j in data.objs[i].usercode.split(',')){
-						if(data.objs[i].usercode.split(',')[j] === loginUserName.empcode){
-							isNull = 2;
-						}
-					}
-					if(data.objs[i].type === 1){
-						if(isNull === 1){
-							headerNoticeBCount++;
-							li.innerHTML = data.objs[i].title + '<b></b>';
-						}else{
-							li.innerHTML = data.objs[i].title;
-						}
-					}else if(data.objs[i].type === 2){
-						if(isNull === 1){
-							var alertNoticeObj = {};
-							alertNoticeObj.title = data.objs[i].title;
-							alertNoticeObj.content = data.objs[i].content;
-							alertNoticeArr.push(alertNoticeObj);
-							var headerNoticeListUlLiObj = {};
-							headerNoticeListUlLiObj.id = data.objs[i].id;
-							headerNoticeListUlLiObj.usercode = loginUserName.empcode;
-							$.ajax({
-								type: 'post',
-								url: URLX + '/jf/announcement/update.json',
-								data: {
-									obj: JSON.stringify(headerNoticeListUlLiObj),
-								},
-								success: function(msg){
-								}
-							})
-						}
-						li.innerHTML = data.objs[i].title;
-					}
-				}
-
-				li.onclick = function(){
-					var headerNoticeListUlLiObj = {};
-					headerNoticeListUlLiObj.id = JSON.parse(this.dataset.value).id;
-					headerNoticeListUlLiObj.usercode = loginUserName.empcode;
-					alern(JSON.parse(this.dataset.value).content,JSON.parse(this.dataset.value).title);
-					$.ajax({
-						type: 'post',
-						url: URLX + '/jf/announcement/update.json',
-						data: {
-							obj: JSON.stringify(headerNoticeListUlLiObj),
-						},
-						success: function(msg){
-							noticed();
-						}
-					})
-				}
-				headerNoticeListUl.appendChild(li);
-			}
-			if(headerNoticeBCount === 0){
-				headerNoticeB.style.opacity = '0';
-				headerNoticeB.innerHTML = headerNoticeBCount;
-			}else{
-				headerNoticeB.style.opacity = '1';
-				headerNoticeB.innerHTML = headerNoticeBCount;
-			}
-
-			//弹窗消息应用
-			if(alertNoticeArr.length > 0&&alertNoticeArr.length === 1){
-				alern(alertNoticeArr[0].content,alertNoticeArr[0].title);
-			}else if(alertNoticeArr.length > 0&&alertNoticeArr.length !== 1){
-				var alertNoticeString = '';
-				for(var i = 0; i < alertNoticeArr.length; i++){
-					alertNoticeString += alertNoticeArr[i].title + ':<br/><br/>';
-					alertNoticeString += alertNoticeArr[i].content + '<br/><hr color="#f0f0f0" style="height: 1px; border: none; margin-top: 10px; margin-bottom: 10px;"/><br/>';
-				}
-				alern(alertNoticeString,'公告通知');
-			}
-		}
-	})
-}
-noticed();
 
 //顶部渲染
 function head(obj){
@@ -325,15 +154,15 @@ function head(obj){
 }
 
 //充值缴费
-if(sessionStorage.menuidPayMent != undefined){
-	if(sessionStorage.menuidPayMent == GetQueryString('menuid')){
-		d('pay_ment').style.backgroundColor = '#323F52';
-	}
-}
-d('pay_ment').onclick = function(){
-	sessionStorage.menuidPayMent = 'payMent';
-	window.location.href = 'pay_ment.html?menuid=' + sessionStorage.menuidPayMent;
-}
+// if(sessionStorage.menuidPayMent != undefined){
+// 	if(sessionStorage.menuidPayMent == GetQueryString('menuid')){
+// 		d('pay_ment').style.backgroundColor = '#323F52';
+// 	}
+// }
+// d('pay_ment').onclick = function(){
+// 	sessionStorage.menuidPayMent = 'payMent';
+// 	window.location.href = 'pay_ment.html?menuid=' + sessionStorage.menuidPayMent;
+// }
 
 //退出登录
 var exitLogin = d('exit_login');
@@ -358,6 +187,7 @@ $.ajax({
 			data: {},
 			dataType: 'json',
 			success: function(data){
+				log(JSON.parse(data.menusData));
 				var objs = JSON.parse(data.menusData);
 				var objects = [];
 				for(var i = 0; i < objs.length; i++){

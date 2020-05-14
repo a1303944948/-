@@ -55,36 +55,50 @@
 			</div>
 			<div class="clear"></div>
 		</div>
-		<div class="index_chart">
-			<div class="index_chart_head">
-				<p>最近30天销售图</p>
-				<div class="index_chart_head_top">
-					<div class="index_chart_head_top_left"></div>
-					<div class="index_chart_head_top_right">
-						<div id="index_chart_head_top_right_loading"><div><b></b><b></b></div></div>
-						<canvas id="index_chart_head_top_right_canvas"></canvas>
-					</div>
-					<div class="clear"></div>
-				</div>
-				<div class="index_chart_head_bottom">
-					<img src="image/ybp.png" align="right"/>
-				</div>
+		<div class="index_kanban">
+			<b>今日营业情况</b>
+			<span>营业额： <b class="index_kanban_total"></b></span>
+			<span>有效订单数： <b class="index_kanban_num"></b></span>
+		</div>
+		<div class="index_kanbans">
+			<p class="index_kanbans_p">历史营业情况</p>
+			<div class="index_kanbans_ybp">
+				<table class="index_head_table">
+					<tbody classs="index_head_table">
+						<tr>
+							<td>时间选择<span>*</span></td>
+							<td>
+								<input id="index_head_time" class="index_head_selects" type="text" placeholder="请选择..." readonly="readonly"/>
+								<b></b>
+							</td>
+							<td class="index_head_date_nian">年份<span>*</span></td>
+							<td class="index_head_date_nian"><input class="wm_select" id="device_head_year" data-select="" type="text" readonly="readonly"/><img src="image/dates.png"/></td>
+							<td class="index_head_date_yue">月份<span>*</span></td>
+							<td class="index_head_date_yue"><input class="wm_select" id="device_head_month" data-select="[{value:1,name:'一月'},{value:2,name:'二月'},{value:3,name:'三月'},{value:4,name:'四月'},{value:5,name:'五月'},{value:6,name:'六月'},{value:7,name:'七月'},{value:8,name:'八月'},{value:9,name:'九月'},{value:10,name:'十月'},{value:11,name:'十一月'},{value:12,name:'十二月'},]" type="text" readonly="readonly"/><img src="image/dates.png"/></td>
+							<td class="index_head_date_start">开始日期<span>*</span></td>
+							<td class="index_head_date_start"><input class="index_head_date_controller" type="text" readonly="readonly"/><img src="image/dates.png"/></td>
+							<td class="index_head_date_end">结束日期<span>*</span></td>
+							<td class="index_head_date_end"><input class="index_head_date_controller" type="text" readonly="readonly"/><img src="image/dates.png"/></td>
+							<td rowspan="1" style="text-align: left; border-left: 5px rgba(0,0,0,0) solid;"><button class="index_head_tbody_submit"><img src="image/seachs.png">查看报告</button></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
-			<div class="index_chart_foot">
-				<p>去年<b></b> vs 今年<b></b></p>
-				<div class="index_chart_foot_top">
-					<div class="index_chart_foot_top_left"></div>
-					<div class="index_chart_foot_top_right">
-						<div id="index_chart_foot_top_right_loading"><div><b></b><b></b></div></div>
-						<canvas id="index_chart_foot_top_right_canvas"></canvas>
-					</div>
-					<div class="clear"></div>
-				</div>
-				<div class="index_chart_foot_bottom">
-					<img src="image/ybpvs.png" align="right"/>
-				</div>
+			<div class="index_kanbans_body">
+				<p>营业收入</p>
+				<table>
+					<tbody>
+						<tr>
+							<td>收入</td>
+							<td>有效订单</td>
+						</tr>
+						<tr>
+							<td><b id="index_kanbans_body_total">0</b></td>
+							<td><b id="index_kanbans_body_num">0</b></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
-			<div class="clear"></div>
 		</div>
 	</div>
 	<script type="text/javascript" src="js/index.js"></script>

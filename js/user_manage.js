@@ -1,7 +1,7 @@
-var userOperator = d('user_operator');						//权限范围
-var userPurview = d('user_purview');						//权限范围
+//var userOperator = d('user_operator');					//运营方
+var userPurview = d('user_purview');						//所属店铺
 var userName = d('user_name');								//姓名
-var userJob = d('user_job');								//职位
+//var userJob = d('user_job');								//职位
 var userPhone = d('user_phone');							//联系电话
 var userAccount = d('user_account');						//账号
 /*var userPassword = d('user_password');					//密码
@@ -74,8 +74,6 @@ userHeadSubmit.onclick = function(){
 	if(userHeadGroup == ""){
 		userHeadGroup = loginUserName.scopeofauthority;
 	}
-	console.log(userHeadGroup);
-	console.log(userHeadStatus);
 	$.ajax({
 		type: 'post',
 		url: URLZ + '/jf/bg/basic/cfc/searchClassifi.json',
@@ -85,7 +83,6 @@ userHeadSubmit.onclick = function(){
 			stop: userHeadStatus,
 		},
 		success: function(data){
-			console.log(data);
 			KIT = data.obj;
 			if(userHeadStatus == 1){
 				startbody();
@@ -179,9 +176,9 @@ function startbody(addper){
 		for(var i=0;i<tree.length;i++){
 		    var item = tree[i],u = "";
 		    if(item.icon == 0){
-		   		temp.push('<li><img class="item'+item['lev']+'" src="image/grouping/001.png"/><a data-id="'+item.id+'">'+item.text+'</a></li>');
+		   		temp.push('<li><img class="item'+item['lev']+'" src="image/grouping/001.png"/><a data-id="'+item.id+'" data-operatid="'+item.operatorID+'">'+item.text+'</a></li>');
 		    }else if(item.icon == 1){
-		   		temp.push('<li><img class="item'+item['lev']+'" src="image/grouping/002.png"/><a data-id="'+item.id+'">'+item.text+'</a></li>');
+		   		temp.push('<li><img class="item'+item['lev']+'" src="image/grouping/002.png"/><a data-id="'+item.id+'" data-operatid="'+item.operatorID+'">'+item.text+'</a></li>');
 		    }else if(item.icon == 2){
 		   		temp.push('<li><img class="item'+item['lev']+'" src="image/grouping/003.png"/><a data-id="'+item.id+'">'+item.text+'</a></li>');
 		    }
@@ -225,6 +222,7 @@ function startbody(addper){
 				headUl[i].children[j].children[1].onmousedown = function(){
 					Grouping[this.parentNode.parentNode.dataset.list].value = this.innerHTML;
 					Grouping[this.parentNode.parentNode.dataset.list].name = this.dataset.id;
+					Grouping[this.parentNode.parentNode.dataset.list].setAttribute('data-operatid',this.dataset.operatid);
 				}
 			}
 		}
@@ -275,7 +273,6 @@ function startbody(addper){
 				li += (temp[j]);
 			}
 			ul.innerHTML = li;
-			console.log(Operator[i].clientWidth);
 			ul.style.minWidth = '179px';
 			Head.appendChild(ul);
 
@@ -299,8 +296,6 @@ function startbody(addper){
 			}
 			for(var j = 0; j < headUlOperator[i].children.length; j++){
 				headUlOperator[i].children[j].onmousedown = function(){
-					console.log(this.innerText);
-					console.log(this.children[1].dataset.id);
 					Operator[this.parentNode.dataset.list].value = this.children[1].innerHTML;
 					Operator[this.parentNode.dataset.list].name = this.children[1].dataset.id;
 				}
@@ -310,54 +305,54 @@ function startbody(addper){
 	if(loginUserName.operatorID == 1){
 		OPERATOR();
 	}else{
-		$.ajax({
-			type: 'post',
-			url: URLS + '/operate/getOperate.json',
-			data: {
-				operatorID: loginUserName.operatorID,
-			},
-			success: function(data){
-				console.log(data);
+		// $.ajax({
+		// 	type: 'post',
+		// 	url: URLS + '/operate/getOperate.json',
+		// 	data: {
+		// 		operatorID: loginUserName.operatorID,
+		// 	},
+		// 	success: function(data){
+		// 		console.log(data);
 
-				var Head = c('user_head')[0];
-				var Operator = c('user_head_operator');
-				for(var i = 0; i < Operator.length; i++){
-					var ul = creat('ul');
-					ul.className = "user_head_ulOperator";
-					ul.setAttribute('data-list',i);
-					var li = creat('li');
-					li.innerHTML = data.operator;
-					li.setAttribute('data-value',data.operatorID);
-					ul.appendChild(li);
-					console.log(Operator[i].clientWidth);
-					ul.style.minWidth = '179px';
-					Head.appendChild(ul);
+		// 		var Head = c('user_head')[0];
+		// 		var Operator = c('user_head_operator');
+		// 		for(var i = 0; i < Operator.length; i++){
+		// 			var ul = creat('ul');
+		// 			ul.className = "user_head_ulOperator";
+		// 			ul.setAttribute('data-list',i);
+		// 			var li = creat('li');
+		// 			li.innerHTML = data.operator;
+		// 			li.setAttribute('data-value',data.operatorID);
+		// 			ul.appendChild(li);
+		// 			console.log(Operator[i].clientWidth);
+		// 			ul.style.minWidth = '179px';
+		// 			Head.appendChild(ul);
 
-					(function(q){
-						var headUlOperator = c('user_head_ulOperator');
-						Operator[q].onfocus = function(){
-							headUlOperator[q].style.display = "inline-block";
-							headUlOperator[q].style.left = this.offsetParent.offsetLeft + 5 + 255 + 'px';
-							headUlOperator[q].style.top = this.offsetParent.offsetTop + this.clientHeight + 181 + 'px';
-							headUlOperator[q].style.maxHeight = window.innerHeight - this.offsetParent.offsetTop - 190 - 23 - 200 + 'px';
-						}
-						Operator[q].onblur = function(){
-							headUlOperator[q].style.display = "none";
-						}
-					})(i)
+		// 			(function(q){
+		// 				var headUlOperator = c('user_head_ulOperator');
+		// 				Operator[q].onfocus = function(){
+		// 					headUlOperator[q].style.display = "inline-block";
+		// 					headUlOperator[q].style.left = this.offsetParent.offsetLeft + 5 + 255 + 'px';
+		// 					headUlOperator[q].style.top = this.offsetParent.offsetTop + this.clientHeight + 181 + 'px';
+		// 					headUlOperator[q].style.maxHeight = window.innerHeight - this.offsetParent.offsetTop - 190 - 23 - 200 + 'px';
+		// 				}
+		// 				Operator[q].onblur = function(){
+		// 					headUlOperator[q].style.display = "none";
+		// 				}
+		// 			})(i)
 			
-					var headUlOperator = c('user_head_ulOperator');
-					Operator[i].value = headUlOperator[i].children[0].innerHTML;
-					Operator[i].name = headUlOperator[i].children[0].dataset.id;
-					for(var j = 0; j < headUlOperator[i].children.length; j++){
-						headUlOperator[i].children[j].onmousedown = function(){
-							Operator[this.parentNode.dataset.list].value = this.children[1].innerHTML;
-							Operator[this.parentNode.dataset.list].name = this.children[1].dataset.id;
-						}
-					}
-				}
-			}
-		})
+		// 			var headUlOperator = c('user_head_ulOperator');
+		// 			Operator[i].value = headUlOperator[i].children[0].innerHTML;
+		// 			Operator[i].name = headUlOperator[i].children[0].dataset.id;
+		// 			for(var j = 0; j < headUlOperator[i].children.length; j++){
+		// 				headUlOperator[i].children[j].onmousedown = function(){
+		// 					Operator[this.parentNode.dataset.list].value = this.children[1].innerHTML;
+		// 					Operator[this.parentNode.dataset.list].name = this.children[1].dataset.id;
+		// 				}
+		// 			}
+		// 		}
+		// 	}
+		// })
 	}
 
 	var Head = c('user_head')[0];
@@ -531,7 +526,6 @@ function startbody(addper){
 		}
 	}
 
-	console.log(userweobject);
 	for(var o = 0; o < userweobject.length; o++){
 		function sonsTree(arr,id){
 		    var temp = [],lev=0;
@@ -552,7 +546,6 @@ function startbody(addper){
 		}
 		var tree = sonsTree(USERWE,userweobject[o].menuid);
 	}
-	console.log(userweobjects);
 	for(var i = 0; i < userweobjects.length; i++){
 		for(var j = 0; j < userweobjects[i].length; j++){
 			var li = creat('li');
@@ -592,20 +585,20 @@ function startbody(addper){
 		panel.appendChild(ulz);
 	}
 
-
+	//权限管理复选框勾选监听
 	var panelUl = c('user_body_right_foot_item_panel_ul')[0];
 	if(panelUl != undefined){
 		for(var i = 0; i < panelUl.children.length; i++){
 			panelUl.children[i].children[0].checked = false;
 		}
-		for(var i = 0; i < panelUl.children.length; i++){
-			//console.log(panelUl.children[i]);USEROTHER
-			panelUl.children[i].children[0].onchange = function(){
-				console.log(this.parentNode.dataset.value);
-				console.log(this.value);
-				console.log(this.parentNode.innerText);
-			}
-		}
+		// for(var i = 0; i < panelUl.children.length; i++){
+		// 	//console.log(panelUl.children[i]);USEROTHER
+		// 	panelUl.children[i].children[0].onchange = function(){
+		// 		// console.log(this.parentNode.dataset.value);
+		// 		// console.log(this.value);
+		// 		// console.log(this.parentNode.innerText);
+		// 	}
+		// }
 	}
 }
 
@@ -652,14 +645,11 @@ function startfoot(){
 		var Head = c('user_head')[0];
 		var Operator = c('user_head_operator');
 		var headUlOperator = c('user_head_ulOperator');
-		console.dir(headUlOperator[0].children[0]);
 		for(var i = 0; i < Operator.length; i++){
 			Operator[i].value = headUlOperator[i].children[0].children[0].innerHTML;
 			Operator[i].name = headUlOperator[i].children[0].children[0].dataset.id;
 			for(var j = 0; j < headUlOperator[i].children.length; j++){
 				headUlOperator[i].children[j].children[0].onmousedown = function(){
-					console.log(this.innerHTML);
-					console.log(this.dataset.id);
 					Operator[this.parentNode.parentNode.dataset.list].value = this.innerHTML;
 					Operator[this.parentNode.parentNode.dataset.list].name = this.dataset.id;
 				}
@@ -669,14 +659,11 @@ function startfoot(){
 		var Head = c('user_head')[0];
 		var Operator = c('user_head_operator');
 		var headUlOperator = c('user_head_ulOperator');
-		console.dir(headUlOperator[0].children[0]);
 		for(var i = 0; i < Operator.length; i++){
 			Operator[i].value = headUlOperator[i].children[0].innerHTML;
 			Operator[i].name = headUlOperator[i].children[0].dataset.value;
 			for(var j = 0; j < headUlOperator[i].children.length; j++){
 				headUlOperator[i].children[j].onmousedown = function(){
-					console.log(this.innerHTML);
-					console.log(this.dataset.value);
 					Operator[this.parentNode.dataset.list].value = this.innerHTML;
 					Operator[this.parentNode.dataset.list].name = this.dataset.value;
 				}
@@ -687,7 +674,6 @@ function startfoot(){
 
 //点击人物渲染右部表单
 function rendering(empcode,that){
-	console.log(123);
 	startfoot();
 	USEREMPCODE = empcode;
 	var userHeadUlShow = c('user_head_ul_show')[0];
@@ -706,18 +692,17 @@ function rendering(empcode,that){
 			empcode: empcode,
 		},
 		success: function(data){
-			console.log(data);
 			type = 1;
 			for(var i = 0; i < userBodyRightFootItem.length; i++){
 				userBodyRightFootItem[i].style.visibility = 'visible';
 			}
 			userName.value = data.obj.name;
-			userJob.value = data.obj.position;
+			//userJob.value = data.obj.position;
 			userPhone.value = data.obj.tel;
 			userAccount.value = data.obj.empcode;
 			userAccount.disabled = "disabled";
-			/*userPassword.value = data.obj.password;
-			userConfirmpass.value = data.obj.password;*/
+			//userPassword.value = data.obj.password;
+			//userConfirmpass.value = data.obj.password;
 			userEmail.value = data.obj.email;
 			userRigphone.value = data.obj.phone;
 			userLegend.value = data.obj.mark;
@@ -728,20 +713,19 @@ function rendering(empcode,that){
 			}
 			userNameDelete.value = data.obj.name;
 			userAccountDelete.value = data.obj.empcode;
-			console.log(KITSorted);
 			var userCount = 0;
 			for(var i = 0; i < KITSorted.length; i++){
+				//log(KITSorted[i],data.obj);
 				if(KITSorted[i].id == data.obj.scopeofauthority){
 					userPurview.value = KITSorted[i].text;
 					userPurview.name = KITSorted[i].id;
+					userPurview.setAttribute('data-operatid',KITSorted[i].operatorID);
 					userCount = 1;
 				}
-				if(KITSorted[i].operatorID == data.obj.operatorID||KITSorted[i].id == data.obj.operatorID){
-					console.log(KITSorted[i].text);
-					console.log(KITSorted[i].operatorID);
-					userOperator.value = KITSorted[i].text;
-					userOperator.name = KITSorted[i].operatorID;
-				}
+				// if(KITSorted[i].operatorID == data.obj.operatorID||KITSorted[i].id == data.obj.operatorID){
+				// 	userOperator.value = KITSorted[i].text;
+				// 	userOperator.name = KITSorted[i].operatorID;
+				// }
 			}
 			if(userCount == 0){
 				userPurview.value = "";
@@ -758,7 +742,7 @@ function rendering(empcode,that){
 			emplCode: empcode,
 		},
 		success: function(data){
-			console.log(data);
+			log(data);
 			USEROTHER = [];
 			for(var i = 0; i < data.obj.length; i++){
 				USEROTHER.push(data.obj[i]);
@@ -884,9 +868,9 @@ function rendering(empcode,that){
 		for(var i = 0; i < panelUl.children.length; i++){
 			//console.log(panelUl.children[i]);USEROTHER
 			panelUl.children[i].children[0].onchange = function(){
-				console.log(this.parentNode.dataset.value);
-				console.log(this.value);
-				console.log(this.parentNode.innerText);
+				// console.log(this.parentNode.dataset.value);
+				// console.log(this.value);
+				// console.log(this.parentNode.innerText);
 				/*if(this.checked){
 					for(var j = 2; j < this.parentNode.children.length; j++){
 						this.parentNode.children[j].children[0].checked = true;
@@ -962,10 +946,10 @@ function submit(){
 		for(var i = 0; i < userBodyRightFootItem.length; i++){
 			userBodyRightFootItem[i].style.visibility = 'visible';
 		}
-		userOperator.value = "";
-		userOperator.name = "";
+		//userOperator.value = "";
+		//userOperator.name = "";
 		userName.value = "";
-		userJob.value = "";
+		//userJob.value = "";
 		userPhone.value = "";
 		userAccount.value = "";
 		userAccount.disabled = false;
@@ -1000,14 +984,14 @@ function submit(){
 		//创建事件
 		var userError = "";
 		if(userPurview.name == ""){
-			userError += '权限范围不能为空！</br>';
+			userError += '所属店铺不能为空！</br>';
 		}
 		if(userName.value == ""){
 			userError += '姓名不能为空！</br>';
 		}
-		if(userJob.value == ""){
+		/*if(userJob.value == ""){
 			userError += '职位不能为空！</br>';
-		}
+		}*/
 		if(userAccount.value == ""){
 			userError += '账号不能为空！</br>';
 		}
@@ -1028,10 +1012,11 @@ function submit(){
 		}
 
 		var userObject = new Object();
-		userObject.OperatorID = userOperator.name;
+		//log(userPurview);
+		userObject.OperatorID = userPurview.dataset.operatid;
 		userObject.scopeofauthority = userPurview.name;
 		userObject.name = userName.value;
-		userObject.position = userJob.value;
+		userObject.position = '';
 		userObject.tel = userPhone.value;
 		userObject.empcode = userAccount.value;
 		/*userObject.password = userPassword.value;*/
@@ -1040,7 +1025,6 @@ function submit(){
 		userObject.mark = userLegend.value;
 		userObject.stop = userStops;
 
-		console.log(userObject);
 		if(type == 0){
 			//创建事件
 			$.ajax({
@@ -1051,10 +1035,9 @@ function submit(){
 				},
 				success: function(data){
 					if(data.obj == 1){
-						alert('创建成功！');
-						start();
-						startbody(1);
-						location.reload();
+						Authority();
+					}else if(data.obj == 2){
+						alern('该账号已存在！');
 					}else{
 						alern('创建失败！');
 					};
@@ -1073,10 +1056,7 @@ function submit(){
 				},
 				success: function(data){
 					if(data.obj == 1){
-						alert('更新成功');
-						start();
-						startbody(1);
-						location.reload();
+						Authority();
 					}else{
 						alern('更新失败！');
 					};
@@ -1101,55 +1081,67 @@ function submit(){
 			})*/
 		}
 
-		//权限分配
-		var itemPanelUl = c('user_body_right_foot_item_panel_ul')[0];
-		var itemPanelUlArray = [];
-		for(var i = 0; i < itemPanelUl.children.length; i++){
-			if(itemPanelUl.children[i].children[0].checked){
-				var itemPanelUlObject = new Object();
-				if(itemPanelUl.children[i].dataset.value != 'undefined'){
-					itemPanelUlObject.perent = itemPanelUl.children[i].dataset.value;
+		function Authority(){//权限分配
+			var itemPanelUl = c('user_body_right_foot_item_panel_ul')[0];
+			var itemPanelUlArray = [];
+			for(var i = 0; i < itemPanelUl.children.length; i++){
+				if(itemPanelUl.children[i].children[0].checked){
+					var itemPanelUlObject = new Object();
+					if(itemPanelUl.children[i].dataset.value != 'undefined'){
+						itemPanelUlObject.perent = itemPanelUl.children[i].dataset.value;
+					}else{
+						itemPanelUlObject.perent = "";
+					};
+					itemPanelUlObject.menuid = itemPanelUl.children[i].children[0].value;
+					itemPanelUlObject.text = itemPanelUl.children[i].innerText;
+					itemPanelUlObject.textEn = itemPanelUl.children[i].children[0].dataset.texten;
+					itemPanelUlObject.value = 1;
+					itemPanelUlObject.emplCode = userAccount.value;
+					itemPanelUlArray.push(itemPanelUlObject);
 				}else{
-					itemPanelUlObject.perent = "";
-				};
-				itemPanelUlObject.menuid = itemPanelUl.children[i].children[0].value;
-				itemPanelUlObject.text = itemPanelUl.children[i].innerText;
-				itemPanelUlObject.textEn = itemPanelUl.children[i].children[0].dataset.texten;
-				itemPanelUlObject.value = 1;
-				itemPanelUlObject.emplCode = USEREMPCODE;
-				itemPanelUlArray.push(itemPanelUlObject);
-			}else{
-				var itemPanelUlObject = new Object();
-				if(itemPanelUl.children[i].dataset.value != 'undefined'){
-					itemPanelUlObject.perent = itemPanelUl.children[i].dataset.value;
-				}else{
-					itemPanelUlObject.perent = "";
-				};
-				itemPanelUlObject.menuid = itemPanelUl.children[i].children[0].value;
-				itemPanelUlObject.textEn = itemPanelUl.children[i].innerText;
-				itemPanelUlObject.value = 0;
-				itemPanelUlObject.text = itemPanelUl.children[i].children[0].dataset.text;
-				itemPanelUlObject.emplCode = USEREMPCODE;
-				itemPanelUlArray.push(itemPanelUlObject);
+					var itemPanelUlObject = new Object();
+					if(itemPanelUl.children[i].dataset.value != 'undefined'){
+						itemPanelUlObject.perent = itemPanelUl.children[i].dataset.value;
+					}else{
+						itemPanelUlObject.perent = "";
+					};
+					itemPanelUlObject.menuid = itemPanelUl.children[i].children[0].value;
+					itemPanelUlObject.textEn = itemPanelUl.children[i].innerText;
+					itemPanelUlObject.value = 0;
+					itemPanelUlObject.text = itemPanelUl.children[i].children[0].dataset.text;
+					itemPanelUlObject.emplCode = userAccount.value;
+					itemPanelUlArray.push(itemPanelUlObject);
+				}
 			}
-		}
-		for(var i = 0; i < USEROBJECTS.length; i++){
-			itemPanelUlArray.push(USEROBJECTS[i]);
-		}
-		$.ajax({
-			type: 'post',
-			url: URLZ + '/jf/bg/basic/sac/addSubAthor.json',
-			data: {
-				subAthorObjArarry: JSON.stringify(itemPanelUlArray),
-			},
-			success: function(data){
-				console.log(data);
-			},
-			error: function(data){
-				console.log(data);
+			if(USEROBJECTS){
+				for(var i = 0; i < USEROBJECTS.length; i++){
+					itemPanelUlArray.push(USEROBJECTS[i]);
+				}
 			}
-		})
-		console.log(JSON.stringify(itemPanelUlArray));
+			log(itemPanelUlArray);
+			$.ajax({
+				type: 'post',
+				url: URLZ + '/jf/bg/basic/sac/addSubAthor.json',
+				data: {
+					subAthorObjArarry: JSON.stringify(itemPanelUlArray),
+				},
+				success: function(data){
+					alert('保存成功');
+					start();
+					startbody(1);
+					//location.reload();
+					//console.log(data);
+				},
+				error: function(data){
+					alern('用户保存成功但权限更新失败，请重新选中该用户分配权限！');
+					start();
+					startbody(1);
+					//location.reload();
+					//console.log(data);
+				}
+			})
+			//console.log(JSON.stringify(itemPanelUlArray));
+		}
 	}
 }
 

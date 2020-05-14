@@ -53,101 +53,10 @@ function start(){
 	}
 
 
-
-	//第二种类渲染
-	//给下拉框元素创建下拉内容
-	$.ajax({
-		url: URLX + '/jf/com/report/dealtype.json',
-		type: 'post',
-		data: {},
-		async: false,
-		dataType: 'json',
-		success: function(data){
-			if(data.dealtypeJson.length != undefined){
-				LISTS.unshift(data.dealtypeJson);
-			}else{
-				LISTS.unshift('');
-			}
-		}
-	})
-
-	var selectz = c('sales_head_selectz');	//第二种类input下拉框(携带value值的下拉框)
-	var selects_ulz = c('sales_head_selects_ulz');
-
-	for(var i = 0; i < selectz.length; i++){
-		var ul = creat('ul');
-		ul.className = 'sales_head_selects_ulz';
-		ul.setAttribute('data-list',i);
-		for(var j = 0; j < LISTS[i].length; j++){
-			var li = creat('li');
-			var br = creat('br');
-			li.setAttribute("data-value", LISTS[i][j].value)
-			li.innerHTML = LISTS[i][j].text;
-			ul.appendChild(li);
-			ul.appendChild(br);
-		}
-		sales_head.appendChild(ul);
-	}
-
-
-	//渲染点击事件
-	for(var i = 0; i < selectz.length; i++){
-
-		//给下拉框元素默认选中第一个值
-		var avoid = [0];	//此数组可以避免被执行默认选中
-		var avoids = 0;
-		for(var j = 0; j < avoid.length; j++){
-			if(avoid[j] == i){
-				avoids = 1;
-			}
-		}
-		if(avoids != 1){
-				selectz[i].value = selects_ulz[i].children[0].innerHTML;
-				selectz[i].name = selects_ulz[i].children[0].dataset.value;
-		}else{
-			var br = creat('br');
-			var newItem = creat('li');
-			newItem.innerHTML = '请选择...';
-			newItem.style.color = '#666666';
-			newItem.setAttribute("data-value", '');
-			selects_ulz[i].insertBefore(br,selects_ulz[i].childNodes[0]);
-			selects_ulz[i].insertBefore(newItem,selects_ulz[i].childNodes[0]);
-		}
-
-		selects_ulz[i].style.left = selectz[i].offsetParent.offsetLeft + 5 + 'px';
-		selects_ulz[i].style.top = selectz[i].offsetParent.offsetTop + selectz[i].offsetParent.clientHeight - 4 + 'px';
-		(function(q){
-			//点击input框时的显示隐藏
-			selectz[q].onfocus = function(){
-						selects_ulz[q].style.display = 'inline-block';
-			}
-			selectz[q].onblur = function(){
-						selects_ulz[q].style.display = 'none';
-			}
-			//点击ul时的显示隐藏
-			selectz[q].parentNode.children[1].onfocus = function(){
-				selects_ulz[q].style.display = 'inline-block';
-			}
-			selectz[q].parentNode.children[1].onblur = function(){
-				selects_ulz[q].style.display = 'none';
-			}
-		})(i)
-		//将ul中选中的数据渲染到input框中
-		for(var j = 0; j < selects_ulz[i].children.length; j++){
-			if(j%2 == 0){
-				selects_ulz[i].children[j].onmousedown = function(){
-					selectz[this.offsetParent.dataset.list].value = this.innerHTML;
-					selectz[this.offsetParent.dataset.list].name = this.dataset.value;
-				}
-			};
-		}
-	}
-
-
 	//请求头部下拉框机器型号内容
 	$.ajax({
 		type: 'post',
-		url: URLS + '/status/getJXZD.json',
+		url: URLS + '/elmStatus/getJXZD.json',
 		async: false,
 		data: {},
 		dataType: 'json',
@@ -218,20 +127,20 @@ function submit(){
 
 		$.ajax({
 			type: 'post',
-			url: URLS + '/status/getTotalStatus.json',
+			url: URLS + '/elmStatus/getTotalStatus.json',
 			data: {
 				strArray: JSON.stringify(LISTGROUP),
 				machType: model, 
 				status: status,
 			},
-			async: false,
 			//dataType: 'json',
 			success: function(data){
+				log(data);
 				OBJECT = data;
 				loadingClear();
+				tableObj();
 			}
 		})
-		tableObj();
 
 		/*WmPageMarkStart(JSON.parse(d('page_mark').dataset.length)[1]);*/
 
@@ -328,92 +237,12 @@ function tableObj(){
 				divs.style.backgroundColor = '#C8EDF8';
 				div.appendChild(divs);
 			//信号内容修改
-			}else if(j == 6){
-				var divs = creat('div');
-				var divss = creat('div');
-				var divssa = creat('div');
-				var divssb = creat('div');
-				var divssc = creat('div');
-				var divssd = creat('div');
-				var divsse = creat('div');
-				var divssClear = creat('div');
-				divss.style.position = 'relative';
-				divssa.className = 'machine_home_foot_body_table_item_son';
-				divssb.className = 'machine_home_foot_body_table_item_son';
-				divssc.className = 'machine_home_foot_body_table_item_son';
-				divssd.className = 'machine_home_foot_body_table_item_son';
-				divsse.className = 'machine_home_foot_body_table_item_son';
-				divssa.style.height = '6px';
-				divssb.style.height = '8px';
-				divssc.style.height = '11px';
-				divssd.style.height = '14px';
-				divsse.style.height = '18px';
-				divs.className = 'machine_home_foot_body_table_item machine_home_foot_body_table_item_sign';
-				divs.style.width = 100 / OBJECT[i].length + '%';
-				divss.appendChild(divssa);
-				divss.appendChild(divssb);
-				divss.appendChild(divssc);
-				divss.appendChild(divssd);
-				divss.appendChild(divsse);
-				if(OBJECT[i][j][0] == '-'){
-					divss.innerHTML = '-';
-				}else{
-					for(var k = 0; k < OBJECT[i][j][0]; k++){
-						switch(k){
-							case 0:
-								divssa.style.backgroundColor = 'green';
-								break;
-							case 1:
-								divssb.style.backgroundColor = 'green';
-								break;
-							case 2:
-								divssc.style.backgroundColor = 'green';
-								break;
-							case 3:
-								divssd.style.backgroundColor = 'green';
-								break;
-							case 4:
-								divsse.style.backgroundColor = 'green';
-								break;
-						}
-					}
-				}
-				if(OBJECT[i][j][1] == 0){
-					divs.style.backgroundColor = '#B5F09B';
-				}else if(OBJECT[i][j][1] == 1){
-					divs.style.backgroundColor = '#FFA500';
-				}else if(OBJECT[i][j][1] == 2){
-					divs.style.backgroundColor = '#D30009';
-					divs.style.color = '#ffffff';
-				}else if(OBJECT[i][j][1] == 3){
-					divs.style.backgroundColor = '#f0f0f0';
-				}
-				divs.appendChild(divss);
-				div.appendChild(divs);
 			}else if(j == 7||j == 8){
 				var divs = creat('div');
 				divs.className = 'machine_home_foot_body_table_item';
+				log(OBJECT[i][j][0]);
 				if(OBJECT[i][j][0] != '-'){
 					OBJECT[i][j][0] = worldDateTimeA(new Date(OBJECT[i][j][0]).getTime());
-				};
-				divs.innerHTML = OBJECT[i][j][0];
-				divs.style.width = 100 / OBJECT[i].length + '%';
-				if(OBJECT[i][j][1] == 0){
-					divs.style.backgroundColor = '#B5F09B';
-				}else if(OBJECT[i][j][1] == 1){
-					divs.style.backgroundColor = '#FFA500';
-				}else if(OBJECT[i][j][1] == 2){
-					divs.style.backgroundColor = '#D30009';
-					divs.style.color = '#ffffff';
-				}else if(OBJECT[i][j][1] == 3){
-					divs.style.backgroundColor = '#f0f0f0';
-				}
-				div.appendChild(divs);
-			}else if(j == 10||j == 11){
-				var divs = creat('div');
-				divs.className = 'machine_home_foot_body_table_item';
-				if(OBJECT[i][j][0] != '-'){
-					OBJECT[i][j][0] = worldDateTime(new Date(OBJECT[i][j][0]).getTime());
 				};
 				divs.innerHTML = OBJECT[i][j][0];
 				divs.style.width = 100 / OBJECT[i].length + '%';
@@ -462,61 +291,62 @@ function tableObj(){
 				var divxx = c('machine_home_foot_body_table_listx');
 				if(show != q){
 					//请求机器内容
+					log(OBJECT[q][1][0],OBJECT[q][2][2])
 					$.ajax({
 						type: 'post',
-						url: URLS + '/status/getAlone.json',
+						url: URLS + '/elmStatus/getAlone.json',
 						data: {
 							machCode: OBJECT[q][1][0],
 							machType: OBJECT[q][2][2],
 						},
-						async: false,
 						success: function(data){
+							log(data);
 							OBJECTITEM = data;
-						}
-					})
-					show = q;
-					for(var j = 0; j < divxx.length; j++){
-						ftable.removeChild(divxx[j]);
-					}
-					var divx = creat('div');
-					divx.innerHTML = '<div class="machine_home_foot_body_table_listx_head"></div><div class="machine_home_foot_body_table_listx_foot"><button class="machine_home_foot_body_table_historical">历史温度</button><button class="machine_home_foot_body_table_status">最近状态</button></div>'
-					divx.className = 'machine_home_foot_body_table_listx';
-					ftable.insertBefore(divx,div[q+1]);
-					var listxHead = c('machine_home_foot_body_table_listx_head')[0];
-					for(var j = 0; j < OBJECTITEM.length/7; j++){
-						var table = creat('table');
-						for(var k = 0; k < 7; k++){
-							if(j*7 + k < OBJECTITEM.length){
-								var tr = creat('tr');
-								var tda = creat('td');
-								var tdb = creat('td');
-								tda.innerHTML = OBJECTITEM[j*7 + k].name + '：';
-								tdb.innerHTML = OBJECTITEM[j*7 + k].text;
-								tr.appendChild(tda);
-								tr.appendChild(tdb);
-								table.appendChild(tr);
+							show = q;
+							for(var j = 0; j < divxx.length; j++){
+								ftable.removeChild(divxx[j]);
+							}
+							var divx = creat('div');
+							divx.innerHTML = '<div class="machine_home_foot_body_table_listx_head"></div><div class="machine_home_foot_body_table_listx_foot"><button class="machine_home_foot_body_table_historical">历史温度</button><button class="machine_home_foot_body_table_status">最近状态</button></div>'
+							divx.className = 'machine_home_foot_body_table_listx';
+							ftable.insertBefore(divx,div[q+1]);
+							var listxHead = c('machine_home_foot_body_table_listx_head')[0];
+							for(var j = 0; j < OBJECTITEM.length/7; j++){
+								var table = creat('table');
+								for(var k = 0; k < 7; k++){
+									if(j*7 + k < OBJECTITEM.length){
+										var tr = creat('tr');
+										var tda = creat('td');
+										var tdb = creat('td');
+										tda.innerHTML = OBJECTITEM[j*7 + k].name + '：';
+										tdb.innerHTML = OBJECTITEM[j*7 + k].text;
+										tr.appendChild(tda);
+										tr.appendChild(tdb);
+										table.appendChild(tr);
+									}
+								}
+								listxHead.appendChild(table);
+							}
+							var listxHeadTable = c('machine_home_foot_body_table_listx_head')[0].children;
+							if(listxHeadTable[listxHeadTable.length-2] != undefined && listxHeadTable[listxHeadTable.length-1] != undefined){
+								listxHeadTable[listxHeadTable.length-1].style.top = listxHeadTable[listxHeadTable.length-1].clientHeight - listxHeadTable[listxHeadTable.length-2].clientHeight + 'px';
+							}
+
+							var Historical = c('machine_home_foot_body_table_historical')[0];
+							var Status = c('machine_home_foot_body_table_status')[0];
+							//历史温度通道
+							if(Historical != undefined){
+								Historical.onclick = function(){
+									window.open('mach_historyTem.html?machCode=' + OBJECT[q][1][0],'_blank','width=1280,height=768');
+								}
+							}
+							if(Status != undefined){
+								Status.onclick = function(){
+									window.open('mach_recentStatus.html?machCode=' + OBJECT[q][1][0] + '&machType=' + OBJECT[q][2][2],'_blank','width=1280,height=768');
+								}
 							}
 						}
-						listxHead.appendChild(table);
-					}
-					var listxHeadTable = c('machine_home_foot_body_table_listx_head')[0].children;
-					if(listxHeadTable[listxHeadTable.length-2] != undefined && listxHeadTable[listxHeadTable.length-1] != undefined){
-						listxHeadTable[listxHeadTable.length-1].style.top = listxHeadTable[listxHeadTable.length-1].clientHeight - listxHeadTable[listxHeadTable.length-2].clientHeight + 'px';
-					}
-
-					var Historical = c('machine_home_foot_body_table_historical')[0];
-					var Status = c('machine_home_foot_body_table_status')[0];
-					//历史温度通道
-					if(Historical != undefined){
-						Historical.onclick = function(){
-							window.open('mach_historyTem.html?machCode=' + OBJECT[q][1][0],'_blank','width=1280,height=768');
-						}
-					}
-					if(Status != undefined){
-						Status.onclick = function(){
-							window.open('mach_recentStatus.html?machCode=' + OBJECT[q][1][0] + '&machType=' + OBJECT[q][2][2],'_blank','width=1280,height=768');
-						}
-					}
+					})
 				}else{
 					show = null;
 					for(var j = 0; j < divxx.length; j++){

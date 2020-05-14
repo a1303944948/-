@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8"/>
-	<title>运营方</title>
+	<title>店铺</title>
 	<link rel="icon" type="image/x-icon" href="image/logos.jpg"/>
 	<link rel="stylesheet" type="text/css" href="css/index.css"/>
 	<link rel="stylesheet" type="text/css" href="css/operator.css"/>
@@ -51,28 +51,24 @@
 					</div>
 				</div>
 				<div class="operator_body_right_foot">
-					<div class="operator_body_right_foot_list" data-menuid="205001">
+					<div class="operator_body_right_foot_list" data-menuid="305001">
 						<div class="operator_body_right_foot_item">
 							<p>基础信息</p>
 							<table>
 								<tr>
-									<td>运营方代码：<span>*</span></td>
-									<td><input id="detailed_operator_id" type="text" onkeyup="this.value=this.value.replace(/^\s+|\s+$/g,'')"/></td>
+									<td>店铺ID：<span>*</span></td>
+									<td><input id="detailed_operator_id" type="text" disabled="disabled" placeholder="创建完成后自动生成" /></td>
 								</tr>
 								<tr>
-									<td>运营方：<span>*</span></td>
-									<td><input id="detailed_operator_numbering" type="text"/></td>
+									<td>店铺名称：<span>*</span></td>
+									<td><input id="detailed_operator_name" type="text"/></td>
 								</tr>
 								<tr>
-									<td>公司名称：</td>
-									<td><input id="detailed_operator_companyname" type="text"/></td>
+									<td>店铺地址：</td>
+									<td><input id="detailed_operator_address" type="text"/></td>
 								</tr>
 								<tr>
-									<td>公司地址：</td>
-									<td><input id="detailed_operator_companyaddress" type="text"/></td>
-								</tr>
-								<tr>
-									<td>运营方负责人：</td>
+									<td>店铺负责人：</td>
 									<td><input id="detailed_operator_principal" type="text"/></td>
 								</tr>
 								<tr>
@@ -80,57 +76,60 @@
 									<td><input id="detailed_operator_phone" type="text" onkeyup ="value=value.replace(/[^\d]/g,'')"/></td>
 								</tr>
 								<tr>
-									<td>备用电话：</td>
-									<td><input id="detailed_operator_sparephone" type="text"/></td>
-								</tr>
-								<tr>
-									<td>E-mail：</td>
-									<td><input id="detailed_operator_email" type="text"/></td>
-								</tr>
-								<tr>
 									<td><input id="detailed_operator_stop" type="checkbox"/>停用</td>
-									<td><input id="detailed_operator_isFree" type="checkbox"/>免费</td>
 								</tr>
 							</table>
 						</div>
 						<div class="clear"></div>
 					</div>
-					<div class="operator_body_right_foot_list" data-menuid="205002">
+					<div class="operator_body_right_foot_list" data-menuid="305002">
 						<div class="operator_body_right_foot_item">
-							<p>微信</p>
+							<p>饿了么平台</p>
 							<table>
 								<tr>
-									<td><input id="wechat_pay" type="checkbox"/>启用</td>
+									<td><input id="elem_enable" type="checkbox"/>启用</td>
 									<td>&nbsp;</td>
 								</tr>
 								<tr>
-									<td>API密钥：<span class="wechat_pay">*</span></td>
-									<td><input id="wechat_pass" type="password"/></td>
+									<td>门店ID：<span class="wechat_pay">*</span></td>
+									<td><input id="elem_store_id" type="text"/></td>
 								</tr>
 								<tr>
-									<td>公众号ID：<span class="wechat_pay">*</span></td>
-									<td><input id="wechat_id" type="text"/></td>
+									<td>应用Key：<span class="wechat_pay">*</span></td>
+									<td><input id="elem_store_key" type="text"/></td>
 								</tr>
 								<tr>
-									<td>APPSecret：<span class="wechat_pay">*</span></td>
-									<td><input id="wechat_secret" type="password"/></td>
+									<td>应用Secret：<span class="wechat_pay">*</span></td>
+									<td><input id="elem_store_secret" type="password"/></td>
 								</tr>
 								<tr>
-									<td>商户号：<span class="wechat_pay">*</span></td>
-									<td><input id="wecaht_shanghu" type="text"/></td>
+									<td>回调URL：<span class="wechat_pay">*</span></td>
+									<td><input id="elem_store_redirecturl" type="text"/></td>
 								</tr>
 								<tr>
-									<td>Pcks12证书：<span class="wechat_pay">*</span></td>
-									<td><input id="wecahtFile" type="file" accept=".p12"/><div id="wecahtFile_value">点击选择文件...</div></td>
+									<td>店铺URL：<span class="wechat_pay">*</span></td>
+									<td><input id="elem_store_url" type="text"/></td>
 								</tr>
 								<tr>
-									<td>支付测试：</td>
-									<td><button id="wechatTest">微信码</button></td>
+									<td>商家密码：<span class="wechat_pay">*</span></td>
+									<td><input id="elem_store_pass" type="password"/></td>
+								</tr>
+								<tr>
+									<td>商家账号：</td>
+									<td><input id="elem_store_user" type="text"/></td>
+								</tr>
+								<tr>
+									<td>推送地址：</td>
+									<td><input id="elem_store_pushUrl" type="text"/></td>
+								</tr>
+								<tr>
+									<td>饿了么授权：</td>
+									<td><button class="elem_store_auth" id="elem_store_authorize">商家授权</button><button class="elem_store_auth" id="elem_store_authdelete">取消授权</button></td>
 								</tr>
 							</table>
 						</div>
 						<div class="operator_body_right_foot_item">
-							<p>支付宝</p>
+							<p>美团平台</p>
 							<table>
 								<tr>
 									<td><input id="alipay_pay" type="checkbox"/>启用</td>
@@ -149,13 +148,13 @@
 									<td><input id="alipay_publicpay" type="password"/></td>
 								</tr>
 								<tr>
-									<td>支付测试：</td>
-									<td><button id="alipayTest">支付宝码</button></td>
+									<td>美团授权：</td>
+									<td><button class="elem_store_auth" id="meituan_store_authorize">美团授权</button><button class="elem_store_auth" id="meituan_store_authdelete">取消授权</button></td>
 								</tr>
 							</table>
 						</div>
 						<div class="operator_body_right_foot_item">
-							<p>银商</p>
+							<p>客如云</p>
 							<table>
 								<tr>
 									<td><input id="silver_pay" type="checkbox"/>启用</td>
@@ -187,7 +186,7 @@
 								</tr>
 							</table>
 						</div>
-						<div class="operator_body_right_foot_item">
+						<!-- <div class="operator_body_right_foot_item">
 							<p>工行</p>
 							<table>
 								<tr>
@@ -215,10 +214,10 @@
 									<td><input id="icbc_life" type="text"/></td>
 								</tr>
 							</table>
-						</div>
+						</div> -->
 						<div class="clear"></div>
 					</div>
-					<div class="operator_body_right_foot_list" data-menuid="205003">
+					<div class="operator_body_right_foot_list" data-menuid="305003">
 						<div class="operator_body_right_foot_item">
 							<p>开票资料</p>
 							<table>

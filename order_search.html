@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>销售分析</title>
+	<link rel="icon" type="image/x-icon" href="image/logos.jpg"/>
+	<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	<link rel="stylesheet" type="text/css" href="css/order_search.css"/>
+	<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="js/wm.js"></script>
+	<script type="text/javascript" src="js/object.js"></script>
+</head>
+<body>
+	<script type="text/javascript" src="js/header.js"></script>
+	<div class="sales_home">
+		<div class="sales_head">
+			<table class="sales_head_table">
+				<tbody classs="sales_head_tbody">
+					<tr>
+						<td>店铺</td>
+						<td>
+							<input class="device_head_groupingz" type="text" placeholder="请选择..." readonly="readonly"/>
+							<b></b>
+						</td>
+						<td>订单状态</td>
+						<td>
+							<input class="statisticalMethods wm_select" data-select="[{value:'settled,,successful',name:'已完成'},{value:',successful,',name:'取消/退单'}]" type="text" placeholder="请选择..." readonly="readonly"/>
+							<b></b>
+						</td>
+						<td>日期选择</td>
+						<td>
+							<input class="sales_head_selects" type="text" placeholder="请选择..." readonly="readonly"/>
+							<b></b>
+						</td>
+						<td>订单号</td>
+						<td>
+							<input class="sales_head_order" type="text" placeholder="请输入订单号..."/>
+						</td>
+						<td rowspan="3" style="text-align: left; border-left: 5px rgba(0,0,0,0) solid;"><button class="sales_head_tbody_submit"><img src="image/seachs.png">查看报告</button></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="sales_body">
+			<button class="sales_body_excel_btn"><img src="image/excelDwon.png"/>导出为Excel</button>
+			<button class="sales_body_switch"><img src="image/switch.png"/>切换详情</button>
+			<table class="sales_body_table" id="sales_body_table">
+				<tr>
+					<th>平台</th>
+					<th>店铺名称</th>
+					<th>订单号</th>
+					<th>商品信息</th>
+					<th>金额（元）</th>
+					<th>联系人</th>
+					<th>联系电话</th>
+					<th>下单地址</th>
+					<th>下单时间</th>
+					<th>订单状态</th>
+					<th>备注</th>
+				</tr>
+				<tbody class="sales_body_table_tbody">
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="order_center_shipping_fixed">
+		<p>商品列表<span class="order_center_shipping_fixed_clear">×</span></p>
+		<div>
+			<table>
+				<thead class="order_center_shipping_fixed_head">
+					<!-- <tr>
+						<th>名称</th>
+						<th>数量</th>
+						<th>价格</th>
+						<th>货道</th>
+						<th>操作</th>
+					</tr> -->
+				</thead>
+				<tbody class="order_center_shipping_fixed_main">
+					<!-- <tr>
+						<td>鱼香肉丝</td>
+						<td>*1</td>
+						<td>13</td>
+						<td>1-2</td>
+						<td><button>出货</button></td>
+					</tr> -->
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/order_search.js"></script>
+</body>
+</html>

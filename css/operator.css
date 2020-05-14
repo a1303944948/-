@@ -271,33 +271,20 @@ html,body{
 	padding-right: 5px;
 	opacity: 0;
 }
-#wecahtFile_value{
-	width: 170px;
-	height: 24px;
-	border: 1px #d4d4d4 solid;
-	border-radius: 3px;
-	padding-left: 5px;
-	padding-right: 5px;
-	position: absolute;
-	top: 8px;
-	left: 0px;
-	overflow: hidden;
-	white-space: nowrap;
-	pointer-events: none;
-}
 .headUl>li{
 	cursor: pointer;
 }
-#wechatTest,#alipayTest{
+.elem_store_auth{
 	padding: 5px 10px;
 	border: 1px #d4d4d4 solid;
 	background-color: #ffffff;
 	border-radius: 4px;
+	margin-left: 5px;
 }
-#wechatTest:hover,#alipayTest:hover{
+.elem_store_auth:hover{
 	background-color: #f0f0f0;
 }
-#wechatTest:active,#alipayTest:active{
+.elem_store_auth:active{
 	background-color: #ffffff;
 }
 .advertise_board_fixed{

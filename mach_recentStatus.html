@@ -290,7 +290,7 @@
 	    //请求机器名称
 	    $.ajax({
 	    	type: 'post',
-	    	url: URLS + '/status/getHostNameByMachCode.json',
+	    	url: URLS + '/elmStatus/getHostNameByMachCode.json',
 	    	data: {
 				machCode: machCode,
 	    	},
@@ -328,7 +328,7 @@
 			console.log(End);
 			$.ajax({
 				type: 'post',
-				url: URLS + '/status/getHistoryStatusC.json',
+				url: URLS + '/elmStatus/getHistoryStatusC.json',
 				data: {
 					machCode: machCode,
 					startTime: Start,

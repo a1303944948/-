@@ -110,30 +110,6 @@ if(sessionStorage.loginUserName != undefined){
 	window.location.href = 'login.html';
 }
 
-var loginTimeOut = 0;
-var Timoers = setInterval(function(){
-	loginTimeOut += 1;
-	if(loginTimeOut >= 12){
-		sessionStorage.removeItem("loginUserName");
-		alert('用户长时间未操作,请重新登录!');
-		clearInterval(Timoers);
-		window.location.href = 'login.html';
-	}
-},50000);
-window.onmousemove = function(){
-	loginTimeOut = 0;
-	clearInterval(Timoers);
-	Timoers = setInterval(function(){
-		loginTimeOut += 1;
-		if(loginTimeOut >= 12){
-			sessionStorage.removeItem("loginUserName");
-			alert('用户长时间未操作,请重新登录!');
-			clearInterval(Timoers);
-			window.location.href = 'login.html';
-		}
-	},50000);
-}
-
 var KIT;		//数据结构
 var KITSEARCH;	//搜索后产生的数据结构
 var KITSort;	//排序后的数据结构
@@ -143,49 +119,37 @@ var KITANALYSIS;	//BOM结构提取方法	 对应方法为groupanalysis(kit,qid,a
 var KITASSIGN;		//BOM结构获取指定类型方法	对应方法为groupitemlevel(num,bom) num为要获取的类型 bom为要提取的数据源
 //以上方法请前往header.js查找
 //页面请求数据抬头
-// var URLS = 'http://10.1.8.34:8080/bg-uc';
-// var URLX = 'http://10.1.8.36:8080/bg-uc';
-// var URLZ = 'http://10.1.8.45:8080/bg-uc';
-// var URLY = 'http://10.1.8.45:8080/bg-uc';
-/*var URLS = 'http://10.1.8.36:8080/bg-uc';
-var URLX = 'http://10.1.8.36:8080/bg-uc';
-var URLZ = 'http://10.1.8.36:8080/bg-uc';
-var URLY = 'http://10.1.8.36:8080/bg-uc';
-var OSSURL = 'http://hf-web.oss-cn-shanghai.aliyuncs.com/';*/
-/*var URLS = 'http://hfrd.hontech-rdcenter.com:8080/hontechgroup';
-var URLX = 'http://hfrd.hontech-rdcenter.com:8080/hontechgroup';
-var URLZ = 'http://hfrd.hontech-rdcenter.com:8080/hontechgroup';
-var URLY = 'http://hfrd.hontech-rdcenter.com:8080/hontechgroup';
-var OSSURL = 'http://hf-web.oss-cn-shanghai.aliyuncs.com/';*/
-/*var URLS = 'http://test.hontech-rdcenter.com:8080/bg-uc';
-var URLX = 'http://test.hontech-rdcenter.com:8080/bg-uc';
-var URLZ = 'http://test.hontech-rdcenter.com:8080/bg-uc';
-var URLY = 'http://test.hontech-rdcenter.com:8080/bg-uc';
-var OSSURL = 'http://hf-web.oss-cn-shanghai.aliyuncs.com/';*/
-var URLS = 'https://api.hontech-rdcenter.com:8443/bg-uc';
-var URLX = 'https://api.hontech-rdcenter.com:8443/bg-uc';
-var URLZ = 'https://api.hontech-rdcenter.com:8443/bg-uc';
-var URLY = 'https://api.hontech-rdcenter.com:8443/bg-uc';
-var OSSURL = 'https://hf-web.oss-cn-shanghai.aliyuncs.com/';
-
-/*var URLS = 'http://7daqrw.natappfree.cc/bg-uc';
-var URLX = 'http://7daqrw.natappfree.cc/bg-uc';
-var URLZ = 'http://7daqrw.natappfree.cc/bg-uc';
-var URLY = 'http://7daqrw.natappfree.cc/bg-uc';
-var OSSURL = 'http://hf-web.oss-cn-shanghai.aliyuncs.com/';*/
 /*var URLS = 'http://10.1.8.34:8080/bg-uc';
 var URLX = 'http://10.1.8.34:8080/bg-uc';
 var URLZ = 'http://10.1.8.34:8080/bg-uc';
 var URLY = 'http://10.1.8.34:8080/bg-uc';
-var OSSURL = 'http://hf-web.oss-cn-shanghai.aliyuncs.com/';*/
-/*var URLS = 'http://9n2sjp.natappfree.cc/bg-uc';
-var URLX = 'http://9n2sjp.natappfree.cc/bg-uc';
-var URLZ = 'http://9n2sjp.natappfree.cc/bg-uc';
-var URLY = 'http://9n2sjp.natappfree.cc/bg-uc';
-var OSSURL = 'http://hf-web.oss-cn-shanghai.aliyuncs.com/';*/
-var URLTEST = 'http://10.1.8.34:8080/bg-uc';
+var OSSURL = 'http://daoyin.oss-cn-shanghai.aliyuncs.com/';*/
+/*var URLS = 'http://10.1.8.36:8080/bg-uc';
+var URLX = 'http://10.1.8.36:8080/bg-uc';
+var URLZ = 'http://10.1.8.36:8080/bg-uc';
+var URLY = 'http://10.1.8.36:8080/bg-uc';
+var OSSURL = 'http://daoyin.oss-cn-shanghai.aliyuncs.com/';*/
+/*var URLS = 'http://mz3wyv.natappfree.cc/bg-uc';
+var URLX = 'http://mz3wyv.natappfree.cc/bg-uc';
+var URLZ = 'http://mz3wyv.natappfree.cc/bg-uc';
+var URLY = 'http://mz3wyv.natappfree.cc/bg-uc';
+var OSSURL = 'http://daoyin.oss-cn-shanghai.aliyuncs.com/';*/
+var URLS = 'https://api.daoyin.tech:8443';
+var URLX = 'https://api.daoyin.tech:8443';
+var URLZ = 'https://api.daoyin.tech:8443';
+var URLY = 'https://api.daoyin.tech:8443';
+var OSSURL = 'http://daoyin.oss-cn-shanghai.aliyuncs.com/';
+
+function orderBatch(object){
+	return '/dy/'+ object.empcode +'/order?state='+ object.state +'&refundStatus='+ object.refundStatus +'&settledStatus='+ object.settledStatus +'&startTime='+ object.startTime +'&endTime='+ object.endTime +'&orderId='+ object.orderId;
+}
 //禁用页面log,要恢复调试请注释
 //console.log = ()=>{};
+
+//首页日期选择数据
+var INDEXLIST = [
+	['昨天','本周','最近10天','最近30天','按月','今年','去年','自定时间间隔'],
+]
 
 //销售分析页面数据
 var LIST = [

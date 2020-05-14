@@ -2,40 +2,12 @@
 /**首页销售图数据来源**/
 
 var groupitemKit = groupitem(4);
-var groupitemArray = [];	//图表清单
 var groupitemArrays = [];	//状态清单
 for(var i = 0; i < groupitemKit.length; i++){
-	groupitemArray.push(groupitemKit[i].devicecode);
 	if(groupitemKit[i].stop == 1){
 		groupitemArrays.push(groupitemKit[i].devicecode);
 	}
 }
-var ybpobj;
-$.ajax({
-	type: 'post',
-	url: URLX + '/jf/com/report/thirty.json',
-	data: {
-		array: JSON.stringify(groupitemArray),
-	},
-	async: true,
-	dataType: 'json',
-	success: function(data){
-		ybpobj = data;
-		d('index_chart_head_top_right_loading').style.display = 'none';
-		d('index_chart_foot_top_right_loading').style.display = 'none';
-		ybp();			//首页仪表盘
-	},
-	error: function(){
-		d('index_chart_head_top_right_loading').innerHTML = '发生错误!';
-		d('index_chart_foot_top_right_loading').innerHTML = '发生错误!';
-		d('index_chart_head_top_right_loading').style.animation = 'false';
-		d('index_chart_foot_top_right_loading').style.animation = 'false';
-		d('index_chart_head_top_right_loading').style.lineHeight = d('index_chart_head_top_right_loading').clientHeight + 'px';
-		d('index_chart_foot_top_right_loading').style.lineHeight = d('index_chart_foot_top_right_loading').clientHeight + 'px';
-	}
-})
-
-
 /*$.ajax({
 	url: URLS + '/sbzt/indexNum.json',
 	type: 'post',
@@ -47,17 +19,18 @@ $.ajax({
 		canvas(data);
 	}
 })*/
-$.ajax({
-	url: URLS + '/status/getHomePage.json',
+
+ajax({
+	url: URLS + '/elmStatus/getHomePage.json',
 	type: 'post',
 	data: {
 		strArray: JSON.stringify(groupitemArrays),
 	},
-	async: false,
 	success: function(data){
 		canvas(data);
 	}
 })
+
 
 //var allD = {totalNum: 15,NornalNum: 5,NornalFake: 3,BadNum: 5,BadNum24: 2};
 //canvas(allD);
@@ -120,380 +93,880 @@ function canvas(allData){
 	cxt3.arc(32,32,26,Math.PI*1.5,Math.PI*(1.5 + bad24/total*2),false);
 	cxt3.stroke();
 }
-//首页仪表盘刻度线
-function canvasRight(){
-	var context = d('index_chart_head_top_right_canvas');
-	var tRight = c('index_chart_head_top_right')[0];
-	var cxt = context.getContext('2d');
 
-	var Width = tRight.clientWidth;
-	var Height = tRight.clientHeight;
+//看板栏历史记录样式渲染
+function kanbansfun(){
+	var Height = window.innerHeight;
+	var Header = n('header')[0].clientHeight;
+	var indexStatus = c('index_status')[0].clientHeight;
+	var indexKanban = c('index_kanban')[0].clientHeight;
+	var kanbans = c('index_kanbans')[0];
+	kanbans.style.height = Height - Header - indexStatus - indexKanban - 85 + 'px';
+}
+kanbansfun();
 
-	context.width = Width;
-	context.height = Height;
-
-	for(var i = 0; i < 6; i++){
-		cxt.beginPath();
-		cxt.strokeStyle = '#e5e5e5';
-		cxt.lineWidth = 1;
-		cxt.moveTo(0,i*Height/6 + 0.5);
-		cxt.lineTo(Width,i*Height/6 + 0.5);
-		cxt.closePath();
-		cxt.stroke();
-	}
-
-	var contexts = d('index_chart_foot_top_right_canvas');
-	var tRights = c('index_chart_foot_top_right')[0];
-	var cxts = contexts.getContext('2d');
-
-	var Widths = tRights.clientWidth;
-	var Heights = tRights.clientHeight;
-
-	contexts.width = Widths;
-	contexts.height = Heights;
-
-	for(var i = 0; i < 6; i++){
-		cxts.beginPath();
-		cxts.strokeStyle = '#e5e5e5';
-		cxts.lineWidth = 1;
-		cxts.moveTo(0,i*Heights/6 + 0.5);
-		cxts.lineTo(Widths,i*Heights/6 + 0.5);
-		cxts.closePath();
-		cxts.stroke();
-	}
+window.onresize = function(){
+	kanbansfun();
 }
 
-//首页仪表盘渲染
-function ybp(){
-	var ybpa = c('index_chart_head_bottom')[0];
-	var topRight = c('index_chart_head_top_right')[0];
-	var leftList = 0;	//30天柱状图使用变量
-	var leftLists = 0;  //今年vs去年柱状图使用变量
-	var Width = window.innerWidth;
-	var Height = window.innerHeight;
-	for(var i = 0; i < ybpobj.days.length; i++){
-		// var date = new Date();
-		// var nian = date.getFullYear();
-		// var yue = date.getMonth()+1;
-		// var ri = date.getDate();
-		// var dates = new Date(nian,yue,ri - 30 + i);
-		// var nians = dates.getFullYear();
-		// var yues = dates.getMonth();
-		// var ris = dates.getDate();
-		// if(yues == 0){
-		// 	yues = 12;
-		// 	nians -= 1;
-		// }
-		//生成30天销售图底部的日期
-		var div = creat('div');
-		div.className = 'index_chart_head_bottom_list';
-		ybpa.appendChild(div);
-		div.innerHTML = ybpobj.days[i];
-		/*div.children[0].style.display = 'block';
-		div.children[0].style.width = div.clientHeight + 'px';
-		div.children[0].style.height = div.clientWidth + 'px';
-		div.children[0].style.lineHeight = div.clientWidth + 'px';
-		div.children[0].style.position = 'relative';
-		div.children[0].style.left = div.clientWidth + 'px';
-		div.children[0].style.fontFamily = 'Arial, Helvetica, sans-serif';
-		div.children[0].style.transformOrigin = 'left top';
-		div.children[0].style.transform = 'rotate(90deg)';*/
-
-		//生成30天销售图的柱状图
-		var zdz = ybpobj.totals.slice(0);
-		zdz = zdz.sort(function (a,b){return a - b;});
-		leftList = parseInt(zdz[zdz.length-1]);
-		var divsCount = leftListMe(leftList)[0];
-		var divs = creat('div');
-		var p = creat('p');
-		var span = creat('span');
-		span.innerHTML = "微信："+ybpobj.wechats[i]+
-						"<br/>支付宝："+ybpobj.alipays[i]+
-						"<br/>银商："+ybpobj.SilverMerchants[i]+
-						"<br/>工商："+ybpobj.icbcs[i]+
-						"<br/>现金："+ybpobj.cashs[i]+
-						"<br/>刷卡："+ybpobj.cards[i]+
-						"<br/>自定义："+ybpobj.frees[i];
-		divs.className = 'index_chart_head_top_right_list';
-		p.innerHTML = ybpobj.totals[i];
-		divs.appendChild(p);
-		divs.appendChild(span);
-		topRight.appendChild(divs);
-		p.style.marginLeft = (divs.clientWidth - p.clientWidth)/2 + 'px';
-		span.style.top = '-10000px';
-		if(divs.offsetParent.offsetLeft + (Width - (divs.offsetParent.clientWidth + 80))/2 + divs.offsetLeft + divs.clientWidth + span.clientWidth>Width){
-			span.style.left = -span.clientWidth + 'px';
-		}else{
-			span.style.left = divs.clientWidth + 'px';
-		}
-		divs.style.top = topRight.clientHeight - zdz[zdz.length-1]/divsCount*topRight.clientHeight + 'px';
-		divs.style.height = Math.round(ybpobj.totals[i]/divsCount*topRight.clientHeight) + 'px';
-	}
-
-	var ybpb = c('index_chart_foot_bottom')[0];
-	var topRights = c('index_chart_foot_top_right')[0];
-
-	var zdzs = ybpobj.vsMap.pastMap.totals.slice(0);
-	for(var i = 0; i < ybpobj.vsMap.thisMap.totals.length; i++){
-		zdzs.push(ybpobj.vsMap.thisMap.totals.slice(0)[i]);
-	}
-	zdzs = zdzs.sort(function (a,b){return a - b;});
-	leftLists = parseInt(zdzs[zdzs.length-1]);
-	for(var i = 0; i < ybpobj.vsMap.pastMap.yues.length; i++){
-		//生成去年vs今年销售图底部的日期
-		var divb = creat('div');
-		divb.className = 'index_chart_foot_bottom_list';
-		ybpb.appendChild(divb);
-		divb.innerHTML = ybpobj.vsMap.pastMap.yues[i];
-
-		//生成去年vs今年销售图的柱状图
-		var divsCount = parseInt(leftListMe(leftLists)[0]);
-		var divs = creat('div');
-		var p = creat('p');
-		var span = creat('span');
-		var divsa = creat('div');
-		var pa = creat('p');
-		var spana = creat('span');
-		span.innerHTML = "微信："+ybpobj.vsMap.pastMap.wechats[i]+
-						"<br/>支付宝："+ybpobj.vsMap.pastMap.alipays[i]+
-						"<br/>银商："+ybpobj.vsMap.pastMap.SilverMerchants[i]+
-						"<br/>工商："+ybpobj.vsMap.pastMap.icbcs[i]+
-						"<br/>现金："+ybpobj.vsMap.pastMap.pcashs[i]+
-						"<br/>刷卡："+ybpobj.vsMap.pastMap.pcards[i]+
-						"<br/>自定义："+ybpobj.vsMap.pastMap.pfrees[i];
-		divs.className = 'index_chart_foot_top_right_list';
-		spana.innerHTML = "微信："+ybpobj.vsMap.thisMap.wechats[i]+
-						"<br/>支付宝："+ybpobj.vsMap.thisMap.alipays[i]+
-						"<br/>银商："+ybpobj.vsMap.thisMap.SilverMerchants[i]+
-						"<br/>工商："+ybpobj.vsMap.thisMap.icbcs[i]+
-						"<br/>现金："+ybpobj.vsMap.thisMap.tcashs[i]+
-						"<br/>刷卡："+ybpobj.vsMap.thisMap.tcards[i]+
-						"<br/>自定义："+ybpobj.vsMap.thisMap.tfrees[i];
-		divsa.className = 'index_chart_foot_top_right_lists';
-		p.innerHTML = ybpobj.vsMap.pastMap.totals[i];
-		pa.innerHTML = ybpobj.vsMap.thisMap.totals[i];
-		divs.appendChild(p);
-		divs.appendChild(span);
-		divsa.appendChild(pa);
-		divsa.appendChild(spana);
-		topRights.appendChild(divs);
-		topRights.appendChild(divsa);
-		p.style.marginLeft = (divs.clientWidth - p.clientWidth)/2 + 'px';
-		pa.style.marginLeft = (divsa.clientWidth - pa.clientWidth)/2 + 'px';
-		span.style.top = '-10000px';
-		spana.style.top = '-10000px';
-		if(divs.offsetParent.offsetLeft + (Width - (divs.offsetParent.clientWidth + 80))/2 + divs.offsetLeft + divs.clientWidth + span.clientWidth>Width){
-			span.style.left = -span.clientWidth + 'px';
-		}else{
-			span.style.left = divs.clientWidth + 'px';
-		}
-		if(divsa.offsetParent.offsetLeft + (Width - (divsa.offsetParent.clientWidth + 80))/2 + divsa.offsetLeft + divsa.clientWidth + span.clientWidth>Width){
-			spana.style.left = -spana.clientWidth + 'px';
-		}else{
-			spana.style.left = divsa.clientWidth + 'px';
-		}
-		divs.style.top = topRights.clientHeight - zdzs[zdzs.length-1]/divsCount*topRights.clientHeight + 'px';
-		divs.style.height = Math.round(ybpobj.vsMap.pastMap.totals[i]/divsCount*topRights.clientHeight) + 'px';
-		divsa.style.top = topRights.clientHeight - zdzs[zdzs.length-1]/divsCount*topRights.clientHeight + 'px';
-		divsa.style.height = Math.round(ybpobj.vsMap.thisMap.totals[i]/divsCount*topRights.clientHeight) + 'px';
-	}
-	//渲染最近30天的竖状旁黑块区域
-	function rightList(){
-		var right_list = c('index_chart_head_top_right_list');
-		for(var i = 0; i < right_list.length; i++){
-			(function(q){
-				right_list[q].onmouseover = function(e){
-					right_list[q].children[1].style.top = '0px';
-				}
-				right_list[q].onmouseout = function(e){
-					right_list[q].children[1].style.top = '-10000px';
-				}
-			})(i)
-		}
-	}
-	rightList();
-
-	//渲染今年vs去年的竖状旁黑块区域
-	function rightLists(){
-		var right_list = c('index_chart_foot_top_right_list');
-		var right_lists = c('index_chart_foot_top_right_lists');
-		for(var i = 0; i < right_list.length; i++){
-			(function(q){
-				right_list[q].onmouseover = function(e){
-					right_list[q].children[1].style.top = '0px';
-				}
-				right_list[q].onmouseout = function(e){
-					right_list[q].children[1].style.top = '-10000px';
-				}
-				right_lists[q].onmouseover = function(e){
-					right_lists[q].children[1].style.top = '0px';
-				}
-				right_lists[q].onmouseout = function(e){
-					right_lists[q].children[1].style.top = '-10000px';
-				}
-			})(i)
-		}
-	}
-	rightLists();
-
-	//渲染销售图的记录值
-	function leftListMe(num){
-		if(num < 10){
-			one = 0;
-			two = 2;
-			three = 4;
-			four = 6;
-			five = 8;
-			six = 10;
-			seven = 12;
-		}else{
-			var weishu = num.toString();		//得到数据是几位数
-			weishu = weishu.replace(/[^0]/ig,"0");
-			weishu = weishu.substr(0, weishu.length - 2);
-			var fir = num.toString()[0];			//得到数据的第一位数值
-			var Last = num.toString()[1];			//得到数据的第二位数值
-			var one;
-			var two;
-			var three;
-			var four;
-			var five;
-			var six;
-			var seven;
-			if(fir == 1&&Last < 2){
-				one = 0;
-				two = 2 + weishu;
-				three = 4 + weishu;
-				four = 6 + weishu;
-				five = 8 + weishu;
-				six = 10 + weishu;
-				seven = 12 + weishu;
-			}else if(fir == 1&&Last >= 2&&Last < 5){
-				one = 0;
-				two = 3 + weishu;
-				three = 6 + weishu;
-				four = 9 + weishu;
-				five = 12 + weishu;
-				six = 15 + weishu;
-				seven = 18 + weishu;
-			}else if(fir == 1&&Last >= 5){
-				one = 0;
-				two = 4 + weishu;
-				three = 8 + weishu;
-				four = 12 + weishu;
-				five = 16 + weishu;
-				six = 20 + weishu;
-				seven = 24 + weishu;
-			}else if(fir == 2){
-				one = 0;
-				two = 5 + weishu;
-				three = 10 + weishu;
-				four = 15 + weishu;
-				five = 20 + weishu;
-				six = 25 + weishu;
-				seven = 30 + weishu;
-			}else if(fir == 3){
-				one = 0;
-				two = 7 + weishu;
-				three = 14 + weishu;
-				four = 21 + weishu;
-				five = 28 + weishu;
-				six = 35 + weishu;
-				seven = 42 + weishu;
-			}else if(fir == 4){
-				one = 0;
-				two = 9 + weishu;
-				three = 18 + weishu;
-				four = 27 + weishu;
-				five = 36 + weishu;
-				six = 45 + weishu;
-				seven = 54 + weishu;
-			}else if(fir == 5){
-				one = 0;
-				two = 10 + weishu;
-				three = 20 + weishu;
-				four = 30 + weishu;
-				five = 40 + weishu;
-				six = 50 + weishu;
-				seven = 60 + weishu;
-			}else if(fir == 6){
-				one = 0;
-				two = 12 + weishu;
-				three = 24 + weishu;
-				four = 36 + weishu;
-				five = 48 + weishu;
-				six = 60 + weishu;
-				seven = 72 + weishu;
-			}else if(fir == 7){
-				one = 0;
-				two = 14 + weishu;
-				three = 28 + weishu;
-				four = 42 + weishu;
-				five = 56 + weishu;
-				six = 70 + weishu;
-				seven = 84 + weishu;
-			}else if(fir == 8){
-				one = 0;
-				two = 16 + weishu;
-				three = 32 + weishu;
-				four = 48 + weishu;
-				five = 64 + weishu;
-				six = 80 + weishu;
-				seven = 96 + weishu;
-			}else if(fir == 9){
-				one = 0;
-				two = 17 + weishu;
-				three = 34 + weishu;
-				four = 51 + weishu;
-				five = 68 + weishu;
-				six = 85 + weishu;
-				seven = 102 + weishu;
+//今日看板
+function todayBar(){
+	var barDate = new Date();
+	var nian = barDate.getFullYear();
+	var yue = barDate.getMonth() + 1;
+	var ri = barDate.getDate();
+	var startTime = String(nian) + '-' + String(yue) + '-' + String(ri) + ' 00:00:00';
+	var endTime = String(nian) + '-' + String(yue) + '-' + String(ri+1) + ' 00:00:00';
+	ajax({
+		type: 'get',
+		url: URLS + '/count/'+loginUserName.empcode+'/home?startTime='+startTime+'&endTime='+endTime,
+		success: function(data){
+			if(data.status == 10001){
+				c('index_kanban_total')[0].innerHTML = data.resultObject.turnover;
+				c('index_kanban_num')[0].innerHTML = data.resultObject.validCount;
+			}else{
+				c('index_kanban_total')[0].innerHTML = 0;
+				c('index_kanban_num')[0].innerHTML = 0;
 			}
 		}
-		var obj = [seven,six,five,four,three,two,one];
-		return obj;
+	})
+}
+todayBar();
+
+//历史看板
+function historyBar(){
+	var indexKanbansYbp = c('index_kanbans_ybp')[0];
+	var selects = c('index_head_selects');	//第一种类input下拉框(不携带value值的下拉框)
+	var selects_ul = c('index_head_selects_ul');
+
+	//第一种类渲染
+	//给下拉框元素创建下拉内容
+	for(var i = 0; i < selects.length; i++){
+		var ul = creat('ul');
+		ul.className = 'index_head_selects_ul';
+		ul.setAttribute('data-list',i);
+		for(var j = 0; j < INDEXLIST[i].length; j++){
+			var li = creat('li');
+			var br = creat('br');
+			li.innerHTML = INDEXLIST[i][j];
+			ul.appendChild(li);
+			ul.appendChild(br);
+		}
+		indexKanbansYbp.appendChild(ul);
 	}
 
-	//最近三十天刻度渲染
-	var topLeft = c('index_chart_head_top_left')[0];
-	var topLeftCount = leftListMe(leftList);
-	for(var i = 0; i < 7; i++){
-		var div = creat('div');
-		div.className = 'index_chart_head_top_left_list';
-		div.innerHTML = topLeftCount[i];
-		topLeft.appendChild(div);
-	}
+	//渲染点击事件
+	for(var i = 0; i < selects.length; i++){
+		selects_ul[i].style.left = selects[i].offsetParent.offsetLeft + 17 + 'px';
+		selects_ul[i].style.top = selects[i].offsetParent.offsetTop + selects[i].offsetParent.clientHeight - 4 + 'px';
+		(function(q){
+			//点击input框时的显示隐藏
+			selects[q].onfocus = function(){
+				selects_ul[q].style.display = 'inline-block';
+			}
+			selects[q].onblur = function(){
+				selects_ul[q].style.display = 'none';
+			}
+			//点击ul时的显示隐藏
+			selects[q].parentNode.children[1].onfocus = function(){
+				selects_ul[q].style.display = 'inline-block';
+			}
+			selects[q].parentNode.children[1].onblur = function(){
+				selects_ul[q].style.display = 'none';
+			}
+		})(i)
+		//将ul中选中的数据渲染到input框中
+		for(var j = 0; j < selects_ul[i].children.length; j++){
+			if(j%2 == 0){
+				selects_ul[i].children[j].onmousedown = function(){
+					selects[this.offsetParent.dataset.list].value = this.innerHTML;
+				}
+			};
+		}
 
-	//去年vs今年刻度渲染
-	var topLefts = c('index_chart_foot_top_left')[0];
-	var topLeftCounts = leftListMe(leftLists);
-	for(var i = 0; i < 7; i++){
-		var div = creat('div');
-		div.className = 'index_chart_head_top_left_list';
-		div.innerHTML = topLeftCounts[i];
-		topLefts.appendChild(div);
+		//给下拉框元素默认选中第一个值
+		selects[i].value = selects_ul[i].children[0].innerHTML;
+	}
+}
+historyBar();
+
+var startDate;	//开始时间
+var endDate;	//结束时间
+
+//日期渲染	如果input框发生改变时要跟着改变
+function datepicke(){
+
+	var date_select = c('index_head_selects')[0];	//日期input
+	var date_selectUl = c('index_head_selects_ul')[0];	//日期input
+	var date_selectList = date_selectUl.children;			//日期input下拉框
+	var headNian = c('index_head_date_nian');
+	var headYue = c('index_head_date_yue');
+	var headStart = c('index_head_date_start');
+	var headEnd = c('index_head_date_end');
+	var date = new Date();
+	var nian;
+	var yue;
+	var ri;
+
+	//页面加载时获取默认时间
+	startDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+	endDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + (date.getDate() + 1);
+
+	var zhou = date.getDay();
+	if(date.getDay() == 0){
+		zhou = 7;
+	}
+	var hao = date.getDate()-1;
+	var tian = 86400000;
+	dateNone();
+	for(var i = 0; i < date_selectList.length; i++){
+		(function(q){
+			date_selectList[q].onmousedown = function(){
+				date_select.value = this.innerHTML;
+				if(this.innerHTML == '今天'){
+					nian = date.getFullYear();
+					yue = date.getMonth() + 1;
+					ri = date.getDate();
+					startDate = String(nian) + '-' + String(yue) + '-' + String(ri);
+					endDate = String(nian) + '-' + String(yue) + '-' + String(ri+1);
+					dateNone();
+				}else if(this.innerHTML == '昨天'){
+					var dates = new Date(new Date - tian);
+					nian = dates.getFullYear();
+					yue = dates.getMonth() + 1;
+					ri = dates.getDate();
+					startDate = String(nian) + '-' + String(yue) + '-' + String(ri);
+					endDate = String(nian) + '-' + String(yue) + '-' + String(ri+1);
+					dateNone();
+				}else if(this.innerHTML == '本周'){
+					var dates = new Date(new Date - tian*(zhou));
+					nian = dates.getFullYear();
+					yue = dates.getMonth() + 1;
+					ri = dates.getDate();
+					startDate = String(nian) + '-' + String(yue) + '-' + String(ri);
+					nian = date.getFullYear();
+					yue = date.getMonth() + 1;
+					ri = date.getDate();
+					endDate = String(nian) + '-' + String(yue) + '-' + String(ri+1);
+					dateNone();
+				}else if(this.innerHTML == '最近10天'){
+					var dates = new Date(new Date - tian*9);
+					nian = dates.getFullYear();
+					yue = dates.getMonth() + 1;
+					ri = dates.getDate();
+					startDate = String(nian) + '-' + String(yue) + '-' + String(ri);
+					nian = date.getFullYear();
+					yue = date.getMonth() + 1;
+					ri = date.getDate();
+					endDate = String(nian) + '-' + String(yue) + '-' + String(ri+1);
+					dateNone();
+				}else if(this.innerHTML == '上周'){
+					var dates = new Date(new Date - tian*(zhou-1+7));
+					nian = dates.getFullYear();
+					yue = dates.getMonth() + 1;
+					ri = dates.getDate();
+					startDate = String(nian) + '-' + String(yue) + '-' + String(ri-1);
+					dates = new Date(new Date - tian*(zhou));
+					nian = dates.getFullYear();
+					yue = dates.getMonth() + 1;
+					ri = dates.getDate();
+					endDate = String(nian) + '-' + String(yue) + '-' + String(ri);
+					dateNone();
+				}else if(this.innerHTML == '本月'){
+					var dates = new Date(new Date - tian*hao);
+					nian = dates.getFullYear();
+					yue = dates.getMonth() + 1;
+					ri = dates.getDate();
+					startDate = String(nian) + '-' + String(yue) + '-' + String(ri);
+					nian = date.getFullYear();
+					yue = date.getMonth() + 1;
+					ri = date.getDate();
+					endDate = String(nian) + '-' + String(yue) + '-' + String(ri+1);
+					dateNone();
+				}else if(this.innerHTML == '最近30天'){
+					var dates = new Date(new Date - tian*29);
+					nian = dates.getFullYear();
+					yue = dates.getMonth() + 1;
+					ri = dates.getDate();
+					startDate = String(nian) + '-' + String(yue) + '-' + String(ri);
+					nian = date.getFullYear();
+					yue = date.getMonth() + 1;
+					ri = date.getDate();
+					endDate = String(nian) + '-' + String(yue) + '-' + String(ri+1);
+					dateNone();
+				}else if(this.innerHTML == '上个月'){
+					var dates = new Date(new Date - tian*(hao+1));
+					nian = dates.getFullYear();
+					yue = dates.getMonth() + 1;
+					ri = dates.getDate();
+          			endDate = String(nian) + '-' + String(yue+1) + '-' + String(1);
+					dates = new Date(new Date - tian*(hao+ri));
+					nian = dates.getFullYear();
+					yue = dates.getMonth() + 1;
+					ri = dates.getDate();
+					startDate = String(nian) + '-' + String(yue) + '-' + String(ri);
+					dateNone();
+				}else if(this.innerHTML == '按月'){
+					dateNone();
+					headNian[0].style.display = 'table-cell';
+					headNian[1].style.display = 'table-cell';
+					headYue[0].style.display = 'table-cell';
+					headYue[1].style.display = 'table-cell';
+					startDate = undefined;
+					endDate = undefined;
+
+					d('device_head_year').value = '';
+					d('device_head_month').value = '';
+					d('device_head_year').setAttribute('data-value','');
+					d('device_head_month').setAttribute('data-value','');
+
+					var preStartTimeYear = 2020;
+					var preTimeYear = new Date().getFullYear();
+					var preTimeYearArr = [];
+					for(var i = 0; i < preTimeYear-preStartTimeYear+1; i++){
+						preTimeYearArr.push(preStartTimeYear+i);
+					}
+					var preTimeYearArray = [];
+					for(var i = 0; i < preTimeYearArr.length; i++){
+						var preTimeYearObject = {};
+						preTimeYearObject.name = preTimeYearArr[i];
+						preTimeYearObject.value = preTimeYearArr[i];
+						preTimeYearArray.push(preTimeYearObject);
+					}
+					var deviceHeadYear = d('device_head_year');
+					deviceHeadYear.setAttribute('data-select',JSON.stringify(preTimeYearArray));
+
+					log(123);
+					log(d('device_head_year'));
+					d('device_head_year').onInput = function(){
+						log(123);
+					}
+
+					d('device_head_month').onInput = function(){
+						log(456);
+					}
+
+					WmStartSelect();
+				}else if(this.innerHTML == '今年'){
+					var dateArr = new Array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+					var dates = new Date();
+					nian = dates.getFullYear();
+					yue = dates.getMonth(); //getMonth()是从0开始
+					ri = dates.getDate();
+					var result = 0;
+					for ( var i = 0; i < yue - 1; i++) {
+						result += dateArr[i];
+					}
+					result += ri;
+					//判断是否闰年
+					if (yue > 1 && (nian % 4 == 0 && nian % 100 != 0) || nian % 400 == 0) {
+						result += 1;
+					}
+					dates = new Date(new Date - tian*(result-1));
+					nian = dates.getFullYear();
+					yue = 1; //getMonth()是从0开始
+					ri = 1;
+					startDate = String(nian) + '-' + String(yue) + '-' + String(ri);
+					nian = date.getFullYear();
+					yue = date.getMonth() + 1;
+					ri = date.getDate();
+					endDate = String(nian) + '-' + String(yue) + '-' + String(ri+1);
+					dateNone();
+				}else if(this.innerHTML == '去年'){
+					var dateArr = new Array(31,28,31,30,31,30,31,31,30,31,30,31);
+					var dates = new Date();
+					nian = dates.getFullYear();
+					yue = dates.getMonth(); //getMonth()是从0开始
+					ri = dates.getDate();
+					var result = 0;
+					for ( var i = 0; i < yue; i++) {
+						result += dateArr[i];
+					}
+					result += ri - 1;
+					//判断是否闰年
+					if (yue > 1 && (nian % 4 == 0 && nian % 100 != 0) || nian % 400 == 0) {
+						result += 1;
+					}
+					dates = new Date(new Date - tian*(result));
+					nian = dates.getFullYear();
+					yue = dates.getMonth() + 1; //getMonth()是从0开始
+					ri = dates.getDate();
+					endDate = String(nian) + '-' + String(yue) + '-' + String(1);
+					nian = nian-1;
+					yue = 1;
+					ri = 1;
+					startDate = String(nian) + '-' + String(yue) + '-' + String(ri);
+					dateNone();
+				}else if(this.innerHTML == '自定时间间隔'){
+					dateNone();
+					headStart[0].style.display = 'table-cell';
+					headStart[1].style.display = 'table-cell';
+					headStart[1].children[0].value = '';
+					headEnd[0].style.display = 'table-cell';
+					headEnd[1].style.display = 'table-cell';
+					headEnd[1].children[0].value = '';
+					startDate = undefined;
+					endDate = undefined;
+					controller(nianStart,yueStart,riStart);
+					tabDate();
+					onclicks(yueStart);
+				}
+			}
+		})(i)
+	}
+	function dateNone(){
+		headNian[0].style.display = 'none';
+		headNian[1].style.display = 'none';
+		headYue[0].style.display = 'none';
+		headYue[1].style.display = 'none';
+		headStart[0].style.display = 'none';
+		headStart[1].style.display = 'none';
+		headEnd[0].style.display = 'none';
+		headEnd[1].style.display = 'none';
 	}
 }
 
-//页面大小改变时触发
-window.onresize = function(){
-	//30天销售图柱状鼠标移上出现的黑块在矿口发生改变时重新定位
-	var rightList = c('index_chart_head_top_right_list');
-	var Width = window.innerWidth;
-	var Height = window.innerHeight;
-	for(var i = 0; i < rightList.length; i++){
-		if(rightList[i].offsetParent.offsetLeft + (Width - (rightList[i].offsetParent.clientWidth + 80))/2 + rightList[i].offsetLeft + rightList[i].clientWidth + rightList[i].children[1].clientWidth>Width){
-			rightList[i].children[1].style.left = -rightList[i].children[1].clientWidth + 'px';
-		}else{
-			rightList[i].children[1].style.left = rightList[i].clientWidth + 'px';
+var dateStart = new Date();
+var nianStart = dateStart.getFullYear();
+var yueStart = dateStart.getMonth()+1;
+var riStart = dateStart.getDate();
+
+//首次渲染日期控件
+function controller(nian,yue,ri){
+	var indexHead = c('index_kanbans_ybp')[0];
+	var dateController = c('index_head_date_controller');
+	var headStart = c('index_head_date_start');
+	var headEnd = c('index_head_date_end');
+	var Left;
+	var Top;
+	var Width;
+
+	for(var i = 0; i < dateController.length; i++){
+		Left = dateController[i].parentNode.offsetLeft + 5;
+		Top = dateController[i].parentNode.offsetTop + dateController[i].parentNode.clientHeight - 3;
+		Width = dateController[i].clientWidth - 20;
+		var div = creat('div');			//创建日期控件本身
+		div.className = 'ui_datapicker';
+		div.style.width = Width + 'px';
+		div.style.height = 'auto';
+		div.style.position = 'absolute';
+		div.style.left = Left + 'px';
+		div.style.top = Top + 'px';
+		div.style.padding = '5px 10px 10px 10px';
+		div.style.border = '1px #e5e5e5 solid';
+		div.style.backgroundColor = '#ffffff';
+		div.style.zIndex = 55;
+
+		function header(){
+			var p = creat('p');
+			var headerHeight = 30;
+			p.className = 'ui_datapicker_head';
+			p.style.width = '100%';
+			p.style.height = headerHeight + 'px';
+			for(var j = 0; j < 4; j++){
+				var a = creat('a');
+				a.style.display = 'inline-block';
+				a.style.height = headerHeight + 'px';
+				a.style.lineHeight = headerHeight + 'px';
+				a.style.textAlign = 'center';
+				a.style.cursor = 'pointer';
+				a.style.position = 'relative';
+				p.appendChild(a);
+				switch(j+1){
+					case 1:
+						a.innerHTML = '<';
+						a.style.width = '20%';
+						a.style.fontFamily = 'serif';
+						a.style.fontSize = '20px';
+						a.style.userSelect = 'none';
+						a.style.fontWeight = '700';
+						a.className = 'ui_datapicker_head_prev';
+						a.onmouseover = function(){
+							this.style.backgroundColor = '#e5e5e5';
+						}
+						a.onmouseout = function(){
+							this.style.backgroundColor = '#ffffff';
+						}
+						break;
+					case 2:
+						var input = creat('input');
+						var span = creat('span');
+						input.value = nian;
+						a.style.width = '34%';
+						input.style.display = 'block';
+						input.style.border = 'none';
+						input.style.width = '100%';
+						input.style.height = headerHeight-4 + 'px';
+						input.style.fontSize = '16px';
+						input.style.textAlign = 'center';
+						input.style.userSelect = 'none';
+						input.type = 'number';
+						span.style.position = 'absolute';
+						span.style.right = '-4px';
+						span.style.top = '-4px';
+						span.innerHTML = '-';
+						a.appendChild(input);
+						a.appendChild(span);
+						a.className = 'ui_datapicker_head_left';
+						break;
+					case 3:
+						if(parseInt(yue) < 10){
+							yue = '0' + parseInt(yue);
+						}
+						a.style.width = '26%';
+						a.innerHTML = yue;
+						a.className = 'ui_datapicker_head_right';
+						break;
+					case 4:
+						a.innerHTML = '>';
+						a.style.width = '20%';
+						a.style.fontFamily = 'serif';
+						a.style.fontSize = '20px';
+						a.style.userSelect = 'none';
+						a.style.fontWeight = '700';
+						a.className = 'ui_datapicker_head_next';
+						a.onmouseover = function(){
+							this.style.backgroundColor = '#e5e5e5';
+						}
+						a.onmouseout = function(){
+							this.style.backgroundColor = '#ffffff';
+						}
+						break;
+				}
+			}
+			div.appendChild(p);
+		}
+		header();
+
+		/*日期选择器核心数组*/
+		(function (){
+			var datepicker = {};
+
+			datepicker.getMonthDate = function(year,month){
+				var ret = [];
+				if(!year || !month){
+					var today = new Date();
+					year = today.getFullYear();
+					month = today.getMonth() + 1;
+				}
+
+				var firstDay = new Date(year,month-1,1);
+				var firstDayWeekDay = firstDay.getDay();
+				if(firstDayWeekDay === 0){
+					firstDayWeekDay = 7;
+				}
+
+				var lastDayOfLastMonth = new Date(year,month-1,0).getDate();
+
+				var preMonthDayCount = firstDayWeekDay - 1;
+				var lastDay = new Date(year,month,0);
+				var lastDate = lastDay.getDate();
+				for(var j = 0; j<7*6;j++){
+					var date = j + 1 - preMonthDayCount;
+					var showDate = date;
+					var thisMonth = month;
+
+					if(date <= 0){
+						thisMonth = month-1;
+						showDate = lastDayOfLastMonth + date;
+
+					}else if(date > lastDate){
+						thisMonth = month+1;
+						showDate = showDate - lastDate;
+					}
+
+					if(thisMonth === 0) thisMonth = 12;
+					if(thisMonth === 13) thisMonth = 1;
+
+					ret.push({
+						month: thisMonth,
+						date: date,
+						showDate: showDate
+					});
+					
+				}
+				return ret;
+			}
+			window.datepicker = datepicker;
+		})()
+		function bodyer(){
+			var obj = datepicker.getMonthDate(nian,parseInt(yue));
+			var objs = ['一','二','三','四','五','六','日']
+			var count = -1;
+
+			var table = creat('table');
+			table.width = Width + 'px';
+			table.height = 'auto';
+			table.className = 'ui_datapicker_body';
+			table.style.borderCollapse = 'collapse';
+			for(var j = 0; j < 1; j++){
+				var tr = creat('tr');
+				for(var k = 0; k < 7; k++){
+					count++;
+					var th = creat('th');
+					th.innerHTML = objs[count];
+					th.style.height = Width/7 + 'px';
+					th.style.lineHeight = Width/7 + 'px';
+					th.style.textAlign = 'center';
+					th.style.userSelect = 'none';
+					th.style.borderRadius = '50%';
+					tr.appendChild(th);
+				}
+				table.appendChild(tr);
+			}
+			count = -1;
+			for(var j = 0; j < 6; j++){
+				var tr = creat('tr');
+				for(var k = 0; k < 7; k++){
+					count++;
+					var td = creat('td');
+					td.innerHTML = obj[count].showDate;
+					td.style.height = Width/7 + 'px';
+					td.style.lineHeight = Width/7 + 'px';
+					td.style.textAlign = 'center';
+					td.style.userSelect = 'none';
+					td.style.borderRadius = '50%';
+					td.style.fontSize = '14px';
+					td.style.cursor = 'pointer';
+					if(obj[count].month != yue){
+						td.style.color = '#a4a4a4';
+						td.style.cursor = 'auto';
+					}
+					td.setAttribute("data-title",obj[count].month);
+					td.onmouseover = function(){
+						this.style.backgroundColor = '#e5e5e5';
+					}
+					td.onmouseout = function(){
+						this.style.backgroundColor = '#ffffff';
+					}
+					tr.appendChild(td);
+				}
+				table.appendChild(tr);
+			}
+			count = -1;
+			div.appendChild(table);
+		}
+		bodyer();
+		indexHead.appendChild(div);
+		(function(q){	//点击展开收起日期控件
+			dateController[q].onfocus = function(){
+				var ui_datapicker = c('ui_datapicker');
+				ui_datapicker[q].style.display = 'block';
+			}
+			dateController[q].onblur = function(){
+				ui_datapicker[q].style.display = 'none';
+			}
+		})(i)
+	}
+
+	//页面加载时关闭所有的日期控件
+	var ui_datapicker = c('ui_datapicker');
+	for(var i = 0; i < ui_datapicker.length; i++){
+		ui_datapicker[i].style.display = 'none';
+	}
+}
+
+//点击后渲染日期控件
+function controllers(nian,yue,ri,num){
+	var indexHead = c('index_kanbans_ybp')[0];
+	var dateController = c('index_head_date_controller');
+	var headStart = c('index_head_date_start');
+	var headEnd = c('index_head_date_end');
+	var left = c('ui_datapicker_head_left');
+	var right = c('ui_datapicker_head_right');
+	var box = yue;
+	var Width;
+
+	var div = c('ui_datapicker');
+	var tbody = c('ui_datapicker_body');
+
+	Width = dateController[num].clientWidth - 20;
+
+	if(box < 10){
+		box = '0' + box;
+	}
+	left[num].children[0].value = nian;
+	right[num].innerHTML = box;
+
+	/*日期选择器核心数组*/
+	(function (){
+		var datepicker = {};
+
+		datepicker.getMonthDate = function(year,month){
+			var ret = [];
+			if(!year || !month){
+				var today = new Date();
+				year = today.getFullYear();
+				month = today.getMonth() + 1;
+			}
+
+			var firstDay = new Date(year,month-1,1);
+			var firstDayWeekDay = firstDay.getDay();
+			if(firstDayWeekDay === 0){
+				firstDayWeekDay = 7;
+			}
+
+			var lastDayOfLastMonth = new Date(year,month-1,0).getDate();
+
+			var preMonthDayCount = firstDayWeekDay - 1;
+			var lastDay = new Date(year,month,0);
+			var lastDate = lastDay.getDate();
+			for(var j = 0; j<7*6;j++){
+				var date = j + 1 - preMonthDayCount;
+				var showDate = date;
+				var thisMonth = month;
+
+				if(date <= 0){
+					thisMonth = month-1;
+					showDate = lastDayOfLastMonth + date;
+
+				}else if(date > lastDate){
+					thisMonth = month+1;
+					showDate = showDate - lastDate;
+				}
+
+				if(thisMonth === 0) thisMonth = 12;
+				if(thisMonth === 13) thisMonth = 1;
+
+				ret.push({
+					month: thisMonth,
+					date: date,
+					showDate: showDate
+				});
+				
+			}
+			return ret;
+		}
+		window.datepicker = datepicker;
+	})()
+	function bodyer(){
+		var tbody = c('ui_datapicker_body');
+		var table = creat('table');
+		var obj = datepicker.getMonthDate(nian,parseInt(yue));
+		var objs = ['一','二','三','四','五','六','日']
+		var count = -1;
+
+		var table = creat('table');
+		table.width = Width + 'px';
+		table.height = 'auto';
+		table.className = 'ui_datapicker_body';
+		table.style.borderCollapse = 'collapse';
+
+		for(var j = 0; j < 1; j++){
+			var tr = creat('tr');
+			for(var k = 0; k < 7; k++){
+				count++;
+				var th = creat('th');
+				th.innerHTML = objs[count];
+				th.style.height = Width/7 + 'px';
+				th.style.lineHeight = Width/7 + 'px';
+				th.style.textAlign = 'center';
+				th.style.userSelect = 'none';
+				th.style.borderRadius = '50%';
+				tr.appendChild(th);
+			}
+			table.appendChild(tr);
+		}
+		count = -1;
+		for(var j = 0; j < 6; j++){
+			var tr = creat('tr');
+			for(var k = 0; k < 7; k++){
+				count++;
+				var td = creat('td');
+				td.innerHTML = obj[count].showDate;
+				td.style.height = Width/7 + 'px';
+				td.style.lineHeight = Width/7 + 'px';
+				td.style.textAlign = 'center';
+				td.style.userSelect = 'none';
+				td.style.borderRadius = '50%';
+				td.style.fontSize = '14px';
+				td.style.cursor = 'pointer';
+				if(obj[count].month != yue){
+					td.style.color = '#a4a4a4';
+					td.style.cursor = 'auto';
+				}
+				if(obj[count].month == yue){
+					if(left[num].children[0].value == nianSelected[num]){
+						if(right[num].innerHTML == yueSelected[num]){
+							if(riSelected[num] == td.innerHTML){
+								td.style.backgroundColor = '#0C64A8';
+								td.style.color = '#ffffff';
+							}else{
+								tdNormal();
+							}
+						}else{
+							tdNormal();
+						}
+					}else{
+						tdNormal();
+					}
+					function tdNormal(){
+						td.setAttribute("data-title",obj[count].month);
+						td.onmouseover = function(){
+							this.style.backgroundColor = '#e5e5e5';
+						}
+						td.onmouseout = function(){
+							this.style.backgroundColor = '#ffffff';
+						}
+					}
+				}
+				tr.appendChild(td);
+			}
+			table.appendChild(tr);
+		}
+		count = -1;
+		div[num].removeChild(tbody[num]);
+		div[num].appendChild(table);
+	}
+	bodyer();
+	onclicks(yue);
+}
+
+var nianNode = [];	//被调用的日期
+var yueNode = [];	//被调用的日期
+var riNode = [];	//被调用的日期
+
+var nianSelected = [];	//被选中的日期
+var yueSelected = [];	//被选中的日期
+var riSelected = [];	//被选中的日期
+
+function tabDate(){
+	var div = c('ui_datapicker');
+	var head = c('ui_datapicker_head');
+	var prev = c('ui_datapicker_head_prev');
+	var next = c('ui_datapicker_head_next');
+	var left = c('ui_datapicker_head_left');
+	var right = c('ui_datapicker_head_right');
+	var table = c('ui_datapicker_body');
+	var dateController = c('index_head_date_controller');
+	for(var i = 0; i < div.length; i++){
+		nianNode.push(nianStart);
+		yueNode.push(yueStart);
+		riNode.push(riStart);
+		nianSelected.push('');
+		yueSelected.push('');
+		riSelected.push('');
+		(function(q){
+			prev[q].onmousedown = function(e){
+				yueNode[q]--;
+				if(yueNode[q] < 1){
+        			yueNode[q] = 12;
+        			nianNode[q] = nianNode[q] - 1;
+				}
+				controllers(nianNode[q],yueNode[q],riNode[q],q);
+				 if ( e && e.preventDefault ) 
+		            e.preventDefault(); 
+		        //IE阻止默认事件
+		        else 
+		            window.event.returnValue = false; 
+		        return false;
+			}
+			next[q].onmousedown = function(e){
+				yueNode[q]++;
+				if(yueNode[q] > 12){
+		        	yueNode[q] = 1;
+		        	nianNode[q] = nianNode[q] + 1;
+				}
+				controllers(nianNode[q],yueNode[q],riNode[q],q);
+				 if ( e && e.preventDefault ) 
+		            e.preventDefault();
+		        //IE阻止默认事件
+		        else 
+		            window.event.returnValue = false; 
+		        return false;
+			}
+			left[q].children[0].onmousedown = function(e){
+				setTimeout(function(){
+					div[q].style.display = 'block';
+					left[q].children[0].focus();
+				},10)
+			}
+			left[q].children[0].onblur = function(){
+					div[q].style.display = 'none';
+			}
+			left[q].children[0].onchange = function(){
+				if(parseInt(this.value) < 1900){
+					this.value = 1900;
+				}
+				nianNode[q] = parseInt(this.value);
+				controllers(nianNode[q],yueNode[q],riNode[q],q);
+			}
+		})(i)
+	}
+}
+
+//选中事件
+function onclicks(yue){
+	var table = c('ui_datapicker_body');
+	var dateController = c('index_head_date_controller');
+	var ui_datapicker = c('ui_datapicker');
+	for(var i = 0; i < table.length; i++){
+		(function(q){
+			for(var j = 0; j < table[q].children.length; j++){
+				for(var k = 0; k < table[q].children[j].children.length; k++){
+					if(table[q].children[j].children[k].dataset.title == yue){
+						table[q].children[j].children[k].onmousedown = function(){
+							nianSelected[q] = nianNode[q];
+							yueSelected[q] = yueNode[q];
+							riSelected[q] = parseInt(this.innerHTML);
+							dateController[q].value = String(nianNode[q]) + '-' + String(yueNode[q]) + '-' + String(this.innerHTML) + ' ' + '00:00:00';
+							controllers(nianSelected[q],yueSelected[q],riSelected[q],q);
+							if(nianSelected[0] != ""){
+								startDate = String(nianSelected[0]) + '-' +String(yueSelected[0]) + '-' + String(riSelected[0]);
+							}
+							if(nianSelected[1] != ""){
+								endDate = String(nianSelected[1]) + '-' +String(yueSelected[1]) + '-' + String(riSelected[1]);
+							}
+							ui_datapicker[q].style.display = 'none';
+						}
+					};
+				}
+			}
+		})(i)
+	}
+}
+
+datepicke();
+
+//查询按钮
+c('index_head_tbody_submit')[0].onclick = function(){
+
+	var indexHeadTime = d('index_head_time');
+	var deviceHeadYear = d('device_head_year');
+	var deviceHeadMonth = d('device_head_month')
+
+	if(indexHeadTime.value == '按月'){
+		var deviceHeadYearValue = deviceHeadYear.dataset.value;
+		var deviceHeadMonthValue = deviceHeadMonth.dataset.value;
+		if(deviceHeadYearValue && deviceHeadMonthValue){
+			startDate = deviceHeadYearValue + '-' + deviceHeadMonthValue + '-1';
+			if(deviceHeadMonthValue == '12'){
+				endDate = (Number(deviceHeadYearValue) + 1) + '-1-1';
+			}else{
+				endDate = deviceHeadYearValue + '-' + (Number(deviceHeadMonthValue) + 1) + '-1';
+			}
 		}
 	}
-	//首页仪表盘刻度线
-	canvasRight();
-	var divs = c('index_chart_head_top_right_list');
-	for(var i = 0; i < divs.length; i++){
-		divs[i].children[0].style.marginLeft = (divs[i].clientWidth - divs[i].children[0].clientWidth)/2 + 'px';
+	if(!startDate || !endDate){
+		alern('请选择有效的时间查询！');
+		return false;
 	}
-}
+	if(new Date(startDate).getTime() >= new Date(endDate).getTime()){
+		alern('开始时间不能大于或等于结束时间！');
+		return false;
+	}
 
-//调用方法处
-canvasRight();	//首页仪表盘刻度绘制
+	ajax({
+		type: 'get',
+		url: URLS + '/count/'+loginUserName.empcode+'/home?startTime='+startDate+' 00:00:00&endTime='+endDate+' 00:00:00',
+		success: function(data){
+			if(data.status == 10001){
+				d('index_kanbans_body_total').innerHTML = data.resultObject.turnover;
+				d('index_kanbans_body_num').innerHTML = data.resultObject.validCount;
+			}else{
+				c('index_kanban_total')[0].innerHTML = 0;
+				c('index_kanban_num')[0].innerHTML = 0;
+			}
+		}
+	})
+}

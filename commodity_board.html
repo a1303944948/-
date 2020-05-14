@@ -15,12 +15,12 @@
 	<script type="text/javascript" src="js/header.js"></script>
 	<div class="operator_home">
 		<div class="operator_head">
-			<table>
+			<!-- <table>
 				<tr>
 					<td>运营方</td>
 					<td><input id="commodity_operators" class="operator_selects" type="text" readonly="readonly"/><b></b></td>
 				</tr>
-			</table>
+			</table> -->
 			<!-- <table>
 				<tr>
 					<td style="min-width: 60px;">输入查询</td>
@@ -51,35 +51,43 @@
 					</div>
 				</div>
 				<div class="operator_body_right_foot">
-					<div class="operator_body_right_foot_list" data-menuid="203001">
+					<div class="operator_body_right_foot_list" data-menuid="303001">
 						<div class="operator_body_right_foot_item">
 							<p>基础信息</p>
 							<table>
-								<tr>
+								<!-- <tr>
 									<td>运营方：<span>*</span></td>
 									<td><input id="commodity_operator" style="cursor: pointer;" class="operator_select" type="text" readonly="readonly"/><b></b></td>
-								</tr>
+								</tr> -->
 								<tr>
 									<td>商品编号：<span>*</span></td>
 									<td><input id="commodity_num" type="text" disabled="disabled" placeholder="商品编号自动生成"/></td>
 								</tr>
 								<tr>
+									<td>饿了么商品ID：</td>
+									<td><input id="commodity_elemid" type="text" disabled="disabled" placeholder="此ID只能导入" /></td>
+								</tr>
+								<tr>
 									<td>商品名称：<span>*</span></td>
 									<td><input id="commodity_name" type="text"/></td>
 								</tr>
-								<tr>
+								<!-- <tr>
 									<td>保质期(天)：<span>*</span></td>
 									<td><input id="commodity_shelf" type="number"/></td>
+								</tr> -->
+								<tr>
+									<td>条码编号：<span>*</span></td>
+									<td><input id="commodity_code" type="text"/></td>
 								</tr>
 								<tr>
 									<td>标准价格(￥)：<span>*</span></td>
 									<td><input id="commodity_price" type="number"/></td>
 								</tr>
-								<tr>
+								<!-- <tr>
 									<td valign="top">货道规格：<span>*</span></td>
 									<td><div id="model_multiple" class="model_multiple"></div></td>
-								</tr>
-								<tr>
+								</tr> -->
+								<!-- <tr>
 									<td>推荐星值：</td>
 									<td>
 										<span class="detailed_operator_star"><img src="image/dxs.png"/></span>
@@ -88,34 +96,34 @@
 										<span class="detailed_operator_star"><img src="image/dxs.png"/></span>
 										<span class="detailed_operator_star"><img src="image/dxs.png"/></span>
 									</td>
-								</tr>
-								<tr>
-									<td>条码编号：</td>
-									<td><input id="commodity_code" type="text"/></td>
-								</tr>
-								<tr>
+								</tr> -->
+								<!-- <tr>
 									<td>红外加热(S)：</td>
 									<td><input id="commodity_Infrared" type="number"/></td>
-								</tr>
+								</tr> -->
 								<tr>
-									<td>微波加热(S)：</td>
+									<td>加热时间(S)：</td>
 									<td><input id="commodity_microwave" type="number"/></td>
 								</tr>
-								<tr>
+								<!-- <tr>
 									<td>散热时间(S)：</td>
 									<td><input id="commodity_cooling" oninput="this.value == ''?this.value = 0:this.value = this.value;" type="number"/></td>
-								</tr>
-								<tr>
+								</tr> -->
+								<!-- <tr>
 									<td>烹饪温度(℃)：</td>
 									<td><input id="commodity_cooking" type="number"/></td>
-								</tr>
-								<tr>
+								</tr> -->
+								<!-- <tr>
 									<td>工艺类型：</td>
 									<td><input id="commodity_type" class="commodity_select wm_select" data-select="[{name:'萃取',value:'1'},{name:'冲泡',value:'2'}]" type="text"/><span> 仅咖啡机</span></td>
-								</tr>
-								<tr>
+								</tr> -->
+								<!-- <tr>
 									<td>供应商：</td>
 									<td><input id="commodity_supplier" type="text"/></td>
+								</tr> -->
+								<tr>
+									<td>非设备商品：</td>
+									<td><input title="不放置到设备上的商品请勾选此项！" id="detailed_operator_not" type="checkbox"/></td>
 								</tr>
 								<tr>
 									<td>商品图片：</td>
@@ -125,19 +133,28 @@
 									<td>下单图片：</td>
 									<td><div class="detailed_operator_orderimg detailed_operator_img"></div><input id="detailed_operator_orderimg" class="detailed_operator_int" accept="image/gif,image/jpeg,image/jpg,image/png" type="file" data-url=""/><button id="detailed_operator_orderimg_btns" class="detailed_operator_img_btns">上传</button><button id="detailed_operator_orderimg_btn" class="detailed_operator_img_btn">预览</button></td>
 								</tr>
-								<tr>
+								<!-- <tr>
 									<td>商品介绍：</td>
 									<td><div class="detailed_operator_ingredientimg detailed_operator_imgs"></div><input id="detailed_operator_ingredientimg" accept="image/gif,image/jpeg,image/jpg,image/png" type="file" data-url=""/><button id="detailed_operator_ingredientimg_btns" class="detailed_operator_img_btns_b">上传</button><button id="detailed_operator_ingredientimg_btn" class="detailed_operator_img_btn">预览</button><button id="detailed_operator_ingredientimg_delete_btn" class="detailed_operator_img_btn">清空</button></td>
-								</tr>
-								<tr>
+								</tr> -->
+								<!-- <tr>
 									<td>备注</td>
 									<td><textarea id="commodity_remark" maxlength="100"></textarea></td>
-								</tr>
+								</tr> -->
 								<tr>
 									<td><input id="detailed_operator_stop" type="checkbox"/>停用</td>
 									<td><button id="detailed_operator_delete" class="detailed_operator_img_btn">删除</button></td>
 								</tr>
 							</table>
+						</div>
+						<div class="operator_body_right_foot_item">
+							<p>商品导入</p>
+							<span>
+								<input id="shop_select" type="text" class="wm_select" data-select="[{name: '饿了么',value: 1},{name: '美团',value: 2},{name: '客如云',value: 3}]"/>店铺ID:
+								<input id="shop_id" type="text"/>
+								<button id="search_commodity">查询商品</button></span>
+							<ul class="operator_body_right_foot_item_ul">
+							</ul>
 						</div>
 						<div class="clear"></div>
 					</div>

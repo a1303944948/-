@@ -4,7 +4,7 @@ var modelNumber = d('model_number');				//机型编号
 var modelName = d('model_name');					//机型名称
 var modelNameEn = d('model_name_en');				//英文名称
 var modelPayment = d('model_payment');				//服务费用
-var modelMultiple = d('model_multiple');			//货道规格
+//var modelMultiple = d('model_multiple');			//货道规格
 //规格参数
 var modelWidth = d('model_width');					//宽度
 var modelHeight = d('model_height');				//高度
@@ -108,7 +108,7 @@ function start(){
 		url: URLS + '/jxzd/getMachineType.json',
 		data: {},
 		success: function(data){
-			console.log(data);
+			//console.log(data);
 			var bodyLeftList = c('operator_body_left_list');
 			for(var i = bodyLeftList.length-1;i > -1; i--){
 				bodyLeftList[i].parentNode.removeChild(bodyLeftList[i]);
@@ -168,19 +168,19 @@ function start(){
 							modelImageView.innerHTML = data[q].picture;
 							modelImages.innerHTML = '<img src="'+ data[q].picture +'" />';
 						}
-						var MultipleData = data[q].goodsSize.split(',');
-						var MultipleDiv = c('model_multiple_div');
-						console.log(MultipleData);
-						for(var j = 0; j < MultipleDiv.length; j++){
-							MultipleDiv[j].children[0].checked = false;
-						}
-						for(var j = 0; j < MultipleDiv.length; j++){
-							for(var k = 0; k < MultipleData.length; k++){
-								if(MultipleDiv[j].children[0].name == MultipleData[k]){
-									MultipleDiv[j].children[0].checked = 'checked';
-								}
-							}
-						}
+						//var MultipleData = data[q].goodsSize.split(',');
+						//var MultipleDiv = c('model_multiple_div');
+						//console.log(MultipleData);
+						// for(var j = 0; j < MultipleDiv.length; j++){
+						// 	MultipleDiv[j].children[0].checked = false;
+						// }
+						// for(var j = 0; j < MultipleDiv.length; j++){
+						// 	for(var k = 0; k < MultipleData.length; k++){
+						// 		if(MultipleDiv[j].children[0].name == MultipleData[k]){
+						// 			MultipleDiv[j].children[0].checked = 'checked';
+						// 		}
+						// 	}
+						// }
 					}
 				})(i)
 			}
@@ -257,33 +257,33 @@ function start(){
 	}
 }
 
-function startbody(){
-	//渲染货道规格
-	$.ajax({
-		type: 'post',
-		url: URLS + '/jxzd/goods.json',
-		data: {},
-		async: false,
-		success: function(data){
-			console.log(data);
-			for(var i = 0; i < data.length; i++){
-				var div = creat('div');
-				var input = creat('input');
-				var span = creat('span');
-				div.className = 'model_multiple_div';
-				input.type = 'checkbox';
-				input.name = data[i].categoryId;
-				span.innerHTML = data[i].categoryId;
-				div.appendChild(input);
-				div.appendChild(span);
-				modelMultiple.appendChild(div);
-			}
-			var divClear = creat('div');
-			divClear.className = 'clear';
-			modelMultiple.appendChild(divClear);
-		}
-	});
-}
+// function startbody(){
+// 	//渲染货道规格
+// 	$.ajax({
+// 		type: 'post',
+// 		url: URLS + '/jxzd/goods.json',
+// 		data: {},
+// 		async: false,
+// 		success: function(data){
+// 			console.log(data);
+// 			for(var i = 0; i < data.length; i++){
+// 				var div = creat('div');
+// 				var input = creat('input');
+// 				var span = creat('span');
+// 				div.className = 'model_multiple_div';
+// 				input.type = 'checkbox';
+// 				input.name = data[i].categoryId;
+// 				span.innerHTML = data[i].categoryId;
+// 				div.appendChild(input);
+// 				div.appendChild(span);
+// 				modelMultiple.appendChild(div);
+// 			}
+// 			var divClear = creat('div');
+// 			divClear.className = 'clear';
+// 			modelMultiple.appendChild(divClear);
+// 		}
+// 	});
+// }
 
 //初始化渲染布局
 window.onresize = function(){
@@ -337,14 +337,14 @@ function submit(){
 		modelImage.value = "";
 		modelImageView.innerHTML = "点击选择图片...";
 		modelImages.innerHTML = "";
-		var MultipleDiv = c('model_multiple_div');
-		for(var j = 0; j < MultipleDiv.length; j++){
-			MultipleDiv[j].children[0].checked = false;
-		}
+		// var MultipleDiv = c('model_multiple_div');
+		// for(var j = 0; j < MultipleDiv.length; j++){
+		// 	MultipleDiv[j].children[0].checked = false;
+		// }
 	}
 	bodySubmit.onclick = function(){
 		var errorObj = "";
-		var Multiple = 0;
+		//var Multiple = 0;
 		if(modelNumber.value == ""){
 			errorObj += '机型编号不能为空！</br>';
 		}
@@ -357,35 +357,35 @@ function submit(){
 		if(modelPayment.value == ""){
 			errorObj += '服务费用不能为空！</br>';
 		}
-		var MultipleDiv = c('model_multiple_div');
-		for(var i = 0; i < MultipleDiv.length; i++){
-			if(MultipleDiv[i].children[0].checked == true){
-				Multiple = 1;
-				break;
-			};
-		}
-		if(Multiple == 0){
-			errorObj += '至少选择一个货道规格！</br>';
-		}
+		// var MultipleDiv = c('model_multiple_div');
+		// for(var i = 0; i < MultipleDiv.length; i++){
+		// 	if(MultipleDiv[i].children[0].checked == true){
+		// 		Multiple = 1;
+		// 		break;
+		// 	};
+		// }
+		// if(Multiple == 0){
+		// 	errorObj += '至少选择一个货道规格！</br>';
+		// }
 		if(errorObj != ""){
 			alern(errorObj);
 			return false;
 		}
 		//获取货道规格上传参数
-		modelmul = "";
-		for(var i = 0; i < MultipleDiv.length; i++){
-			if(MultipleDiv[i].children[0].checked == true){
-				modelmul += MultipleDiv[i].children[0].name + ',';
-			};
-		}
-		modelmul = modelmul.substring(0,modelmul.length-1);
+		//modelmul = "";
+		// for(var i = 0; i < MultipleDiv.length; i++){
+		// 	if(MultipleDiv[i].children[0].checked == true){
+		// 		modelmul += MultipleDiv[i].children[0].name + ',';
+		// 	};
+		// }
+		//modelmul = modelmul.substring(0,modelmul.length-1);
 		//基础资料
 		var basicObj = new Object();
 		basicObj.number = modelNumber.value;
 		basicObj.name = modelName.value;
 		basicObj.modelEn = modelNameEn.value;
 		basicObj.serviceFee = modelPayment.value;
-		basicObj.multiple = modelmul;
+		basicObj.multiple = '';
 		//规格参数
 		var paramObj = new Object();
 		paramObj.width = modelWidth.value;
@@ -424,11 +424,12 @@ function submit(){
 		}else{
 			deployObj.image = "";
 		}
-		console.log(JSON.stringify(basicObj));
-		console.log(JSON.stringify(paramObj));
-		console.log(JSON.stringify(useObj));
-		console.log(JSON.stringify(deployObj));
-		console.log(type + "");
+		// console.log(JSON.stringify(basicObj));
+		// console.log(JSON.stringify(paramObj));
+		// console.log(JSON.stringify(useObj));
+		// console.log(JSON.stringify(deployObj));
+		// console.log(type + "");
+		loading();
 		$.ajax({
 			type: 'post',
 			url: URLS + '/jxzd/addMachineType.json',
@@ -440,10 +441,12 @@ function submit(){
 				type: type + "",
 			},
 			success: function(data){
+				loadingClear();
 				alern(data);
 				start();
 			},
 			error: function(data){
+				loadingClear();
 				alern(data.responseText);
 				start();
 			}
@@ -475,7 +478,7 @@ function subUP(){
 		mobelUpdateObject.lowerfileVersion = intd.value;
 		mobelUpdateObject.model = mobelName;
 		mobelUpdateObject.modelNum = mobelId;
-		console.log(JSON.stringify(mobelUpdateObject));
+		//console.log(JSON.stringify(mobelUpdateObject));
 		$.ajax({
 			type: 'post',
 			url: URLX + '/jf/bg/file/web/addfile.json',
@@ -497,7 +500,7 @@ function subUP(){
 				modelNum: mobelId,
 			},
 			success: function(data){
-				console.log(data);
+				//console.log(data);
 				c('model_push_fixed')[0].style.display = "block";
 				//客户端与下位机下拉框
 				var fixedHomeTableaInta = c('model_push_fixed_home_tablea_inta')[0];
@@ -633,10 +636,10 @@ function subUP(){
 			alern(modelError);
 			return false;
 		}
-		console.log(mobelId);
-		console.log(fixedHomeTableaInta.name);
-		console.log(fixedHomeTableaIntb.name);
-		console.log(JSON.stringify(modelArray));
+		// console.log(mobelId);
+		// console.log(fixedHomeTableaInta.name);
+		// console.log(fixedHomeTableaIntb.name);
+		// console.log(JSON.stringify(modelArray));
 		$.ajax({
 			type: 'post',
 			url: URLX + '/jf/bg/file/web/pushfile.json',
@@ -654,6 +657,6 @@ function subUP(){
 }
 
 start();
-startbody();
+//startbody();
 submit();
 subUP();	//系统升级

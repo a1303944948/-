@@ -3,7 +3,8 @@
 	padding: 0px;
 }
 html,body{
-	min-width: 860px;
+	width: 100%;
+	height: 100%;
 	overflow: hidden;
 }
 a{
@@ -16,42 +17,47 @@ ul{
 input,button{
 	outline:none;
 }
-#canvas{
-	-webkit-touch-callout: none; /* iOS Safari */
-	-webkit-user-select: none; /* Chrome/Safari/Opera */
-	-khtml-user-select: none; /* Konqueror */
-	-moz-user-select: none; /* Firefox */
-	-ms-user-select: none; /* Internet Explorer/Edge */
+.body{
+	width: 100%;
+	height: 100%;
+	background-image: url('../image/background.jpg');
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+.body>p{
+	width: 100%;
+	min-width: 1024px;
+	height: 300px;
+	line-height: 300px;
+	text-align: center;
+	font-size: 64px;
+	letter-spacing: 20px;
+	color: #ffffff;
+	font-family: '华文行楷';
 	user-select: none;
 }
-.head{
-	width: 100%;
-	height: 100px;
-	line-height: 100px;
-	text-align: center;
-	font-size: 40px;
-	letter-spacing: 8px;
-	font-weight: 600;
-	color: rgba(0,73,162,1);
-	font-family: "华文行楷";
-	background-color: #DCEAF6;
+@media screen and (min-width:768px) and (max-width:1024px){
+	.body>p{
+		font-size: 48px;
+		min-width: 768px;
+		letter-spacing: 10px;
+	}
 }
-.body{
-	position: relative;
-	min-width: 1200px;
-}
-.img{
-	width: 400px;
-	height: 400px;
-	position: absolute;
-	left: 180px;
+@media screen and (max-width:768px){
+	.body>p{
+		font-size: 28px;
+		min-width: 375px;
+		letter-spacing: 5px;
+	}
 }
 .login{
 	width: 360px;
 	height: auto;
-	position: absolute;
-	right: 230px;
 	padding: 20px 30px;
+	margin-left: -210px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
 	background-color: rgba(255,255,255,0.2);
 }
 .login>p{
@@ -60,16 +66,6 @@ input,button{
 	color: #ffffff;
 	text-align: center;
 	position: relative;
-}
-.login>p>span{
-	font-size: 13px;
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	color: #ffffff;
-	text-decoration: underline;
-	cursor: pointer;
-	font-weight: 500;
 }
 .login_user{
 	width: 100%;
@@ -151,28 +147,4 @@ input,button{
 }
 .login_btn:active{
 	box-shadow: -2px -2px 3px #333333;
-}
-.foot{
-	width: 100%;
-	height: 120px;
-	box-sizing: border-box;
-	border-top: 5px #0D6FB8 solid;
-	margin-top: -4px;
-	background-color: #324B61;
-}
-.foot>p{
-	text-align: center;
-	font-size: 12px;
-	color: #ffffff;
-	padding-top: 20px;
-}
-.foot>p:first-child{
-	padding-top: 14px;
-}
-.foot>p>img{
-	width: 30px;
-	height: 30px;
-	position: relative;
-	top: 10px;
-	cursor: pointer;
 }

@@ -198,9 +198,6 @@
 				<tr>
 					<td>记录温度</td>
 					<td>记录时间</td>
-					<td>CPU</td>
-					<td>RAM</td>
-					<td>信号强度</td>
 				</tr>
 			</table>
 		</div>
@@ -282,7 +279,7 @@
 	    //请求机器名称
 	    $.ajax({
 	    	type: 'post',
-	    	url: URLS + '/status/getHostNameByMachCode.json',
+	    	url: URLS + '/elmStatus/getHostNameByMachCode.json',
 	    	data: {
 				machCode: machCode,
 	    	},
@@ -321,7 +318,7 @@
 			console.log(End);
 			$.ajax({
 				type: 'post',
-				url: URLS + '/status/getHistoryTem.json',
+				url: URLS + '/elmStatus/getHistoryTem.json',
 				data: {
 					machCode: machCode,
 					startTime: Start,
@@ -339,20 +336,11 @@
 						var tr = creat('tr');
 						var tda = creat('td');
 						var tdb = creat('td');
-						var tdc = creat('td');
-						var tdd = creat('td');
-						var tde = creat('td');
 						tda.innerHTML = data[i].temperature;
     					var addTime = timestampToTime(parseInt(data[i].addTime/1000));
 						tdb.innerHTML = addTime;
-						tdc.innerHTML = data[i].cpu;
-						tdd.innerHTML = data[i].ram;
-						tde.innerHTML = data[i].signStrength;
 						tr.appendChild(tda);
 						tr.appendChild(tdb);
-						tr.appendChild(tdc);
-						tr.appendChild(tdd);
-						tr.appendChild(tde);
 						table.appendChild(tr);
 						div.appendChild(table); 
 						temBody.appendChild(div);

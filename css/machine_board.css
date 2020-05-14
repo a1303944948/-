@@ -396,7 +396,7 @@ html,body{
 	border-right: 5px rgba(0,0,0,0) solid;
 	border-bottom: 5px rgba(0,0,0,0) solid;
 	position: absolute;
-	right: 15px;
+	right: 30px;
 	top: 18px;
 	pointer-events: none;
 }
