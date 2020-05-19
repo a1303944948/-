@@ -172,11 +172,11 @@ function start(){
 	for(var i=0;i<tree.length;i++){
 	    var item = tree[i],u = "";
 	    if(item.icon == 0){
-	   		temp.push('<li><img class="item'+item['lev']+'" src="image/grouping/001.png"/><a data-id="'+item.id+'">'+item.text+'</a></li>');
+	   		temp.push('<li><img class="item'+item['lev']+'" src="image/grouping/001.png"/><a data-id="'+item.operatorID+'">'+item.text+'</a></li>');
 	    }else if(item.icon == 1){
-	   		temp.push('<li><img class="item'+item['lev']+'" src="image/grouping/002.png"/><a data-id="'+item.id+'">'+item.text+'</a></li>');
+	   		temp.push('<li><img class="item'+item['lev']+'" src="image/grouping/002.png"/><a data-id="'+item.operatorID+'">'+item.text+'</a></li>');
 	    }else if(item.icon == 2){
-	   		temp.push('<li><img class="item'+item['lev']+'" src="image/grouping/003.png"/><a data-id="'+item.id+'">'+item.text+'</a></li>');
+	   		temp.push('<li><img class="item'+item['lev']+'" src="image/grouping/003.png"/><a data-id="'+item.operatorID+'">'+item.text+'</a></li>');
 	    }/*else if(item.icon == 3){
 	   		temp.push('<li><img class="item'+item['lev']+'" src="image/grouping/004.png"/><a data-id="'+item.id+'">'+item.text+'</a></li>');
 	    }*/
@@ -277,7 +277,6 @@ for(var i = 0; i < rightFootItem.length; i++){
 }
 var rightFootItemBtnbb = c('user_body_right_foot_item_btnbb')[0];
 function rendering(msgObject,that){
-	log(msgObject,that);
 	//选中效果实现
 	var userHeadUlShow = c('user_head_ul_show')[0];
 	for(var i = 0; i < userHeadUlShow.children.length; i++){
@@ -310,35 +309,21 @@ function rendering(msgObject,that){
 			devicecode: msgObject.devicecode,
 		},
 		success: function(data){
-			log(data);
 			//渲染保存远程取物门开启时间
 			c('remote_selectc')[0].value = data.obj.pickupdoor;
 			for(var i = 0; i < MACH.length; i++){
-				log(data.obj.scopeofauthority+'+'+MACH[i].id);
-				if(data.obj.scopeofauthority == MACH[i].id){
+				if(data.obj.operatorID == MACH[i].operatorID){
 					machineGrouping.value = MACH[i].text;
-					machineGrouping.name = MACH[i].id;
+					machineGrouping.name = MACH[i].operatorID;
 					break;
 				}
 			}
 			machineName.value = data.obj.machName;
 			machineNumber.value = data.obj.machCode;
 			machineMac.value = data.obj.macAddr;
-			if(data.obj.useAddr != undefined){
-				machineAddr.value = data.obj.useAddr;
-			}else{
-				machineAddr.value = "";
-			}
-			if(data.obj.flowcard != undefined){
-				machineTraffic.value = data.obj.flowcard;
-			}else{
-				machineTraffic.value = "";
-			}
-			if(data.obj.description != undefined){
-				machineExplain.value = data.obj.description;
-			}else{
-				machineExplain.value = "";
-			}
+			data.obj.useAddr?machineAddr.value = data.obj.useAddr:machineAddr.value = "";
+			data.obj.flowcard?machineTraffic.value = data.obj.flowcard:machineTraffic.value = "";
+			data.obj.description?machineExplain.value = data.obj.description:machineExplain.value = "";
 			if(msgObject.isFree == 1){
 				c('machine_freeze_tr')[0].style.display = 'none';
 			}else{
@@ -355,7 +340,8 @@ function rendering(msgObject,that){
 				data.obj.useAddr = machineAddr.value;
 				data.obj.flowcard = machineTraffic.value;
 				data.obj.description = machineExplain.value;
-				data.obj.scopeofauthority = machineGrouping.name;
+				data.obj.operateCompany = machineGrouping.value;
+				data.obj.operatorID = machineGrouping.name;
 				data.obj.machName = machineName.value;
 
 				if(msgObject.isFree == 1){
@@ -371,7 +357,6 @@ function rendering(msgObject,that){
 					alern('设备名称不能为空');
 					return false;
 				}
-
 				$.ajax({
 					type: 'post',
 					url: URLZ + '/jf/bg/basic/dvm/update.json',
@@ -379,11 +364,11 @@ function rendering(msgObject,that){
 						uObj: JSON.stringify(data.obj),
 					},
 					success: function(msg){
-						if(msg.success){
-							alern('成功');
+						if(msg.status == 10001){
+							alern(msg.msg);
 							userHeadSubmit.click();
 						}else{
-							alern('失败');
+							alern(msg.msg);
 						};
 					},
 					error: function(){
@@ -941,7 +926,6 @@ function renderingAlarm(machCODE,mobleId){
 
 	//开启警报
 	d('machine_temp_open').onclick = function(){
-		log(machCODE);
 		ajax({
 			type: 'post',
 			url: URLS + '/worn/runTempture.json',
@@ -957,7 +941,6 @@ function renderingAlarm(machCODE,mobleId){
 	}
 	//关闭警报
 	d('machine_temp_close').onclick = function(){
-		log(machCODE);
 		ajax({
 			type: 'post',
 			url: URLS + '/worn/runTempture.json',

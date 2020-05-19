@@ -153,8 +153,8 @@ function start(){
 	}*/
 	//监听复选框事件
 	let wechatPayOn = new OnChange('elem_enable');
-	let alipayPayOn = new OnChange('alipay_pay');
-	let silverPayOn = new OnChange('silver_pay');
+	// let alipayPayOn = new OnChange('alipay_pay');
+	// let silverPayOn = new OnChange('silver_pay');
 	d('elem_enable').onchange = function(){
 		if(this.checked){
 			wechatPayOn.yes('wechat_pay');
@@ -162,20 +162,20 @@ function start(){
 			wechatPayOn.no('wechat_pay');
 		}
 	};
-	d('alipay_pay').onchange = function(){
-		if(this.checked){
-			alipayPayOn.yes('alipay_pay');
-		}else{
-			alipayPayOn.no('alipay_pay');
-		}
-	};
-	d('silver_pay').onchange = function(){
-		if(this.checked){
-			silverPayOn.yes('silver_pay');
-		}else{
-			silverPayOn.no('silver_pay');
-		}
-	};
+	// d('alipay_pay').onchange = function(){
+	// 	if(this.checked){
+	// 		alipayPayOn.yes('alipay_pay');
+	// 	}else{
+	// 		alipayPayOn.no('alipay_pay');
+	// 	}
+	// };
+	// d('silver_pay').onchange = function(){
+	// 	if(this.checked){
+	// 		silverPayOn.yes('silver_pay');
+	// 	}else{
+	// 		silverPayOn.no('silver_pay');
+	// 	}
+	// };
 }
 function OnChange(String){
 	this.yes = function(value){
@@ -259,33 +259,33 @@ function startbody(l){
 						var elemStoreId = d('elem_store_id');					//平台ID
 						var elemStoreKey = d('elem_store_key');					//应用Key
 						var elemStoreSecret = d('elem_store_secret');			//应用Secret
-						var elemStoreRedirecturl = d('elem_store_redirecturl');	//回调URL
-						var elemStoreUrl = d('elem_store_url');					//店铺URL
-						var elemStoreUser = d('elem_store_user');				//店铺账号
-						var elemStorePass = d('elem_store_pass');				//店铺密码
-						var elemStorePushUrl = d('elem_store_pushUrl');			//推送地址
+						// var elemStoreRedirecturl = d('elem_store_redirecturl');	//回调URL
+						// var elemStoreUrl = d('elem_store_url');					//店铺URL
+						// var elemStoreUser = d('elem_store_user');				//店铺账号
+						// var elemStorePass = d('elem_store_pass');				//店铺密码
+						// var elemStorePushUrl = d('elem_store_pushUrl');			//推送地址
 						if(data.resultObject.elmPlatform){
 							elemStoreId.name = data.resultObject.id;
 							elemStoreId.value = data.resultObject.elmPlatform.storeId;
 							data.resultObject.elmPlatform.platformdeleted == 1?elemEnable.checked = "checked":elemEnable.checked = false;
 							elemStoreKey.value = data.resultObject.elmPlatform.storeAppKey;
 							elemStoreSecret.value = data.resultObject.elmPlatform.storeAppSecret;
-							elemStoreRedirecturl.value = data.resultObject.elmPlatform.redirectUrl;
-							elemStoreUrl.value = data.resultObject.elmPlatform.storeUrl;
-							elemStoreUser.value = data.resultObject.elmPlatform.storeAccountNumber;
-							elemStorePass.value = data.resultObject.elmPlatform.storePass;
-							elemStorePushUrl.value = data.resultObject.elmPlatform.pushUrl;
+							// elemStoreRedirecturl.value = data.resultObject.elmPlatform.redirectUrl;
+							// elemStoreUrl.value = data.resultObject.elmPlatform.storeUrl;
+							// elemStoreUser.value = data.resultObject.elmPlatform.storeAccountNumber;
+							// elemStorePass.value = data.resultObject.elmPlatform.storePass;
+							// elemStorePushUrl.value = data.resultObject.elmPlatform.pushUrl;
 						}else{
 							elemStoreId.name = data.resultObject.id;
 							elemStoreId.value = '';
 							elemEnable.checked = false;
 							elemStoreKey.value = '';
 							elemStoreSecret.value = '';
-							elemStoreRedirecturl.value = '';
-							elemStoreUrl.value = '';
-							elemStoreUser.value = '';
-							elemStorePass.value = '';
-							elemStorePushUrl.value = '';
+							// elemStoreRedirecturl.value = '';
+							// elemStoreUrl.value = '';
+							// elemStoreUser.value = '';
+							// elemStorePass.value = '';
+							// elemStorePushUrl.value = '';
 						}
 					}
 				})
@@ -365,11 +365,11 @@ function submit(){
 		d('elem_store_id').value = '';										//平台ID
 		d('elem_store_key').value = '';					//应用Key
 		d('elem_store_secret').value = '';			//应用Secret
-		d('elem_store_redirecturl').value = '';	//回调URL
-		d('elem_store_url').value = '';					//店铺URL
-		d('elem_store_user').value = '';				//店铺账号
-		d('elem_store_pass').value = '';				//店铺密码
-		d('elem_store_pushUrl').value = '';			//推送地址
+		// d('elem_store_redirecturl').value = '';	//回调URL
+		// d('elem_store_url').value = '';					//店铺URL
+		// d('elem_store_user').value = '';				//店铺账号
+		// d('elem_store_pass').value = '';				//店铺密码
+		// d('elem_store_pushUrl').value = '';			//推送地址
 
 		var BodyLeftList = c('operator_body_left_list');
 		for(var j = 0; j < BodyLeftList.length; j++){
@@ -417,20 +417,20 @@ function submit(){
 		var elemStoreId = d('elem_store_id');					//平台ID
 		var elemStoreKey = d('elem_store_key');					//应用Key
 		var elemStoreSecret = d('elem_store_secret');			//应用Secret
-		var elemStoreRedirecturl = d('elem_store_redirecturl');	//回调URL
-		var elemStoreUrl = d('elem_store_url');					//店铺URL
-		var elemStoreUser = d('elem_store_user');				//店铺账号
-		var elemStorePass = d('elem_store_pass');				//店铺密码
-		var elemStorePushUrl = d('elem_store_pushUrl');			//推送地址
+		// var elemStoreRedirecturl = d('elem_store_redirecturl');	//回调URL
+		// var elemStoreUrl = d('elem_store_url');					//店铺URL
+		// var elemStoreUser = d('elem_store_user');				//店铺账号
+		// var elemStorePass = d('elem_store_pass');				//店铺密码
+		// var elemStorePushUrl = d('elem_store_pushUrl');			//推送地址
 		var objs = {};
 		objs.storeId = Number(elemStoreId.value);
 		objs.storeAppKey = elemStoreKey.value;
 		objs.storeAppSecret = elemStoreSecret.value;
-		objs.redirectUrl = elemStoreRedirecturl.value;
-		objs.storeUrl = elemStoreUrl.value;
-		objs.storeAccountNumber = elemStoreUser.value;
-		objs.storePass = elemStorePass.value;
-		objs.pushUrl = elem_store_pushUrl.value;
+		// objs.redirectUrl = elemStoreRedirecturl.value;
+		// objs.storeUrl = elemStoreUrl.value;
+		// objs.storeAccountNumber = elemStoreUser.value;
+		// objs.storePass = elemStorePass.value;
+		// objs.pushUrl = elem_store_pushUrl.value;
 		//objs.relatedId = Number(elemStoreId.name)?Number(elemStoreId.name):data.resultObject.id;
 		objs.platformdeleted = elemEnable.checked?1:0;
 
@@ -497,60 +497,60 @@ function submit(){
 
 function platform(){		//平台关联模块
 	//饿了么平台授权按钮
-	d('elem_store_authorize').onclick = function(){
-		var elemEnable = d('elem_enable');						//停用启用
-		var elemStoreId = d('elem_store_id');					//平台ID
-		var elemStoreKey = d('elem_store_key');					//应用Key
-		var elemStoreSecret = d('elem_store_secret');			//应用Secret
-		var elemStoreRedirecturl = d('elem_store_redirecturl');	//回调URL
-		var elemStoreUrl = d('elem_store_url');					//店铺URL
-		var elemStoreUser = d('elem_store_user');				//店铺账号
-		var elemStorePass = d('elem_store_pass');				//店铺密码
-		var elemStorePushUrl = d('elem_store_pushUrl');			//推送地址
+	// d('elem_store_authorize').onclick = function(){
+	// 	var elemEnable = d('elem_enable');						//停用启用
+	// 	var elemStoreId = d('elem_store_id');					//平台ID
+	// 	var elemStoreKey = d('elem_store_key');					//应用Key
+	// 	var elemStoreSecret = d('elem_store_secret');			//应用Secret
+	// 	var elemStoreRedirecturl = d('elem_store_redirecturl');	//回调URL
+	// 	var elemStoreUrl = d('elem_store_url');					//店铺URL
+	// 	var elemStoreUser = d('elem_store_user');				//店铺账号
+	// 	var elemStorePass = d('elem_store_pass');				//店铺密码
+	// 	var elemStorePushUrl = d('elem_store_pushUrl');			//推送地址
 		
-		var elemError;
-		elemError = elemStoreId.value?'':'平台ID不能为空<br/>';
-		elemError += elemStoreKey.value?'':'应用Key不能为空<br/>';
-		elemError += elemStoreSecret.value?'':'应用secret不能为空<br/>';
-		elemError += elemStoreRedirecturl.value?'':'回调URL不能为空<br/>';
-		elemError += elemStoreUrl.value?'':'店铺URL不能为空<br/>';
-		elemError += elemStorePass.value?'':'店铺密码不能为空';
+	// 	var elemError;
+	// 	elemError = elemStoreId.value?'':'平台ID不能为空<br/>';
+	// 	elemError += elemStoreKey.value?'':'应用Key不能为空<br/>';
+	// 	elemError += elemStoreSecret.value?'':'应用secret不能为空<br/>';
+	// 	elemError += elemStoreRedirecturl.value?'':'回调URL不能为空<br/>';
+	// 	elemError += elemStoreUrl.value?'':'店铺URL不能为空<br/>';
+	// 	elemError += elemStorePass.value?'':'店铺密码不能为空';
 
-		if(elemError){
-			alern(elemError);
-			return false;
-		}
+	// 	if(elemError){
+	// 		alern(elemError);
+	// 		return false;
+	// 	}
 
-		var obj = {};
-		obj.storeId = elemStoreId.value;
-		obj.storeAppKey = elemStoreKey.value;
-		obj.storeAppSecret = elemStoreSecret.value;
-		obj.redirectUrl = elemStoreRedirecturl.value;
-		obj.storeUrl = elemStoreUrl.value;
-		obj.storeAccountNumber = elemStoreUser.value;
-		obj.storePass = elemStorePass.value;
-		obj.pushUrl = elem_store_pushUrl.value;
-		obj.relatedId = elemStoreId.name;
-		obj.platformdeleted = elemEnable.checked?1:0;
+	// 	var obj = {};
+	// 	obj.storeId = elemStoreId.value;
+	// 	obj.storeAppKey = elemStoreKey.value;
+	// 	obj.storeAppSecret = elemStoreSecret.value;
+	// 	obj.redirectUrl = elemStoreRedirecturl.value;
+	// 	obj.storeUrl = elemStoreUrl.value;
+	// 	obj.storeAccountNumber = elemStoreUser.value;
+	// 	obj.storePass = elemStorePass.value;
+	// 	obj.pushUrl = elem_store_pushUrl.value;
+	// 	obj.relatedId = elemStoreId.name;
+	// 	obj.platformdeleted = elemEnable.checked?1:0;
 
-		ajax({
-			type: 'post',
-			url: URLS + '/store/platform/authorization',
-			data: {
-				obj: JSON.stringify(obj),
-			},
-			success: function(data){
-				log(data);
-				if(data.status == 10001 && data.resultObject.url){
-					window.open(data.resultObject.url,"饿了么授权","height=600,width=800,top=100,left=200,toolbar=no,menubar=no");
-				}else if(data.status == 10001 && data.resultObject.tokenCode){
-					alern('该店铺已经有绑定的饿了么商家！');
-				}else{
-					alern(data.msg);
-				}
-			}
-		})
-	}
+	// 	ajax({
+	// 		type: 'post',
+	// 		url: URLS + '/store/platform/authorization',
+	// 		data: {
+	// 			obj: JSON.stringify(obj),
+	// 		},
+	// 		success: function(data){
+	// 			log(data);
+	// 			if(data.status == 10001 && data.resultObject.url){
+	// 				window.open(data.resultObject.url,"饿了么授权","height=600,width=800,top=100,left=200,toolbar=no,menubar=no");
+	// 			}else if(data.status == 10001 && data.resultObject.tokenCode){
+	// 				alern('该店铺已经有绑定的饿了么商家！');
+	// 			}else{
+	// 				alern(data.msg);
+	// 			}
+	// 		}
+	// 	})
+	// }
 
 	//饿了么取消授权按钮
 	d('elem_store_authdelete').onclick = function(){

@@ -551,7 +551,6 @@ function shippingList(that){
 	thc.innerHTML = '价格';
 	tr.setAppend([tha,thb,thc,thd,the]);
 	orderCenterShippingFixedHead.appendChild(tr);
-	log(thatValue);
 	for(var i of thatValue){
 		for(var j of i.lanes){
 			var trs = creat('tr');

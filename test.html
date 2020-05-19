@@ -4,17 +4,40 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<script src="js/wm.js"></script>
-	<script src="js/jquery-3.3.1.j"></script>
+	<script src="js/jquery-3.3.1.js"></script>
 	<style>
 		
 	</style>
 </head>
 <body>
 	<script>
-		$.ajax（{
-			type: 'get',
-			url: URLS + orderBatch(param),
-		}）
+		var arr=[2,3,2,2,2,4,5],
+			arr2=[];
+		/*function find(arr2,ele){
+			for(var i= 0,len=arr2.length;i<len;i++){
+				if(arr2[i]==ele) return false;
+			}
+			return true;
+		}
+
+		for(var i= 0,len=arr.length;i<len;i++){
+			if(find(arr2,arr[i])){
+				arr2.push(arr[i]);
+			}
+		}*/
+		var TF;
+		for(var i = 0; i < arr.length; i++){
+			TF = true;
+			for(var j = 0; j < arr2.length; j++){
+				if(arr2[j] == arr[i]){
+					TF = false;
+				}
+			}
+			if(TF){
+				arr2.push(arr[i]);
+			}
+		}
+		log(arr2);
 	</script>
 </body>
 </html>
