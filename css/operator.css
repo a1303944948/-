@@ -83,7 +83,7 @@ html,body{
 	border: 1px #e0e0e0 solid;
 	box-sizing: border-box;
 	border-radius: 4px;
-	overflow-y: auto;
+	overflow: auto;
 	padding: 10px;
 	float: left;
 }
@@ -99,6 +99,7 @@ html,body{
 	border-radius: 4px;
 	padding-left: 5px;
 	padding-right: 5px;
+	white-space:nowrap;
 }
 .operator_body_left_list:hover{
 	background-color: #d4d4d4;

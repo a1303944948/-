@@ -459,7 +459,7 @@ c('operator_home_head_submit')[0].onclick = function(){
 	var commodityStatus = d('commodity_status');
 	ajax({
 		type: 'get',
-		url: URLZ + '/item/get?deleted=' + commodityStatus.name,
+		url: URLZ + '/item/get?deleted=' + commodityStatus.name + '&storeId=' + Number(loginUserName.operatorID),
 		success: function(data){
 			log(data);
 			Object.is(data.status,10001)?startbodyleft(data.resultObject):alern(data.msg);
@@ -533,7 +533,7 @@ function UploadOss(num){
 						alern(tbodyFileError);
 						return false;
 					}*/
-					set_upload_param(up,'', false,'ceshi/');//commodity_board
+					set_upload_param(up,'', false,'hontech/commodity/');//commodity_board
 				};
 			},
 
@@ -549,7 +549,7 @@ function UploadOss(num){
 				});
 			},
 			BeforeUpload: function(up, file) {
-				set_upload_param(up, file.name, true,'ceshi/');
+				set_upload_param(up, file.name, true,'hontech/commodity/');
 			},
 			UploadFile: function(){
 				count = 1;
@@ -1211,7 +1211,7 @@ function submit(){
 			commodityError += '标准价格不能为空<br/>';
 		}
 		if(!commodityCode){
-			commodityError += '货道规格不能为空<br/>';
+			commodityError += '条码编号不能为空<br/>';
 		}
 		// if(d('commodity_shelf').value == ""){
 		// 	commodityError += '保质期不能为空<br/>';
@@ -1237,6 +1237,7 @@ function submit(){
 		commodityobj.itemMeituanId = 0;
 		commodityobj.itemKryId = 0;
 		commodityobj.deleted = detailedOperatorStop;
+		commodityobj.storeId = Number(loginUserName.operatorID);
 		!commodityElemidvalue?commodityobj.specs = []:commodityobj.specs = JSON.parse(commodityElemidvalue);
 		if(type == 1){
 			$.ajax({
@@ -1281,7 +1282,7 @@ function submit(){
 								url: URLS + '/oss/upload/deleteOssUrl.json',
 								data: {
 									ossUrl: detailedOperatorImg[i].dataset.url,
-									setUrl: 'ceshi/',
+									setUrl: 'hontech/commodity/',
 								},
 								async: false,
 								success: function(data){
@@ -1303,7 +1304,7 @@ function submit(){
 								url: URLS + '/oss/upload/deleteOssUrl.json',
 								data: {
 									ossUrl: detailedOperatorImgS[i].dataset.url,
-									setUrl: 'ceshi/',
+									setUrl: 'hontech/commodity/',
 								},
 								async: false,
 								success: function(data){
@@ -1364,7 +1365,7 @@ d('detailed_operator_delete').onclick = function(){
 									url: URLS + '/oss/upload/deleteOssUrl.json',
 									data: {
 										ossUrl: DetailedOperatorImages[i],
-										setUrl: 'ceshi/',
+										setUrl: 'hontech/commodity/',
 									},
 									success: function(data){
 										if(data.result === 1){

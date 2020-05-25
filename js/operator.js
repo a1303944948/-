@@ -495,7 +495,7 @@ function submit(){
 	}
 }
 
-function platform(){		//平台关联模块
+//function platform(){		//平台关联模块
 	//饿了么平台授权按钮
 	// d('elem_store_authorize').onclick = function(){
 	// 	var elemEnable = d('elem_enable');						//停用启用
@@ -553,24 +553,24 @@ function platform(){		//平台关联模块
 	// }
 
 	//饿了么取消授权按钮
-	d('elem_store_authdelete').onclick = function(){
-		if(confirm('确认要取消饿了么商家授权吗？取消后可重新绑定其他饿了么商家！')){
-			ajax({
-				type: 'post',
-				url: URLS + '/store/platform/delete',
-				data: {
-					storeId: Number(d('elem_store_id').value),
-				},
-				success: function(data){
-					alern(data.msg);
-				}
-			})
-		}
-	}
-}
+	// d('elem_store_authdelete').onclick = function(){
+	// 	if(confirm('确认要取消饿了么商家授权吗？取消后可重新绑定其他饿了么商家！')){
+	// 		ajax({
+	// 			type: 'post',
+	// 			url: URLS + '/store/platform/delete',
+	// 			data: {
+	// 				storeId: Number(d('elem_store_id').value),
+	// 			},
+	// 			success: function(data){
+	// 				alern(data.msg);
+	// 			}
+	// 		})
+	// 	}
+	// }
+//}
 
 
 start();
 startbody(1);
 submit();
-platform();		//平台关联模块
+//platform();		//平台关联模块
