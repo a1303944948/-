@@ -1434,10 +1434,10 @@ function commoditySelect(data){
 	for(var i = 0; i < data.length; i++){
 		var li = creat('li');
 		li.innerHTML = data[i].name;
-		li.value = data[i].id;
+		li.setAttribute('data-id',data[i].id);
 		li.setAttribute('data-value',JSON.stringify(data[i].specs));
 		li.onmousedown = function(){
-			commodityElemid.value = this.value;
+			commodityElemid.value = this.dataset.id;
 			commodityElemid.setAttribute('data-value',this.dataset.value);
 			commodityPrice.value = JSON.parse(this.dataset.value)[0].price;
 		}

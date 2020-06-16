@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8"/>
@@ -13,7 +13,7 @@
 <body>
 	<script type="text/javascript" src="js/header.js"></script>
 	<div class="sales_home">
-		<div class="sales_head">
+		<!--<div class="sales_head">
 			<table class="sales_head_table">
 				<tbody classs="sales_head_tbody">
 					<tr>
@@ -26,21 +26,38 @@
 					</tr>
 				</tbody>
 			</table>
-		</div>
+		</div>-->
 		<div class="sales_body">
 			<button class="sales_body_excel_btn"><img src="image/excelDwon.png"/>导出为Excel</button>
 			<table class="sales_body_table" id="sales_body_table">
 				<tr>
 					<th>售货机名称</th>
 					<th>售货机编号</th>
-					<th class="sales_body_table_cargo">货道<span>↑</span></th>
+					<!-- <th class="sales_body_table_cargo">货道<span>↑</span></th>
 					<th>商品名称</th>
-					<th>商品编号</th>
+					<th>商品编号</th> -->
 					<th>库存数量</th>
-					<th>商品状态</th>
+					<th>库存详情</th>
 				</tr>
 				<tbody class="sales_body_table_tbody">
 				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="sales_fixed">
+		<p>库存详情<span class="sales_fixed_clear">×</span></p>
+		<div class="sales_fixed_body">
+			<table>
+				<thead>
+					<tr>
+						<th>售货机名称</th>
+						<th>售货机编号</th>
+						<th>商品名称</th>
+						<th>商品编号</th>
+						<th>库存数量</th>
+					</tr>
+				</thead>
+				<tbody class="sales_fixed_table_tbody"></tbody>
 			</table>
 		</div>
 	</div>

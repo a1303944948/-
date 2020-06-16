@@ -18,59 +18,59 @@ function start(){
   }
 
   //区域选择下拉框
-  var Groupingz = c('device_head_groupingz')[0];
-  var ul = creat('ul');
-  ul.className = "device_head_ul";
-  var li = "";
-  for(var j = 0; j < KITANALYSIS.length; j++){
-    li += (KITANALYSIS[j]);
-  }
-  ul.innerHTML = li;
-  for(var i = 0; i < ul.children.length; i++){
-    ul.children[i].children[0].className = "";
-  }
-  ul.style.minWidth = Groupingz.clientWidth + 'px';
-  sales_head.appendChild(ul);
+  // var Groupingz = c('device_head_groupingz')[0];
+  // var ul = creat('ul');
+  // ul.className = "device_head_ul";
+  // var li = "";
+  // for(var j = 0; j < KITANALYSIS.length; j++){
+  //   li += (KITANALYSIS[j]);
+  // }
+  // ul.innerHTML = li;
+  // for(var i = 0; i < ul.children.length; i++){
+  //   ul.children[i].children[0].className = "";
+  // }
+  // ul.style.minWidth = Groupingz.clientWidth + 'px';
+  // sales_head.appendChild(ul);
 
-  var headUlz = c('device_head_ul');
-  Groupingz.onfocus = function(){
-    headUlz[0].style.display = "inline-block";
-    headUlz[0].style.left = this.offsetParent.offsetLeft + 5 + 'px';
-    headUlz[0].style.top = this.offsetParent.offsetTop + this.clientHeight + 5 + 'px';
-    headUlz[0].style.maxHeight = window.innerHeight - Groupingz.offsetParent.offsetTop - 200 + 'px';
-  }
-  Groupingz.onblur = function(){
-    headUlz[0].style.display = "none";
-  }
+  // var headUlz = c('device_head_ul');
+  // Groupingz.onfocus = function(){
+  //   headUlz[0].style.display = "inline-block";
+  //   headUlz[0].style.left = this.offsetParent.offsetLeft + 5 + 'px';
+  //   headUlz[0].style.top = this.offsetParent.offsetTop + this.clientHeight + 5 + 'px';
+  //   headUlz[0].style.maxHeight = window.innerHeight - Groupingz.offsetParent.offsetTop - 200 + 'px';
+  // }
+  // Groupingz.onblur = function(){
+  //   headUlz[0].style.display = "none";
+  // }
 
-  for(var j = 0; j < headUlz[0].children.length; j++){
-    headUlz[0].children[j].children[1].onmousedown = function(){
-      Groupingz.value = this.innerHTML;
-      Groupingz.name = this.dataset.mach;
-      BOMAll(KIT,this.dataset.id);
-      groupitemlevel(4,KITEXTR);
-      LISTGROUP = [];   //每次点击时清空内容
-      for(var i = 0; i < KITASSIGN.length; i++){
-        LISTGROUP.push(KITASSIGN[i].devicecode);
-      }
-    }
-  }
+  // for(var j = 0; j < headUlz[0].children.length; j++){
+  //   headUlz[0].children[j].children[1].onmousedown = function(){
+  //     Groupingz.value = this.innerHTML;
+  //     Groupingz.name = this.dataset.mach;
+  //     BOMAll(KIT,this.dataset.id);
+  //     groupitemlevel(4,KITEXTR);
+  //     LISTGROUP = [];   //每次点击时清空内容
+  //     for(var i = 0; i < KITASSIGN.length; i++){
+  //       LISTGROUP.push(KITASSIGN[i].devicecode);
+  //     }
+  //   }
+  // }
 
-  //第一种类渲染  (不携带value值的下拉)
-  //给下拉框元素创建下拉内容
-  for(var i = 0; i < selects.length; i++){
-    var ul = creat('ul');
-    ul.className = 'sales_head_selects_ul';
-    ul.setAttribute('data-list',i);
-    for(var j = 0; j < LIST[i].length; j++){
-      var li = creat('li');
-      var br = creat('br');
-      li.innerHTML = LIST[i][j];
-      ul.appendChild(li);
-      ul.appendChild(br);
-    }
-    sales_head.appendChild(ul);
-  }
+  // //第一种类渲染  (不携带value值的下拉)
+  // //给下拉框元素创建下拉内容
+  // for(var i = 0; i < selects.length; i++){
+  //   var ul = creat('ul');
+  //   ul.className = 'sales_head_selects_ul';
+  //   ul.setAttribute('data-list',i);
+  //   for(var j = 0; j < LIST[i].length; j++){
+  //     var li = creat('li');
+  //     var br = creat('br');
+  //     li.innerHTML = LIST[i][j];
+  //     ul.appendChild(li);
+  //     ul.appendChild(br);
+  //   }
+  //   sales_head.appendChild(ul);
+  // }
 
   //渲染点击事件
   // var statisticalMethods = c('statisticalMethods')[0];
@@ -227,131 +227,107 @@ function start(){
 
 //数据请求
 function selesForm(){
-  var submit = c('sales_head_tbody_submit')[0];
-  var deviceHeadGroupingz = d('device_head_groupingz');
-
-  submit.onclick = function(){
-    var salesBody = c('sales_body')[0];                         //底部渲染数据部分
-
-    if(deviceHeadGroupingz.name == ""){
-      alern('请先选择设备！');
-      return false;
+  //直接渲染部分数据
+  ajax({
+    type: 'get',
+    url: URLS + '/stock/device/report?userId='+loginUserName.empcode,
+    success: function(data){
+      log(data);
+      tableRenderings(data.resultObject);
     }
-    salesBody.style.display = 'block';
-    ajax({
-      type: 'get',
-      url: URLS + '/stock/'+deviceHeadGroupingz.name+'/report?orderBy=ASC',
-      success: function(data){
-        console.log(data);
-        tableRendering(data.resultObject);
-      }
-    })
-  }
+  })
 
   //根据货道排序
-  c('sales_body_table_cargo')[0].onclick = function(){
-    var count = 1;
-    if(c('sales_body_table_cargo')[0].children[0].innerHTML == '↓' && count == 1){
-      count = 0;
-      c('sales_body_table_cargo')[0].children[0].innerHTML = '↑';
-      ajax({
-        type: 'get',
-        url: URLS + '/stock/'+deviceHeadGroupingz.name+'/report?orderBy=ASC',
-        success: function(data){
-          count = 1;
-          console.log(data);
-          tableRendering(data.resultObject);
-        }
-      })
-    }
-    if(c('sales_body_table_cargo')[0].children[0].innerHTML == '↑' && count == 1){
-      count = 0;
-      c('sales_body_table_cargo')[0].children[0].innerHTML = '↓';
-      ajax({
-        type: 'get',
-        url: URLS + '/stock/'+deviceHeadGroupingz.name+'/report?orderBy=DESC',
-        success: function(data){
-          count = 1;
-          console.log(data);
-          tableRendering(data.resultObject);
-        }
-      })
-    }
-  }
+  // c('sales_body_table_cargo')[0].onclick = function(){
+  //   var count = 1;
+  //   if(c('sales_body_table_cargo')[0].children[0].innerHTML == '↓' && count == 1){
+  //     count = 0;
+  //     c('sales_body_table_cargo')[0].children[0].innerHTML = '↑';
+  //     ajax({
+  //       type: 'get',
+  //       url: URLS + '/stock/'+deviceHeadGroupingz.name+'/report?orderBy=ASC',
+  //       success: function(data){
+  //         count = 1;
+  //         console.log(data);
+  //         tableRendering(data.resultObject);
+  //       }
+  //     })
+  //   }
+  //   if(c('sales_body_table_cargo')[0].children[0].innerHTML == '↑' && count == 1){
+  //     count = 0;
+  //     c('sales_body_table_cargo')[0].children[0].innerHTML = '↓';
+  //     ajax({
+  //       type: 'get',
+  //       url: URLS + '/stock/'+deviceHeadGroupingz.name+'/report?orderBy=DESC',
+  //       success: function(data){
+  //         count = 1;
+  //         console.log(data);
+  //         tableRendering(data.resultObject);
+  //       }
+  //     })
+  //   }
+  // }
 }
 
 start();
 selesForm();
 
-//底部table渲染
+//库存详情table渲染
 function tableRendering(allDate){
+  var table = c('sales_fixed_table_tbody')[0];
+  var numTotol = 0; //商品总计
+  table.innerHTML = '';
+  c('sales_fixed')[0].style.display = 'block';
+  for(var i = 0; i < allDate.length; i++){
+    var tr = creat('tr');
+    var td = creats('td',5);
+    td[0].innerHTML = allDate[i].machName;
+    td[1].innerHTML = allDate[i].deviceId;
+    td[2].innerHTML = allDate[i].itemName;
+    td[3].innerHTML = allDate[i].itemId;
+    td[4].innerHTML = allDate[i].stockNum;
+    tr.setAppend(td)
+    table.appendChild(tr);
+  }
+}
+c('sales_fixed_clear')[0].onclick = function(){
+  this.parentNode.parentNode.style.display = 'none';
+}
+
+//底部table渲染
+function tableRenderings(allDate){
   var table = c('sales_body_table_tbody')[0];
   var numTotol = 0; //商品总计
   table.innerHTML = '';
-  log(allDate);
   for(var i = 0; i < allDate.length; i++){
     var tr = creat('tr');
-    var td = creats(7,'td');
+    var td = creats('td',4);
     td[0].innerHTML = allDate[i].machName;
     td[1].innerHTML = allDate[i].deviceId;
-    td[2].innerHTML = allDate[i].goodsLane;
-    td[3].innerHTML = allDate[i].itemName;
-    td[4].innerHTML = allDate[i].itemId;
-    td[5].innerHTML = allDate[i].stockNum;
-    td[6].innerHTML = allDate[i].subOrder;
+    td[2].innerHTML = allDate[i].stockNum;
+    td[3].innerHTML = '<button class="sales_body_table_tbody_btn" data-value="'+allDate[i].deviceId+'">查看详情</button>';
     tr.setAppend(td)
     table.appendChild(tr);
     numTotol += allDate[i].stockNum;
   }
-  var tr = creat('tr');
-  var td = creats(2,'td');
-  td[0].innerHTML = '剩余商品数量总计';
-  td[0].colSpan = 2;
-  td[0].style.backgroundColor = '#FCFBAA';
-  td[1].innerHTML = numTotol;
-  td[1].colSpan = 5;
-  td[1].style.backgroundColor = '#FCFBAA';
-  tr.setAppend(td)
-  table.appendChild(tr);
 
-
-  // var salesBodyTableTbodyBtn = c('sales_body_table_tbody_btn');
-  // for(var i = 0; i < salesBodyTableTbodyBtn.length; i++){
-  //   (function(q){
-  //     salesBodyTableTbodyBtn[q].onclick = function(){
-  //       var Type = this.parentNode.parentNode.dataset.type;
-  //       if(Type == "wechat"){
-
-  //       }else if(Type == "alipay"){
-
-  //       }else if(Type == "SilverMerchant"){
-          
-  //       }else if(Type == "icbc"){
-          
-  //       }else{
-  //         alern('该交易类型不支持退款！');
-  //         return false;
-  //       }
-  //       d('refund_mark').value = "";
-  //       c('refund_fixed')[0].style.display = 'block';
-  //       var refundOrderId = d('refund_orderId');
-  //       var refundComm = d('refund_comm');
-  //       var refundTime = d('refund_time');
-  //       var refundMoney = d('refund_money');
-  //       var refundStatus = d('refund_status');
-  //       var refundType = d('refund_type');
-  //       var refundConsumer = d('refund_consumer');
-  //       refundOrderId.innerHTML = this.parentNode.parentNode.dataset.orderid;
-  //       refundOrderId.setAttribute('data-value',Type);
-  //       refundComm.innerHTML = this.parentNode.parentNode.dataset.comm;
-  //       refundTime.innerHTML = this.parentNode.parentNode.dataset.time;
-  //       refundMoney.innerHTML = this.parentNode.parentNode.dataset.money;
-  //       refundStatus.innerHTML = this.parentNode.parentNode.dataset.status;
-  //       refundType.innerHTML = this.parentNode.parentNode.dataset.mark;
-  //       refundConsumer.innerHTML = this.parentNode.parentNode.dataset.consumer;
-  //     }
-  //   })(i)
-  // }
+  var salesBodyTableTbodyBtn = c('sales_body_table_tbody_btn');
+  for(var i = 0; i < salesBodyTableTbodyBtn.length; i++){
+    (function(q){
+      salesBodyTableTbodyBtn[q].onclick = function(){
+        c('sales_fixed')[0].style.display = 'block';
+        log(this.dataset.value);
+        ajax({
+          type: 'get',
+          url: URLS + '/stock/'+this.dataset.value+'/report?orderBy=ASC',
+          success: function(data){
+            console.log(data);
+            tableRendering(data.resultObject);
+          }
+        })
+      }
+    })(i)
+  }
 }
 
 function tableName(tableNmaeId,excelTable){

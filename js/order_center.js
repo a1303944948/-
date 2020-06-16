@@ -41,7 +41,7 @@ function doTTS(text){
     var eee = '<embed id="tts_embed_id" height="0" width="0" src="">';
     var au2 = '</audio>';
     bdttsDivId.innerHTML = au1 + sss + eee + au2;
-    d('tts_autio_id').play();
+   	d('tts_autio_id').play();
 }
 
 //待接单
@@ -70,30 +70,34 @@ function Waiting(){
 				orderCenterMainPendingOrders.innerHTML = "";
 				for(var i = 0; i < data.resultObject.length; i++){
 					var tr = creat('tr');
-					var tda = creat('td'),
-						tdb = creat('td'),
-						tdc = creat('td'),
-						tdd = creat('td'),
-						tde = creat('td'),
-						tdf = creat('td'),
-						tdg = creat('td'),
-						tdh = creat('td'),
-						tdi = creat('td');
-					tda.innerHTML = data.resultObject[i].orderSourceText;
-					tdb.innerHTML = data.resultObject[i].orderId;
-					tdc.innerHTML = "<button class='order_center_main_pending_btn' data-value='"+JSON.stringify(data.resultObject[i].items)+"'>查看商品</button>";
-					tdd.innerHTML = data.resultObject[i].totalPrice;
-					tde.innerHTML = data.resultObject[i].consignee;
-					tdf.innerHTML = data.resultObject[i].phones.userPhone;
-					tdg.innerHTML = data.resultObject[i].deliveryPoiAddress;
-					tdh.innerHTML = wmDateTime(data.resultObject[i].createdAt);
-					tdi.innerHTML = "<button class='order_center_main_pending_btn' data-value='"+JSON.stringify(data.resultObject[i])+"'>接单</button><button class='order_center_main_pending_btn' data-value='"+JSON.stringify(data.resultObject[i])+"'>拒绝</button>";
+					var td = creats('td',13);
+					td[0].innerHTML = data.resultObject[i].orderSourceText;
+					td[1].innerHTML = data.resultObject[i].orderId;
+					td[2].innerHTML = '#' + data.resultObject[i].daySn;
+					td[3].innerHTML = "<button class='order_center_main_pending_btn' data-value='"+JSON.stringify(data.resultObject[i].items)+"'>查看商品</button>";
+					td[4].innerHTML = data.resultObject[i].totalPrice;
+					td[5].innerHTML = data.resultObject[i].consignee;
+					td[6].innerHTML = data.resultObject[i].phones.virtualNumber + '-' + data.resultObject[i].phones.extNumber;
+					td[7].innerHTML = data.resultObject[i].phones.userPhone;
+					td[8].innerHTML = data.resultObject[i].deliveryPoiAddress;
+					td[9].innerHTML = wmDateTime(data.resultObject[i].createdAt);
+					if(data.resultObject[i].book){
+						td[10].innerHTML = '<b style="background-color: orange;color: #ffffff;">预定</b>';
+					}else{
+						if(data.resultObject[i].orderBusinessType == 0){
+							td[10].innerHTML = '<b style="background-color: green;color: #ffffff;">外送</b>';
+						}else{
+							td[10].innerHTML = '<b style="background-color: red;color: #ffffff;">到取</b>';
+						}
+					}
+					td[11].innerHTML = wmDateTime(data.resultObject[i].deliverTime);
+					td[12].innerHTML = "<button class='order_center_main_pending_btn' data-value='"+JSON.stringify(data.resultObject[i])+"'>接单</button><button class='order_center_main_pending_btn' data-value='"+JSON.stringify(data.resultObject[i])+"'>拒绝</button>";
 					//查看商品
-					tdc.children[0].onmousedown = function(){
+					td[3].children[0].onmousedown = function(){
 						shippingList(this,2);
 					}
 					//接单按钮
-					tdi.children[0].onmousedown = function(){
+					td[12].children[0].onmousedown = function(){
 						var thisData = JSON.parse(this.dataset.value);
 						loading('接单中');
 						ajax({
@@ -120,12 +124,12 @@ function Waiting(){
 					}
 
 					//拒接单
-					tdi.children[1].onmousedown = function(){
+					td[12].children[1].onmousedown = function(){
 						var thisData = JSON.parse(this.dataset.value);
 						refuseCancel(thisData,1);
 						Waiting();
 					}
-					tr.setAppend([tda,tdb,tdc,tdd,tde,tdf,tdg,tdh,tdi]);
+					tr.setAppend(td);
 					orderCenterMainPendingOrders.appendChild(tr);
 				}
 			}
@@ -157,32 +161,35 @@ function Shipping(){
 				orderCenterMainPendingShipping.innerHTML = "";
 				for(var i = 0; i < data.resultObject.length; i++){
 					var tr = creat('tr');
-					var tda = creat('td'),
-						tdb = creat('td'),
-						tdc = creat('td'),
-						tdd = creat('td'),
-						tde = creat('td'),
-						tdf = creat('td'),
-						tdg = creat('td'),
-						tdh = creat('td'),
-						tdi = creat('td'),
-						tdj = creat('td');
-					tda.innerHTML = "<input class='order_center_main_pending_check' type='checkbox' name='"+ data.resultObject[i].orderId +"' />";
-					tdb.innerHTML = data.resultObject[i].orderSourceText;
-					tdc.innerHTML = data.resultObject[i].orderId;
-					tdd.innerHTML = "<button class='order_center_main_pending_btn' data-value='"+JSON.stringify(data.resultObject[i].items)+"'>查看商品</button>";
-					tde.innerHTML = data.resultObject[i].totalPrice;
-					tdf.innerHTML = data.resultObject[i].consignee;
-					tdg.innerHTML = data.resultObject[i].phones.userPhone;
-					tdh.innerHTML = data.resultObject[i].deliveryPoiAddress;
-					tdi.innerHTML = wmDateTime(data.resultObject[i].createdAt);
-					tdj.innerHTML = "<button class='order_center_main_pending_btn order_center_main_pending_print' data-value='"+JSON.stringify(data.resultObject[i])+"'>打印</button><button class='order_center_main_pending_btn order_center_main_pending_print_view' data-value='"+JSON.stringify(data.resultObject[i])+"'>打印预览</button>";
+					var td = creats('td',14);
+					td[0].innerHTML = "<input class='order_center_main_pending_check' type='checkbox' name='"+ data.resultObject[i].orderId +"' />";
+					td[1].innerHTML = data.resultObject[i].orderSourceText;
+					td[2].innerHTML = data.resultObject[i].orderId;
+					td[3].innerHTML = '#' + data.resultObject[i].daySn;
+					td[4].innerHTML = "<button class='order_center_main_pending_btn' data-value='"+JSON.stringify(data.resultObject[i].items)+"'>查看商品</button>";
+					td[5].innerHTML = data.resultObject[i].totalPrice;
+					td[6].innerHTML = data.resultObject[i].consignee;
+					td[7].innerHTML = data.resultObject[i].phones.virtualNumber + '-' + data.resultObject[i].phones.extNumber;
+					td[8].innerHTML = data.resultObject[i].phones.userPhone;
+					td[9].innerHTML = data.resultObject[i].deliveryPoiAddress;
+					td[10].innerHTML = wmDateTime(data.resultObject[i].createdAt);
+					if(data.resultObject[i].book){
+						td[11].innerHTML = '<b style="background-color: orange;color: #ffffff;">预定</b>';
+					}else{
+						if(data.resultObject[i].orderBusinessType == 0){
+							td[11].innerHTML = '<b style="background-color: green;color: #ffffff;">外送</b>';
+						}else{
+							td[11].innerHTML = '<b style="background-color: red;color: #ffffff;">到取</b>';
+						}
+					}
+					td[12].innerHTML = wmDateTime(data.resultObject[i].deliverTime);
+					td[13].innerHTML = "<button class='order_center_main_pending_btn order_center_main_pending_print' data-value='"+JSON.stringify(data.resultObject[i])+"'>打印</button><button class='order_center_main_pending_btn order_center_main_pending_print_view' data-value='"+JSON.stringify(data.resultObject[i])+"'>打印预览</button>";
 					//查看商品
-					tdd.children[0].onmousedown = function(){
+					td[4].children[0].onmousedown = function(){
 						shippingList(this,1);
 					}
 					//打印小票
-					tdj.children[0].onmousedown = function(){
+					td[13].children[0].onmousedown = function(){
 						var thatData = JSON.parse(this.dataset.value);
 						orderItem(thatData);
 				        document.body.innerHTML = c('order_center_print_receipt_home')[0].innerHTML; //构建新网页
@@ -194,12 +201,12 @@ function Shipping(){
 				        window.location = location;
 					}
 					//打印小票（预览）
-					tdj.children[1].onmousedown = function(){
+					td[13].children[1].onmousedown = function(){
 						var thatData = JSON.parse(this.dataset.value);
 						orderItem(thatData);
 					}
 
-					tr.setAppend([tda,tdb,tdc,tdd,tde,tdf,tdg,tdh,tdi,tdj]);
+					tr.setAppend(td);
 					orderCenterMainPendingShipping.appendChild(tr);
 				}
 			}
@@ -233,41 +240,45 @@ function Cancel(){
 				Object.is(data.resultObject.length,0)?cancelOrder.style.display = 'none':cancelOrder.style.display = 'block';
 				for(var i = 0; i < data.resultObject.length; i++){
 					var tr = creat('tr');
-					var tda = creat('td'),
-						tdb = creat('td'),
-						tdc = creat('td'),
-						tdd = creat('td'),
-						tde = creat('td'),
-						tdf = creat('td'),
-						tdg = creat('td'),
-						tdh = creat('td'),
-						tdi = creat('td');
-					tda.innerHTML = data.resultObject[i].orderSourceText;
-					tdb.innerHTML = data.resultObject[i].orderId;
-					tdc.innerHTML = "<button class='order_center_main_pending_btn' data-value='"+JSON.stringify(data.resultObject[i].items)+"'>查看商品</button>";
-					tdd.innerHTML = data.resultObject[i].totalPrice;
-					tde.innerHTML = data.resultObject[i].consignee;
-					tdf.innerHTML = data.resultObject[i].phones.userPhone;
-					tdg.innerHTML = data.resultObject[i].deliveryPoiAddress;
-					tdh.innerHTML = wmDateTime(data.resultObject[i].createdAt);
-					tdi.innerHTML = "<button class='order_center_main_pending_btn' data-value='"+JSON.stringify(data.resultObject[i])+"'>同意</button><button class='order_center_main_pending_btn' data-value='"+JSON.stringify(data.resultObject[i])+"'>拒绝</button>";
+					var td = creats('td',13);
+					td[0].innerHTML = data.resultObject[i].orderSourceText;
+					td[1].innerHTML = data.resultObject[i].orderId;
+					td[2].innerHTML = '#' + data.resultObject[i].daySn;
+					td[3].innerHTML = "<button class='order_center_main_pending_btn' data-value='"+JSON.stringify(data.resultObject[i].items)+"'>查看商品</button>";
+					td[4].innerHTML = data.resultObject[i].totalPrice;
+					td[5].innerHTML = data.resultObject[i].consignee;
+					td[6].innerHTML = data.resultObject[i].phones.virtualNumber + '-' + data.resultObject[i].phones.extNumber;
+					td[7].innerHTML = data.resultObject[i].phones.userPhone;
+					td[8].innerHTML = data.resultObject[i].deliveryPoiAddress;
+					td[9].innerHTML = wmDateTime(data.resultObject[i].createdAt);
+					if(data.resultObject[i].book){
+						td[10].innerHTML = '<b style="background-color: orange;color: #ffffff;">预定</b>';
+					}else{
+						if(data.resultObject[i].orderBusinessType == 0){
+							td[10].innerHTML = '<b style="background-color: green;color: #ffffff;">外送</b>';
+						}else{
+							td[10].innerHTML = '<b style="background-color: red;color: #ffffff;">到取</b>';
+						}
+					}
+					td[11].innerHTML = wmDateTime(data.resultObject[i].deliverTime);
+					td[12].innerHTML = "<button class='order_center_main_pending_btn' data-value='"+JSON.stringify(data.resultObject[i])+"'>同意</button><button class='order_center_main_pending_btn' data-value='"+JSON.stringify(data.resultObject[i])+"'>拒绝</button>";
 					//查看商品
-					tdc.children[0].onmousedown = function(){
+					td[3].children[0].onmousedown = function(){
 						shippingList(this,1);
 					}
 
 					//同意取消订单
-					tdi.children[0].onmousedown = function(){
+					td[12].children[0].onmousedown = function(){
 						var thisData = JSON.parse(this.dataset.value);
 						agreeCancel(thisData,1);
 					}
 
 					//拒绝取消订单
-					tdi.children[1].onmousedown = function(){
+					td[12].children[1].onmousedown = function(){
 						var thisData = JSON.parse(this.dataset.value);
 						refuseCancel(thisData,2);
 					}
-					tr.setAppend([tda,tdb,tdc,tdd,tde,tdf,tdg,tdh,tdi]);
+					tr.setAppend(td);
 					orderCenterMainPendingCancel.appendChild(tr);
 				}
 			}
@@ -302,42 +313,46 @@ function Retreat(){
 				Object.is(data.resultObject.length,0)?retreatOrder.style.display = 'none':retreatOrder.style.display = 'block';
 				for(var i = 0; i < data.resultObject.length; i++){
 					var tr = creat('tr');
-					var tda = creat('td'),
-						tdb = creat('td'),
-						tdc = creat('td'),
-						tdd = creat('td'),
-						tde = creat('td'),
-						tdf = creat('td'),
-						tdg = creat('td'),
-						tdh = creat('td'),
-						tdi = creat('td');
-					tda.innerHTML = data.resultObject[i].orderSourceText;
-					tdb.innerHTML = data.resultObject[i].orderId;
-					tdc.innerHTML = "<button class='order_center_main_pending_btn' data-value='"+JSON.stringify(data.resultObject[i].items)+"'>查看商品</button>";
-					tdd.innerHTML = data.resultObject[i].totalPrice;
-					tde.innerHTML = data.resultObject[i].consignee;
-					tdf.innerHTML = data.resultObject[i].phones.userPhone;
-					tdg.innerHTML = data.resultObject[i].deliveryPoiAddress;
-					tdh.innerHTML = wmDateTime(data.resultObject[i].createdAt);
-					tdi.innerHTML = "<button class='order_center_main_pending_btn' data-value='"+JSON.stringify(data.resultObject[i])+"'>同意</button><button class='order_center_main_pending_btn' data-value='"+JSON.stringify(data.resultObject[i])+"'>拒绝</button>";
+					var td = creats('td',13);
+					td[0].innerHTML = data.resultObject[i].orderSourceText;
+					td[1].innerHTML = data.resultObject[i].orderId;
+					td[2].innerHTML = '#' + data.resultObject[i].daySn;
+					td[3].innerHTML = "<button class='order_center_main_pending_btn' data-value='"+JSON.stringify(data.resultObject[i].items)+"'>查看商品</button>";
+					td[4].innerHTML = data.resultObject[i].totalPrice;
+					td[5].innerHTML = data.resultObject[i].consignee;
+					td[6].innerHTML = data.resultObject[i].phones.virtualNumber + '-' + data.resultObject[i].phones.extNumber;
+					td[7].innerHTML = data.resultObject[i].phones.userPhone;
+					td[8].innerHTML = data.resultObject[i].deliveryPoiAddress;
+					td[9].innerHTML = wmDateTime(data.resultObject[i].createdAt);
+					if(data.resultObject[i].book){
+						td[10].innerHTML = '<b style="background-color: orange;color: #ffffff;">预定</b>';
+					}else{
+						if(data.resultObject[i].orderBusinessType == 0){
+							td[10].innerHTML = '<b style="background-color: green;color: #ffffff;">外送</b>';
+						}else{
+							td[10].innerHTML = '<b style="background-color: red;color: #ffffff;">到取</b>';
+						}
+					}
+					td[11].innerHTML = wmDateTime(data.resultObject[i].deliverTime);
+					td[12].innerHTML = "<button class='order_center_main_pending_btn' data-value='"+JSON.stringify(data.resultObject[i])+"'>同意</button><button class='order_center_main_pending_btn' data-value='"+JSON.stringify(data.resultObject[i])+"'>拒绝</button>";
 
 					//查看商品
-					tdc.children[0].onmousedown = function(){
+					td[4].children[0].onmousedown = function(){
 						shippingList(this,1);
 					}
 
 					//同意退单
-					tdi.children[0].onmousedown = function(){
+					td[12].children[0].onmousedown = function(){
 						var thisData = JSON.parse(this.dataset.value);
 						agreeCancel(thisData,2);
 					}
 
 					//拒绝退单
-					tdi.children[1].onmousedown = function(){
+					td[12].children[1].onmousedown = function(){
 						var thisData = JSON.parse(this.dataset.value);
 						refuseCancel(thisData,3);
 					}
-					tr.setAppend([tda,tdb,tdc,tdd,tde,tdf,tdg,tdh,tdi]);
+					tr.setAppend(td);
 					orderCenterMainPendingRetreat.appendChild(tr);
 				}
 			}
@@ -383,7 +398,7 @@ function shippingList(that,type){
 			var tdb = creat('td');
 			var tdc = creat('td');
 			tda.innerHTML = i.name;
-			tdb.innerHTML = '*1';
+			tdb.innerHTML = '*' + i.quantity;
 			tdc.innerHTML = i.price;
 			if(Object.is(type,1)){
 				var tdd = creat('td');
@@ -423,13 +438,11 @@ function orderItem(that){
 	orderCenterPrintReceiptThead.innerHTML = "";
 	for(var i of that.items){
 		var tr = creat('tr');
-		var tda = creat('td');
-		var tdb = creat('td');
-		var tdc = creat('td');
-		tda.innerHTML = i.name;
-		tdb.innerHTML = '*' + i.quantity;
-		tdc.innerHTML = i.total;
-		tr.setAppend([tda,tdb,tdc]);
+		var td = creats('td',3);
+		td[0].innerHTML = i.name;
+		td[1].innerHTML = '*' + i.quantity;
+		td[2].innerHTML = i.total;
+		tr.setAppend(td);
 		orderCenterPrintReceiptThead.appendChild(tr);
 	}
 	orderCenterPrintReceiptDelivery.innerHTML = that.deliverFee;
@@ -558,7 +571,7 @@ function refuseCancel(that,type){
 					setHeader: {
 						username: loginUserName.empcode,
 						token: loginUserName.token,
-						shopId: thisData.shopId,
+						shopId: that.shopId,
 					},
 					success: function(data){
 						log(data);
@@ -587,7 +600,7 @@ function refuseCancel(that,type){
 					setHeader: {
 						username: loginUserName.empcode,
 						token: loginUserName.token,
-						shopId: thisData.shopId,
+						shopId: that.shopId,
 					},
 					success: function(data){
 						log(data);
@@ -616,7 +629,7 @@ function refuseCancel(that,type){
 					setHeader: {
 						username: loginUserName.empcode,
 						token: loginUserName.token,
-						shopId: thisData.shopId,
+						shopId: that.shopId,
 					},
 					success: function(data){
 						log(data);

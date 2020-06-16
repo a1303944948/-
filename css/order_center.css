@@ -4,7 +4,7 @@ html,body{
 	overflow: hidden;
 }
 .order_center_home{
-	width: 80%;
+	width: 94%;
 	min-width: 1240px;
 	height: auto;
 	margin-top: 50px;
@@ -116,7 +116,7 @@ html,body{
 }
 .order_center_main_pending>table>tbody>tr>td{
 	max-width: 200px;
-	padding: 10px 20px;
+	padding: 10px 5px;
 	border-bottom: 1px #f0f0f0 solid;
 	font-size: 14px;
 }
@@ -125,6 +125,17 @@ html,body{
 }
 .order_center_main_pending>table>tbody>tr>td:nth-child(9){
 	min-width: 200px;
+}
+.order_center_main_pending>table>tbody>tr>td>b{
+	display: inline-block;
+	width: 40px;
+	height: 20px;
+	line-height: 20px;
+	text-align: center;
+	border-radius: 4px;
+	font-size: 12px;
+	font-weight: 500;
+	white-space: nowrap;
 }
 .order_center_main_pending_btn{
 	padding: 5px 10px;

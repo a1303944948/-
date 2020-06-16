@@ -10,9 +10,24 @@
 	</style>
 </head>
 <body>
+	<div id="bdtts_div_id"></div>
 	<script>
-		var arr=[2,3,2,2,2,4,5],
-			arr2=[];
+		var arr=['age','sex','name'],
+			arr2=[25,'男','王猛'];
+		var object = {};
+		for(var i = 0; i < arr.length; i++){
+			object[arr[i]] = arr2[i];
+		}
+		log(object);
+
+	    var bdttsDivId = d('bdtts_div_id'); 
+	    var au1 = '<audio id="tts_autio_id">';
+	    var sss = '<source id="tts_source_id" muted src="http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=6&text=您有新的饿了么订单，请及时处理&per=4"/>';
+	    // var sss = '<source id="tts_source_id" src="http://tts.baidu.com/text2audio?cuid=baike&lan=ZH&ctp=1&pdt=301&vol=9&spd=8&rate=32&per=0&tex='+text;
+	    var eee = '<embed id="tts_embed_id" height="0" width="0" src="">';
+	    var au2 = '</audio>';
+	    bdttsDivId.innerHTML = au1 + sss + eee + au2;
+	   	d('tts_autio_id').play();
 		/*function find(arr2,ele){
 			for(var i= 0,len=arr2.length;i<len;i++){
 				if(arr2[i]==ele) return false;
@@ -25,7 +40,7 @@
 				arr2.push(arr[i]);
 			}
 		}*/
-		var TF;
+		/*var TF;
 		for(var i = 0; i < arr.length; i++){
 			TF = true;
 			for(var j = 0; j < arr2.length; j++){
@@ -37,7 +52,7 @@
 				arr2.push(arr[i]);
 			}
 		}
-		log(arr2);
+		log(arr2);*/
 	</script>
 </body>
 </html>

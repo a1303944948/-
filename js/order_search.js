@@ -312,8 +312,12 @@ function selesForm(){
 			},
 			success: function(data){
 				log(data);
-				switchArray = data.resultObject;
-				tableRendering(switchArray,0);
+				if(data.status == 10001){
+					switchArray = data.resultObject;
+					tableRendering(switchArray,0);
+				}else{
+					alern(data.msg);
+				}
 			}
 		})
 	}
@@ -558,7 +562,7 @@ function shippingList(that){
 			var tdb = creat('td');
 			var tdc = creat('td');
 			tda.innerHTML = i.name;
-			tdb.innerHTML = '*1';
+			tdb.innerHTML = '*' + i.quantity;
 			tdc.innerHTML = i.price;
 			trs.setAppend([tda,tdb,tdc]);
 			orderCenterShippingFixedMain.appendChild(trs);

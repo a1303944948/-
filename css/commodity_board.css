@@ -336,7 +336,7 @@ html,body{
 	max-height: 300px;
 	box-shadow: 0px 0px 3px #d4d4d4;
 	border-radius: 3px;
-	overflow-x: hidden;
+	overflow: auto;
 }
 .operator_body_right_foot_item_ul>li{
 	display: block;
@@ -345,8 +345,10 @@ html,body{
 	line-height: 40px;
 	box-sizing: border-box;
 	padding-left: 15px;
+	font-size: 14px;
 	cursor: pointer;
 	user-select: none;
+	white-space: nowrap;
 }
 .operator_body_right_foot_item_ul>li:hover{
 	background-color: #e5e5e5;

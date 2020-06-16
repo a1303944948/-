@@ -28,7 +28,7 @@ function creat(string){	//传入需要创建的元素
 }
 
 //批量创建元素器
-function creats(num,string){	//num为要创建的元素数量 string为要创建的元素
+function creats(string,num){	//string为要创建的元素 num为要创建的元素数量
 	var domArr = [];
 	for(var i = 0; i < num; i++){
 		domArr.push(document.createElement(string));
