@@ -614,13 +614,13 @@ function ycStart(machCODE,mobleId){
 				}
 			}
 			for(var i = 0; i < data.length; i++){
-				remoteXuan(data[i].startTime,data[i].endTime,data[i].start,data[i].end,data[i].more);
+				remoteXuan(data[i].startTime,data[i].endTime,9,4,data[i].more);
 			};
 		}
 	})
-	remoteTitleAdd.onclick = function(){
-		remoteXuan('','','','','');
-	}
+	// remoteTitleAdd.onclick = function(){
+	// 	remoteXuan('','','','','');
+	// }
 
 	function remoteXuan(Arra,Arrb,Arrc,Arrd,Arre){
 		var itemRemoteTbodysc = c('user_body_right_foot_item_remote_tbodysc');
@@ -906,56 +906,56 @@ function ycStart(machCODE,mobleId){
 	}
 
 	//保存温度设置
-	c('user_body_right_foot_item_remote_title_submit')[0].onclick = function(){
-		var itemRemoteTbodysc = c('user_body_right_foot_item_remote_tbodysc');
-		var startTime = c('startTime');			//开始时间
-		var endTime = c('endTime');				//结束时间
-		var topRemote = c('topRemote');			//温度上限
-		var bottomRemote = c('bottomRemote');	//温度下限
-		var remoteTimeOut = c('remoteTimeOut');	//温度超时
-		var remoteArr = [];
-		var remoteErr = "";
-		for(var i = 0; i < itemRemoteTbodysc.length; i++){
-			var remoteObj = new Object();
-			if(startTime[i].value == ""){
-				remoteErr += 'No.' + (i+1) + '起时间不能为空!<br/>';
-			}
-			if(endTime[i].value == ""){
-				remoteErr += 'No.' + (i+1) + '止时间不能为空!<br/>';
-			}
-			if(topRemote[i].value == ""){
-				remoteErr += 'No.' + (i+1) + '上限不能为空!<br/>';
-			}
-			if(bottomRemote[i].value == ""){
-				remoteErr += 'No.' + (i+1) + '下限不能为空!<br/>';
-			}
-			if(remoteTimeOut[i].value == ""){
-				remoteErr += 'No.' + (i+1) + '工作时间不能为空!<br/>';
-			}
-			remoteObj.startTime = startTime[i].value;
-			remoteObj.endTime = endTime[i].value;
-			remoteObj.start = topRemote[i].value;
-			remoteObj.end = bottomRemote[i].value;
-			remoteObj.more = remoteTimeOut[i].value;
-			remoteObj.machCode = machCODE;
-			remoteArr.push(remoteObj);
-		}
-		if(remoteErr != ""){
-			alern(remoteErr);
-			return false;
-		}
-		$.ajax({
-			type: 'post',
-			url: URLS + '/worn/set.json',
-			data: {
-				string: JSON.stringify(remoteArr),
-				machCode: machCODE,
-			},
-			success: function(data){
-				if(data.a){
-					alern('成功');
-				};
-			}
-		})
-	}
+	// c('user_body_right_foot_item_remote_title_submit')[0].onclick = function(){
+	// 	var itemRemoteTbodysc = c('user_body_right_foot_item_remote_tbodysc');
+	// 	var startTime = c('startTime');			//开始时间
+	// 	var endTime = c('endTime');				//结束时间
+	// 	var topRemote = c('topRemote');			//温度上限
+	// 	var bottomRemote = c('bottomRemote');	//温度下限
+	// 	var remoteTimeOut = c('remoteTimeOut');	//温度超时
+	// 	var remoteArr = [];
+	// 	var remoteErr = "";
+	// 	for(var i = 0; i < itemRemoteTbodysc.length; i++){
+	// 		var remoteObj = new Object();
+	// 		if(startTime[i].value == ""){
+	// 			remoteErr += 'No.' + (i+1) + '起时间不能为空!<br/>';
+	// 		}
+	// 		if(endTime[i].value == ""){
+	// 			remoteErr += 'No.' + (i+1) + '止时间不能为空!<br/>';
+	// 		}
+	// 		if(topRemote[i].value == ""){
+	// 			remoteErr += 'No.' + (i+1) + '上限不能为空!<br/>';
+	// 		}
+	// 		if(bottomRemote[i].value == ""){
+	// 			remoteErr += 'No.' + (i+1) + '下限不能为空!<br/>';
+	// 		}
+	// 		if(remoteTimeOut[i].value == ""){
+	// 			remoteErr += 'No.' + (i+1) + '工作时间不能为空!<br/>';
+	// 		}
+	// 		remoteObj.startTime = startTime[i].value;
+	// 		remoteObj.endTime = endTime[i].value;
+	// 		remoteObj.start = topRemote[i].value;
+	// 		remoteObj.end = bottomRemote[i].value;
+	// 		remoteObj.more = remoteTimeOut[i].value;
+	// 		remoteObj.machCode = machCODE;
+	// 		remoteArr.push(remoteObj);
+	// 	}
+	// 	if(remoteErr != ""){
+	// 		alern(remoteErr);
+	// 		return false;
+	// 	}
+	// 	$.ajax({
+	// 		type: 'post',
+	// 		url: URLS + '/worn/set.json',
+	// 		data: {
+	// 			string: JSON.stringify(remoteArr),
+	// 			machCode: machCODE,
+	// 		},
+	// 		success: function(data){
+	// 			if(data.a){
+	// 				alern('成功');
+	// 			};
+	// 		}
+	// 	})
+	// }
 }

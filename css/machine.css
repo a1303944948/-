@@ -1520,7 +1520,7 @@ html,body{
 .user_body_right_foot_item_remote_title_add{
 	height: 24px;
 	border-radius: 3px;
-	background-color: #ffffff;
+	background-color: #e5e5e5;
 	padding: 3px 5px;
 	border: 1px #d4d4d4 solid;
 	position: relative;
@@ -1533,7 +1533,7 @@ html,body{
 .user_body_right_foot_item_remote_title_submit{
 	height: 24px;
 	border-radius: 3px;
-	background-color: #ffffff;
+	background-color: #e5e5e5;
 	padding: 3px 5px;
 	border: 1px #d4d4d4 solid;
 	position: relative;

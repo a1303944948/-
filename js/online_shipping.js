@@ -51,9 +51,12 @@ function tableRendering(allDate){
 }
 
 //一键出货
+var mark;
+var timeMac;
+var salesBodyTableTbodyNumArr = [];
 c('sales_body_btn')[0].onclick = function(){
   var salesBodyTableTbodyNum = c('sales_body_table_tbody_num');
-  var salesBodyTableTbodyNumArr = [];
+  salesBodyTableTbodyNumArr = [];
   for(var i = 0; i < salesBodyTableTbodyNum.length; i++){
     if(salesBodyTableTbodyNum[i].value != ''&&salesBodyTableTbodyNum[i].value != 0&&salesBodyTableTbodyNum[i].value != null&&salesBodyTableTbodyNum[i].value != undefined){
       var salesBodyTableTbodyNumObj = JSON.parse(salesBodyTableTbodyNum[i].dataset.value);
@@ -61,22 +64,103 @@ c('sales_body_btn')[0].onclick = function(){
       salesBodyTableTbodyNumArr.push(salesBodyTableTbodyNumObj);
     }
   }
-  log(salesBodyTableTbodyNumArr.length);
   if(salesBodyTableTbodyNumArr.length > 0){
+    mark = 1;
     ajax({
       type: 'post',
-      url: URLS + '/stock/shipping/offline',
+      url: URLS + '/stock/shipping/detect',
       data: {
-        obj: JSON.stringify(salesBodyTableTbodyNumArr),
-      },
-      setHeader: {
-        username: loginUserName.empcode,
-        token: loginUserName.token,
+        orders: '[]',
+        userId: loginUserName.empcode,
       },
       success: function(data){
-        data.resultObject?alern(data.resultObject):alern(data.msg);
-        start();
+        if(data.status == 40003){
+          timeMac = setTimeout(function(){
+            if(mark == 1){
+              alern('连接超时，请重试！');
+            }
+          },3000);
+        }else{
+          alern(data.msg);
+          start();
+        }
       }
     })
   }
 }
+
+function WebSocketp2p(){
+  if("WebSocket" in window){
+    //打开一个 web socket
+    var ws = new WebSocket('ws://new.daoyin.tech:6801/websocket?Id=' + loginUserName.empcode);
+
+    function fremeArrs(num){
+      var frameObj = {};
+      frameObj.type = num;
+      return frameObj;
+    }
+
+    var timore;
+
+    ws.onopen = function(){
+    // Web Socket 已连接上，使用 send() 方法发送数据
+      log('已连接!');
+      timore = setInterval(function(){
+        ws.send(JSON.stringify(fremeArrs(0)));
+      },2500);
+    };
+ 
+    ws.onmessage = function (evt){
+      var respons = JSON.parse(evt.data);
+      log(respons);
+      switch(respons.type){
+        case 129:
+          ws.send(JSON.stringify(fremeArrs(2)));
+          var responsData;
+          responsData = respons.body.data;
+          switch(respons.body.type){
+            //检测售货机状态是否繁忙
+            case 'match_status':
+              clearTimeout(timeMac);
+              if(responsData.ready){
+                mark = 2;
+                ajax({
+                  type: 'post',
+                  url: URLS + '/stock/shipping/offline',
+                  data: {
+                    obj: JSON.stringify(salesBodyTableTbodyNumArr),
+                  },
+                  setHeader: {
+                    username: loginUserName.empcode,
+                    token: loginUserName.token,
+                  },
+                  success: function(data){
+                    data.resultObject?alern(data.resultObject):alern(data.msg);
+                    start();
+                  }
+                })
+              }else{
+                alern('设备正忙或故障，无法出货！');
+              }
+              break;
+          }
+          break; 
+      }
+    };
+
+    ws.onerror = function(e){
+      alern('连接发生了错误！');
+    }
+
+    ws.onclose = function(e){
+      // 关闭 websocket
+      log(e);
+      clearInterval(timore);
+      alern('连接已被关闭！');
+    };
+  }else{
+    // 浏览器不支持 WebSocket
+    alern("您的浏览器不支持 WebSocket!");
+  }
+}
+WebSocketp2p();
