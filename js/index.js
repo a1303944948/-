@@ -209,14 +209,14 @@ function datepicke(){
 	var ri;
 
 	//页面加载时获取默认时间
-	startDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-	endDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + (date.getDate() + 1);
+	startDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + (date.getDate() - 1);
+	endDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 
 	var zhou = date.getDay();
 	if(date.getDay() == 0){
 		zhou = 7;
 	}
-	var hao = date.getDate()-1;
+	var hao = date.getDate() - 1;
 	var tian = 86400000;
 	dateNone();
 	for(var i = 0; i < date_selectList.length; i++){
