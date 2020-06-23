@@ -366,6 +366,7 @@ function startbodyleft(commmodityLeft){
 				//var detailedOperatorId = d('commodity_operator');							//运营方
 				var detailedOperatorNumbering = d('commodity_num');							//商品编号
 				var detailedCommodityElemid = d('commodity_elemid');						//饿了么ID
+				var detailedCommoditySpecid = d('commodity_specid');						//规格ID
 				var detailedOperatorCompanyname = d('commodity_name');						//商品名称
 				var detailedOperatorCompanyaddress = d('commodity_price');					//标准价格
 				//var commodityShelf = d('commodity_shelf');								//保质期
@@ -388,7 +389,8 @@ function startbodyleft(commmodityLeft){
 				//detailedOperatorId.name = commmodityLeft[q].operatorID;
 				detailedOperatorNumbering.value = commmodityLeft[q].itemId;
 				detailedCommodityElemid.value = commmodityLeft[q].itemElmId;
-				detailedCommodityElemid.setAttribute('data-value',JSON.stringify(commmodityLeft[q].specs))
+				detailedCommodityElemid.setAttribute('data-value',JSON.stringify(commmodityLeft[q].specs));
+				detailedCommoditySpecid.value = commmodityLeft[q].specs.specId;
 				detailedOperatorCompanyname.value = commmodityLeft[q].itemName;
 				detailedOperatorCompanyaddress.value = commmodityLeft[q].itemPrice;
 				//commodityShelf.value = commmodityLeft[q].quaGuaPeriod;
@@ -1047,6 +1049,7 @@ function submit(){
 		//d('commodity_operator').name = "";								//运营方
 		d('commodity_num').value = "";										//商品编号
 		d('commodity_elemid').value = "";									//饿了么ID
+		d('commodity_specid').value = "";									//规格ID
 		d('commodity_name').value = "";										//商品名称
 		d('commodity_price').value = "";									//标准价格
 		//d('commodity_shelf').value = "";									//保质期
@@ -1424,6 +1427,7 @@ d('search_commodity').onclick = function(){
 function commoditySelect(data){
 	log(data);
 	var commodityElemid = d('commodity_elemid');	//饿了么商品ID
+	var commoditySpecid = d('commodity_specid');	//饿了么规格ID
 	var commodityName = d('commodity_name');		//商品名称
 	var commodityPrice = d('commodity_price');		//商品价格
 
@@ -1439,6 +1443,7 @@ function commoditySelect(data){
 		li.onmousedown = function(){
 			commodityElemid.value = this.dataset.id;
 			commodityElemid.setAttribute('data-value',this.dataset.value);
+			commoditySpecid.value = JSON.parse(this.dataset.value)[0].specId;
 			commodityPrice.value = JSON.parse(this.dataset.value)[0].price;
 		}
 		operatorBodyRightFootItemUl.appendChild(li);
