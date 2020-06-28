@@ -62,3 +62,6 @@
 .sales_body_btn:active{
   background-color: #0C64A8;
 }
+.sales_body_btn>b{
+  color: #ffffff;
+}

@@ -305,7 +305,7 @@ function tableRenderings(allDate){
     td[0].innerHTML = allDate[i].machName;
     td[1].innerHTML = allDate[i].deviceId;
     td[2].innerHTML = allDate[i].stockNum;
-    td[3].innerHTML = '<button class="sales_body_table_tbody_btn" data-value="'+allDate[i].deviceId+'">查看详情</button>';
+    td[3].innerHTML = '<button class="sales_body_table_tbody_btn" data-value="'+allDate[i].deviceId+'">查看详情</button><button class="sales_body_table_tbody_btns" data-value="'+allDate[i].deviceId+'">库存同步</button>';
     tr.setAppend(td)
     table.appendChild(tr);
     numTotol += allDate[i].stockNum;
@@ -325,6 +325,29 @@ function tableRenderings(allDate){
             tableRendering(data.resultObject);
           }
         })
+      }
+    })(i)
+  }
+
+  var salesBodyTableTbodyBtnS = c('sales_body_table_tbody_btns');
+  for(var i = 0; i < salesBodyTableTbodyBtnS.length; i++){
+    (function(q){
+      salesBodyTableTbodyBtnS[q].onclick = function(){
+        log(this.dataset.value);
+        if(confirm('确认同步该设备库存？')){
+          ajax({
+            type: 'post',
+            url: URLS + '/stock/draw',
+            data: {
+              machCode: this.dataset.value,
+            },
+            success: function(data){
+              log(data);
+              start();
+              selesForm();
+            }
+          })
+        }
       }
     })(i)
   }

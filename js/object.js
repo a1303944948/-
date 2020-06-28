@@ -136,7 +136,7 @@ var URLY = 'https://api.daoyin.tech:8443';
 var OSSURL = 'http://daoyin.oss-cn-shanghai.aliyuncs.com/';
 
 function orderBatch(object){
-	return '/dy/'+ object.empcode +'/order?state='+ object.state +'&refundStatus='+ object.refundStatus +'&settledStatus='+ object.settledStatus +'&startTime='+ object.startTime +'&endTime='+ object.endTime +'&orderId='+ object.orderId;
+	return '/dy/'+ object.empcode +'/order?storeId='+ object.storeId +'&state='+ object.state +'&refundStatus='+ object.refundStatus +'&settledStatus='+ object.settledStatus +'&startTime='+ object.startTime +'&endTime='+ object.endTime +'&orderId='+ object.orderId;
 }
 //禁用页面log,要恢复调试请注释
 //console.log = ()=>{};

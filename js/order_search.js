@@ -57,7 +57,6 @@ function start(){
 			for(var i = 0; i < KITASSIGN.length; i++){
 				LISTGROUP.push(KITASSIGN[i].devicecode);
 			}
-			console.log(LISTGROUP);
 		}
 	}
 
@@ -278,7 +277,7 @@ function selesForm(){
 	var submit = c('sales_head_tbody_submit')[0];
 
 	submit.onclick = function(){
-		var device_head_groupingz = c('device_head_groupingz')[0].name;
+		var deviceHeadGroupingz = c('device_head_groupingz')[0].name;
 		var methods = c('statisticalMethods')[0].dataset.value;				//统计方式数据
 		var salesBody = c('sales_body')[0];							//底部渲染数据部分
 		var Start = startDate;
@@ -290,11 +289,12 @@ function selesForm(){
 		}else{
 			methods = methods.split(',');
 		}
-		log(device_head_groupingz);
+		log(deviceHeadGroupingz);
 		log(methods);
 		log(Start,End);
 
 		var object = {};
+		object.storeId = deviceHeadGroupingz;
 		object.empcode = loginUserName.empcode;
 		object.state = methods[0];
 		object.refundStatus = methods[1];
@@ -302,6 +302,7 @@ function selesForm(){
 		object.startTime = Start;
 		object.endTime = End;
 		object.orderId = orderId;
+		log(object);
 
 		ajax({
 			type: 'get',

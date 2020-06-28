@@ -1056,26 +1056,6 @@ function submit(){
 	var boardRentstarts = d('board_rentstarts');
 	var boardRentends = d('board_rentends');
 
-	//mac地址检测是否重复
-	boardMac.onchange = function(){
-		//console.log(this.value);
-		var that = this;
-		$.ajax({
-			type: 'post',
-			url: URLZ + '/jf/bg/basic/dvm/check.json',
-			data: {
-				macAddr: that.value,
-			},
-			success: function(data){
-				//console.log(data);
-				if(data.obj != 0){
-					alern('MAC地址与'+data.obj.machName+'重复!');
-					that.value = "";
-				}
-			}
-		})
-	}
-
 	//创建事件
 	bodyCreat.onclick = function(){
 		userBodyRightFootItem.style.visibility = 'visible';
@@ -1188,53 +1168,71 @@ function submit(){
 		}
 
 		//console.log(type);
-		if(type == 0){
-			//创建事件
-			$.ajax({
-				type: 'post',
-				url: URLZ + '/jf/bg/basic/dvm/addObj.json',
-				data: {
-					aObj: JSON.stringify(userObject),
-				},
-				success: function(data){
-					if(Object.is(data.status,10001)){
-						alern(data.msg);
-						start();
-						startbody();
-						userHeadSubmit.click();
-						bodyCreat.click();
-					}else{
-						alern(data.msg);
+		//mac地址检测是否重复
+		$.ajax({
+			type: 'post',
+			url: URLZ + '/jf/bg/basic/dvm/check.json',
+			data: {
+				macAddr: boardMac.value,
+			},
+			success: function(msg){
+				//console.log(data);
+				if(msg.code == 10002){
+					if(msg.obj.machCode != boardMachcode.value){
+						alern('MAC地址与'+msg.obj.machName+'重复!');
+						boardMac.value = "";
+						return false;
 					}
-				},
-				error: function(){
-					alern('创建失败');
 				}
-			})
-		}else if(type == 1){
-			//更新事件
-			$.ajax({
-				type: 'post',
-				url: URLZ + '/jf/bg/basic/dvm/update.json',
-				data: {
-					uObj: JSON.stringify(userObject),
-				},
-				success: function(data){
-					if(Object.is(data.status,10001)){
-						alern(data.msg);
-						start();
-						startbody();
-						userHeadSubmit.click();
-						bodyCreat.click();
-					}else{
-						alern(data.msg);
-					}
-				},
-				error: function(){
-					alern('更新失败');
+				if(type == 0){
+					//创建事件
+					$.ajax({
+						type: 'post',
+						url: URLZ + '/jf/bg/basic/dvm/addObj.json',
+						data: {
+							aObj: JSON.stringify(userObject),
+						},
+						success: function(data){
+							if(Object.is(data.status,10001)){
+								alern(data.msg);
+								start();
+								startbody();
+								userHeadSubmit.click();
+								bodyCreat.click();
+							}else{
+								alern(data.msg);
+							}
+						},
+						error: function(){
+							alern('创建失败');
+						}
+					})
+				}else if(type == 1){
+					//更新事件
+					$.ajax({
+						type: 'post',
+						url: URLZ + '/jf/bg/basic/dvm/update.json',
+						data: {
+							uObj: JSON.stringify(userObject),
+						},
+						success: function(data){
+							if(Object.is(data.status,10001)){
+								alern(data.msg);
+								start();
+								startbody();
+								userHeadSubmit.click();
+								bodyCreat.click();
+							}else{
+								alern(data.msg);
+							}
+						},
+						error: function(){
+							alern('更新失败');
+						}
+					})
 				}
-			})
-		}
+			}
+		})
 	}
 }
 

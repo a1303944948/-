@@ -54,7 +54,25 @@ function tableRendering(allDate){
 var mark;
 var timeMac;
 var salesBodyTableTbodyNumArr = [];
+var iconMark = 0;
+var iconTimore;
 c('sales_body_btn')[0].onclick = function(){
+  if(iconMark > 0){
+    log('请不要重新点击');
+    return false;
+  }
+  iconMark = 3;
+  c('sales_body_btn')[0].style.backgroundColor = '#a4a4a4';
+  iconTimore = setInterval(function(){
+    if(iconMark <= 0){
+      c('sales_body_btn')[0].style.backgroundColor = '#0C64A8';
+      c('sales_body_btn')[0].children[0].innerHTML = '';
+      clearInterval(iconTimore);
+    }else{
+      c('sales_body_btn')[0].children[0].innerHTML = iconMark;
+    }
+    iconMark--;
+  },1000);
   var salesBodyTableTbodyNum = c('sales_body_table_tbody_num');
   salesBodyTableTbodyNumArr = [];
   for(var i = 0; i < salesBodyTableTbodyNum.length; i++){

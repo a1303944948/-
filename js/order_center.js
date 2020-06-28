@@ -47,6 +47,7 @@ function doTTS(text){
 //待接单
 function Waiting(){
 	var param = {};
+	param.storeId = '';
 	param.empcode = loginUserName.empcode;
 	param.state = 'unprocessed';
 	param.refundStatus = 'noRefund';
@@ -140,6 +141,7 @@ function Waiting(){
 //待出货
 function Shipping(){
 	var param = {};
+	param.storeId = '';
 	param.empcode = loginUserName.empcode;
 	param.state = 'valid';
 	param.refundStatus = 'noRefund';
@@ -217,6 +219,7 @@ function Shipping(){
 //取消单
 function Cancel(){
 	var param = {};
+	param.storeId = '';
 	param.empcode = loginUserName.empcode;
 	param.state = 'valid';
 	param.refundStatus = 'applied';
@@ -289,6 +292,7 @@ function Cancel(){
 //退单
 function Retreat(){
 	var param = {};
+	param.storeId = '';
 	param.empcode = loginUserName.empcode;
 	param.state = 'settled';
 	param.refundStatus = 'applied';

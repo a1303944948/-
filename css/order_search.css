@@ -191,6 +191,7 @@
   width: auto;
   min-width: 1200px;
   height: auto;
+  min-height: 200px;
   background-color: #ffffff;
   padding-top: 20px;
   padding-bottom: 20px;
