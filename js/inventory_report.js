@@ -342,7 +342,7 @@ function tableRenderings(allDate){
               machCode: this.dataset.value,
             },
             success: function(data){
-              log(data);
+              alern(data.msg);
               start();
               selesForm();
             }

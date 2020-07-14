@@ -163,7 +163,7 @@ function Shipping(){
 				orderCenterMainPendingShipping.innerHTML = "";
 				for(var i = 0; i < data.resultObject.length; i++){
 					var tr = creat('tr');
-					var td = creats('td',14);
+					var td = creats('td',13);
 					td[0].innerHTML = "<input class='order_center_main_pending_check' type='checkbox' name='"+ data.resultObject[i].orderId +"' />";
 					td[1].innerHTML = data.resultObject[i].orderSourceText;
 					td[2].innerHTML = data.resultObject[i].orderId;
@@ -185,28 +185,28 @@ function Shipping(){
 						}
 					}
 					td[12].innerHTML = wmDateTime(data.resultObject[i].deliverTime);
-					td[13].innerHTML = "<button class='order_center_main_pending_btn order_center_main_pending_print' data-value='"+JSON.stringify(data.resultObject[i])+"'>打印</button><button class='order_center_main_pending_btn order_center_main_pending_print_view' data-value='"+JSON.stringify(data.resultObject[i])+"'>打印预览</button>";
+					//td[13].innerHTML = "<button class='order_center_main_pending_btn order_center_main_pending_print' data-value='"+JSON.stringify(data.resultObject[i])+"'>打印</button><button class='order_center_main_pending_btn order_center_main_pending_print_view' data-value='"+JSON.stringify(data.resultObject[i])+"'>打印预览</button>";
 					//查看商品
 					td[4].children[0].onmousedown = function(){
 						shippingList(this,1);
 					}
 					//打印小票
-					td[13].children[0].onmousedown = function(){
-						var thatData = JSON.parse(this.dataset.value);
-						orderItem(thatData);
-				        document.body.innerHTML = c('order_center_print_receipt_home')[0].innerHTML; //构建新网页
-				        c('order_center_print_receipt')[0].style.top = '0px';
-				        c('order_center_print_receipt')[0].style.left = '0px';
-				        c('order_center_print_receipt')[0].style.marginTop = '0px';
-				        c('order_center_print_receipt')[0].style.marginLeft = '0px';
-				        window.print();
-				        window.location = location;
-					}
+					// td[13].children[0].onmousedown = function(){
+					// 	var thatData = JSON.parse(this.dataset.value);
+					// 	orderItem(thatData);
+				 //        document.body.innerHTML = c('order_center_print_receipt_home')[0].innerHTML; //构建新网页
+				 //        c('order_center_print_receipt')[0].style.top = '0px';
+				 //        c('order_center_print_receipt')[0].style.left = '0px';
+				 //        c('order_center_print_receipt')[0].style.marginTop = '0px';
+				 //        c('order_center_print_receipt')[0].style.marginLeft = '0px';
+				 //        window.print();
+				 //        window.location = location;
+					// }
 					//打印小票（预览）
-					td[13].children[1].onmousedown = function(){
-						var thatData = JSON.parse(this.dataset.value);
-						orderItem(thatData);
-					}
+					// td[13].children[1].onmousedown = function(){
+					// 	var thatData = JSON.parse(this.dataset.value);
+					// 	orderItem(thatData);
+					// }
 
 					tr.setAppend(td);
 					orderCenterMainPendingShipping.appendChild(tr);
@@ -668,7 +668,7 @@ function refuseCancel(that,type){
 }
 
 //全局计时（用于检测客户端是否返回websocket）
-var timeMac;
+//var timeMac;
 var orderCheckArr = [];
 //按钮事件集合点
 function totalBtn(){
@@ -709,12 +709,11 @@ function totalBtn(){
 					userId: loginUserName.empcode,
 				},
 				success: function(data){
-					if(data.status == 40003){
-						timeMac = setTimeout(function(){
-							alern('连接超时，请重试！');
-						},3000);
-					}else{
+					if(data.status != 40003){
 						alern(data.msg);
+						// timeMac = setTimeout(function(){
+						// 	alern('连接超时，请重试！');
+						// },3000);
 					}
 				}
 			})
@@ -760,7 +759,6 @@ function WebSocketp2p(){
  
 		ws.onmessage = function (evt){
 			var respons = JSON.parse(evt.data);
-			log(respons);
 			switch(respons.type){
 				case 129:
 					ws.send(JSON.stringify(fremeArrs(2)));
@@ -813,8 +811,8 @@ function WebSocketp2p(){
 							break;
 						//检测售货机状态是否繁忙
 						case 'match_status':
+							//clearTimeout(timeMac);
 							if(responsData.ready){
-								clearTimeout(timeMac);
 								ajax({
 									type: 'post',
 									url: URLS + '/stock/shipping/execute',

@@ -51,8 +51,7 @@ function tableRendering(allDate){
 }
 
 //一键出货
-var mark;
-var timeMac;
+//var timeMac;
 var salesBodyTableTbodyNumArr = [];
 var iconMark = 0;
 var iconTimore;
@@ -83,7 +82,6 @@ c('sales_body_btn')[0].onclick = function(){
     }
   }
   if(salesBodyTableTbodyNumArr.length > 0){
-    mark = 1;
     ajax({
       type: 'post',
       url: URLS + '/stock/shipping/detect',
@@ -92,15 +90,15 @@ c('sales_body_btn')[0].onclick = function(){
         userId: loginUserName.empcode,
       },
       success: function(data){
-        if(data.status == 40003){
-          timeMac = setTimeout(function(){
-            if(mark == 1){
-              alern('连接超时，请重试！');
-            }
-          },3000);
-        }else{
+        if(data.status != 40003){
           alern(data.msg);
           start();
+          // timeMac = setTimeout(function(){
+          //   log(mark);
+          //   if(mark == 1){
+          //     alern('连接超时，请重试！');
+          //   }
+          // },3000);
         }
       }
     })
@@ -139,9 +137,8 @@ function WebSocketp2p(){
           switch(respons.body.type){
             //检测售货机状态是否繁忙
             case 'match_status':
-              clearTimeout(timeMac);
+              //clearTimeout(timeMac);
               if(responsData.ready){
-                mark = 2;
                 ajax({
                   type: 'post',
                   url: URLS + '/stock/shipping/offline',
