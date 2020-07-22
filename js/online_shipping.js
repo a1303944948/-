@@ -51,7 +51,8 @@ function tableRendering(allDate){
 }
 
 //一键出货
-//var timeMac;
+var timeMac;
+var mark;
 var salesBodyTableTbodyNumArr = [];
 var iconMark = 0;
 var iconTimore;
@@ -60,6 +61,7 @@ c('sales_body_btn')[0].onclick = function(){
     log('请不要重新点击');
     return false;
   }
+  mark = 1;
   iconMark = 3;
   c('sales_body_btn')[0].style.backgroundColor = '#a4a4a4';
   iconTimore = setInterval(function(){
@@ -73,6 +75,7 @@ c('sales_body_btn')[0].onclick = function(){
     iconMark--;
   },1000);
   var salesBodyTableTbodyNum = c('sales_body_table_tbody_num');
+  log(salesBodyTableTbodyNum);
   salesBodyTableTbodyNumArr = [];
   for(var i = 0; i < salesBodyTableTbodyNum.length; i++){
     if(salesBodyTableTbodyNum[i].value != ''&&salesBodyTableTbodyNum[i].value != 0&&salesBodyTableTbodyNum[i].value != null&&salesBodyTableTbodyNum[i].value != undefined){
@@ -90,18 +93,21 @@ c('sales_body_btn')[0].onclick = function(){
         userId: loginUserName.empcode,
       },
       success: function(data){
-        if(data.status != 40003){
+        if(data.status == 40003){
+          timeMac = setTimeout(function(){
+            if(mark == 1){
+              alern('连接超时，请重试！');
+              start();
+            }
+          },3500);
+        }else{
           alern(data.msg);
           start();
-          // timeMac = setTimeout(function(){
-          //   log(mark);
-          //   if(mark == 1){
-          //     alern('连接超时，请重试！');
-          //   }
-          // },3000);
         }
       }
     })
+  }else{
+    alern('未输入商品数量！');
   }
 }
 
@@ -125,7 +131,6 @@ function WebSocketp2p(){
         ws.send(JSON.stringify(fremeArrs(0)));
       },2500);
     };
- 
     ws.onmessage = function (evt){
       var respons = JSON.parse(evt.data);
       log(respons);
@@ -137,7 +142,8 @@ function WebSocketp2p(){
           switch(respons.body.type){
             //检测售货机状态是否繁忙
             case 'match_status':
-              //clearTimeout(timeMac);
+              clearTimeout(timeMac);
+              mark = 2;
               if(responsData.ready){
                 ajax({
                   type: 'post',
@@ -156,6 +162,7 @@ function WebSocketp2p(){
                 })
               }else{
                 alern('设备正忙或故障，无法出货！');
+                start();
               }
               break;
           }

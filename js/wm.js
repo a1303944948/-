@@ -297,7 +297,7 @@ function BlockDefault(e){
 
 //ajax请求
 function ajax(obj){	//type为设置请求方法 url为请求的地址 data为传递的参数 succ为成功时执行的操作 error为失败时执行的操作 json只能传入一个json字符串，代表将接收到的数据转换为json对象 header为设置请求头部信息 async为是否异步传入默认异步
-	var xhr = new XMLHttpRequest ();
+	var xhr = new XMLHttpRequest();
 	if(obj.async !== true&&obj.async !== false){
 		obj.async = true;
 	}
